@@ -1,0 +1,161 @@
+{
+  "site": {
+    "name": "ForgeLayer",
+    "email": "orders@forgelayer.online",
+    "footer_text": "© 2025 ForgeLayer · Custom 3D Printing · Germany"
+  },
+  "hero": {
+    "enabled": true,
+    "badge": "Custom 3D Prints · Germany",
+    "headline": "Bring your ideas",
+    "headline_highlight": "to life in 3D",
+    "subtext": "Home-based custom 3D printing — personalised gifts, home organisation, functional prototypes and more. Printed with precision, delivered with care.",
+    "cta_primary": "Place an Order",
+    "cta_secondary": "See what we make",
+    "stats": [
+      { "number": "Bambu", "label": "A1 Series Printer" },
+      { "number": "20+", "label": "Colors available" },
+      { "number": "3–5", "label": "Days turnaround" },
+      { "number": "100%", "label": "Custom made" }
+    ]
+  },
+  "products": {
+    "enabled": true,
+    "label": "What we make",
+    "title": "Four categories, endless possibilities",
+    "subtitle": "Every item is printed to order — custom sizes, colours and text always available.",
+    "items": [
+      {
+        "icon": "🏠",
+        "icon_style": "green",
+        "title": "Home & Organisation",
+        "description": "Practical prints that make your space work smarter — designed for real life, printed to fit.",
+        "tags": ["Cable holders", "Wall hooks", "Drawer inserts", "Phone stands", "Spice racks", "Desk organisers"],
+        "price_from": "From €4",
+        "turnaround": "2–4 days"
+      },
+      {
+        "icon": "⚙️",
+        "icon_style": "blue",
+        "title": "Prototypes & Parts",
+        "description": "Need a custom bracket, replacement part or a prototype for your idea? We print it precisely.",
+        "tags": ["Replacement parts", "Brackets", "Enclosures", "Jigs & fixtures", "Product prototypes"],
+        "price_from": "From €8",
+        "turnaround": "3–5 days"
+      },
+      {
+        "icon": "🔤",
+        "icon_style": "purple",
+        "title": "Custom Name & Text",
+        "description": "Personalised with any name, word or short message — perfect for gifts that actually mean something.",
+        "tags": ["Name signs", "Keychains", "Desk nameplates", "Wedding décor", "Baby gifts"],
+        "price_from": "From €5",
+        "turnaround": "2–3 days"
+      },
+      {
+        "icon": "✨",
+        "icon_style": "orange",
+        "title": "Gifts & Décor",
+        "description": "Decorative prints and thoughtful gifts that stand out — unique, durable and made to order.",
+        "tags": ["Planters", "Vases", "Wall art", "Figurines", "Holiday décor", "Lamp shades"],
+        "price_from": "From €6",
+        "turnaround": "3–5 days"
+      }
+    ]
+  },
+  "how": {
+    "enabled": true,
+    "label": "The process",
+    "title": "Order in 3 simple steps",
+    "subtitle": "No complicated forms. Just send an email and we'll handle the rest.",
+    "steps": [
+      {
+        "title": "Tell us what you need",
+        "description": "Click the order button and send us an email with what you'd like — name, size, colour, quantity. Not sure? Just describe your idea."
+      },
+      {
+        "title": "Get a quote & confirm",
+        "description": "We'll reply within 24 hours with a price, estimated time, and a preview if needed. You confirm before anything is printed."
+      },
+      {
+        "title": "Receive your print",
+        "description": "We print it and arrange delivery or pickup. Payment by bank transfer or PayPal once you're happy with the result."
+      }
+    ]
+  },
+  "gallery": {
+    "enabled": true,
+    "label": "Portfolio",
+    "title": "Recent work",
+    "subtitle": "Our latest prints — add your own photos here once you have them.",
+    "note": "📸 More photos coming soon — follow us for updates",
+    "items": [
+      { "emoji": "📦", "label": "Desk Organiser", "bg": "#0d2137" },
+      { "emoji": "🪝", "label": "Wall Hook Set", "bg": "#0d1f0d" },
+      { "emoji": "🔑", "label": "Name Keychain", "bg": "#1f0d25" },
+      { "emoji": "🌿", "label": "Mini Planter", "bg": "#1f1a0d" },
+      { "emoji": "⚙️", "label": "Custom Bracket", "bg": "#1a1a2e" },
+      { "emoji": "🎁", "label": "Gift Box", "bg": "#0d1f1a" }
+    ]
+  },
+  "pricing": {
+    "enabled": false,
+    "label": "Pricing guide",
+    "title": "Transparent, fair pricing",
+    "subtitle": "Every order is quoted individually — here's a rough guide. Final price depends on size, complexity, and material.",
+    "note": "💡 Not sure about the price? Just email us — quotes are free, fast and come with no obligation.",
+    "rows": [
+      { "item_type": "Small home item", "example": "Cable clip, hook, stand", "price": "€4", "turnaround": "1–2 days" },
+      { "item_type": "Custom name print", "example": "Keychain, nameplate", "price": "€5", "turnaround": "2–3 days" },
+      { "item_type": "Decorative / gift", "example": "Vase, planter, wall art", "price": "€6", "turnaround": "3–5 days" },
+      { "item_type": "Functional part", "example": "Bracket, enclosure, jig", "price": "€8", "turnaround": "3–5 days" },
+      { "item_type": "Prototype / complex", "example": "Multi-part assemblies", "price": "€15+", "turnaround": "5–7 days" },
+      { "item_type": "Bulk order (10+)", "example": "Gifts, event items", "price": "Discounted", "turnaround": "Quote on request" }
+    ]
+  },
+  "order": {
+    "enabled": true,
+    "label": "Ready to order?",
+    "title": "Let's make something",
+    "subtitle": "Send us an email with your idea — no need to have all the details figured out. We'll help you get there.",
+    "button_text": "Email us your order",
+    "sub_text": "We reply within 24 hours · No upfront payment · Free quote",
+    "steps": [
+      { "text": "Describe your idea" },
+      { "text": "Pick colour & size" },
+      { "text": "We send a quote" },
+      { "text": "Confirm & we print" }
+    ]
+  },
+  "faq": {
+    "enabled": true,
+    "label": "FAQ",
+    "title": "Common questions",
+    "items": [
+      {
+        "q": "What materials do you print with?",
+        "a": "Primarily PLA and PETG — durable, food-safe options available on request. PLA is great for most decorative and functional items. PETG is tougher and heat-resistant."
+      },
+      {
+        "q": "Can I request a custom design I found online?",
+        "a": "Yes — send us a link or the file. We work with STL, 3MF and STEP files. If you have a sketch or photo, we can often model something simple for a small design fee."
+      },
+      {
+        "q": "How do I pay?",
+        "a": "Bank transfer (Überweisung) or PayPal. Payment is due after you've seen the final item — we don't ask for money upfront unless it's a large bulk order."
+      },
+      {
+        "q": "Do you ship?",
+        "a": "Yes, we ship within Germany via DHL. Shipping cost is added to the order. Local pickup is also available."
+      },
+      {
+        "q": "How long does it take?",
+        "a": "Most small items are ready in 2–3 days. Larger or more complex prints take 4–7 days. We'll always confirm the timeline before you commit."
+      },
+      {
+        "q": "What if I'm not happy with the result?",
+        "a": "We'll reprint or refund. Quality matters to us — we send photos before shipping so you can check before we pack it."
+      }
+    ]
+  }
+}

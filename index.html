@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ForgeLayer — Custom 3D Prints</title>
+  <meta name="description" content="Custom 3D printing from home — personalised gifts, home organisers, prototypes and more." />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --black:   #0a0a0a;
+      --dark:    #111827;
+      --card:    #1a2236;
+      --accent:  #00d9a6;
+      --accent2: #0098ff;
+      --text:    #e2e8f0;
+      --muted:   #94a3b8;
+      --border:  #1e3a5f;
+      --white:   #ffffff;
+      --radius:  14px;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--black); color: var(--text); line-height: 1.6; }
+    a { color: inherit; text-decoration: none; }
+
+    /* Loading */
+    #loader {
+      position: fixed; inset: 0; background: var(--black);
+      display: flex; align-items: center; justify-content: center;
+      z-index: 999; transition: opacity 0.4s;
+    }
+    .loader-ring {
+      width: 48px; height: 48px; border-radius: 50%;
+      border: 3px solid rgba(0,217,166,0.15);
+      border-top-color: var(--accent);
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Nav */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 5%;
+      background: rgba(10,10,10,0.88);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .logo { display: flex; align-items: center; text-decoration: none; }
+    .nav-links { display: flex; gap: 28px; align-items: center; }
+    .nav-links a { font-size: 0.9rem; color: var(--muted); transition: color 0.2s; }
+    .nav-links a:hover { color: var(--white); }
+    .nav-cta {
+      background: var(--accent); color: var(--black) !important;
+      padding: 8px 20px; border-radius: 8px; font-weight: 700; font-size: 0.85rem !important;
+    }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+    .hamburger span { width: 24px; height: 2px; background: var(--text); border-radius: 2px; }
+
+    /* Shared section */
+    section { padding: 96px 5%; }
+    .section-label { font-size: 0.75rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; }
+    h2 { font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 800; letter-spacing: -0.5px; line-height: 1.2; margin-bottom: 16px; }
+    .section-sub { color: var(--muted); font-size: 1.05rem; max-width: 540px; }
+    .section-head { margin-bottom: 56px; }
+
+    /* Hero */
+    .hero {
+      min-height: 100vh; display: flex; align-items: center; justify-content: center;
+      text-align: center; padding: 120px 5% 80px;
+      background: radial-gradient(ellipse 80% 60% at 50% 20%, rgba(0,217,166,0.08) 0%, transparent 60%),
+                  radial-gradient(ellipse 60% 40% at 80% 80%, rgba(0,152,255,0.06) 0%, transparent 50%), var(--black);
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: ''; position: absolute; inset: 0;
+      background-image: radial-gradient(circle, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 40px 40px; pointer-events: none;
+    }
+    .hero-inner { max-width: 760px; position: relative; }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(0,217,166,0.1); border: 1px solid rgba(0,217,166,0.3);
+      padding: 6px 16px; border-radius: 100px; font-size: 0.8rem; color: var(--accent);
+      font-weight: 600; margin-bottom: 28px; letter-spacing: 0.5px;
+    }
+    .hero-badge::before { content: '●'; font-size: 0.6rem; animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+    h1 { font-size: clamp(2.4rem, 6vw, 4.2rem); font-weight: 900; line-height: 1.1; letter-spacing: -1.5px; margin-bottom: 24px; }
+    h1 em { font-style: normal; background: linear-gradient(135deg, var(--accent), var(--accent2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .hero-sub { font-size: 1.15rem; color: var(--muted); max-width: 520px; margin: 0 auto 40px; line-height: 1.7; }
+    .hero-btns { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--accent); color: var(--black); padding: 14px 32px; border-radius: 10px;
+      font-weight: 800; font-size: 1rem; transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 0 32px rgba(0,217,166,0.25);
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 0 48px rgba(0,217,166,0.4); }
+    .btn-secondary {
+      display: inline-flex; align-items: center; gap: 8px;
+      border: 1px solid var(--border); color: var(--text); padding: 14px 28px; border-radius: 10px;
+      font-weight: 600; font-size: 1rem; transition: border-color 0.2s, background 0.2s;
+    }
+    .btn-secondary:hover { border-color: var(--accent); background: rgba(0,217,166,0.05); }
+    .hero-stats { display: flex; justify-content: center; gap: 48px; margin-top: 64px; padding-top: 40px; border-top: 1px solid rgba(255,255,255,0.07); flex-wrap: wrap; }
+    .stat-num { font-size: 1.8rem; font-weight: 800; color: var(--white); }
+    .stat-label { font-size: 0.8rem; color: var(--muted); margin-top: 2px; }
+
+    /* Products */
+    #products { background: var(--dark); }
+    .products-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; }
+    .product-card {
+      background: var(--card); border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 36px 28px; transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s;
+      position: relative; overflow: hidden;
+    }
+    .product-card::after { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(0,217,166,0.04), transparent); opacity: 0; transition: opacity 0.3s; }
+    .product-card:hover { transform: translateY(-6px); border-color: var(--accent); box-shadow: 0 12px 40px rgba(0,217,166,0.1); }
+    .product-card:hover::after { opacity: 1; }
+    .card-icon { width: 56px; height: 56px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 1.6rem; margin-bottom: 20px; }
+    .card-icon.green  { background: rgba(0,217,166,0.12); }
+    .card-icon.blue   { background: rgba(0,152,255,0.12); }
+    .card-icon.purple { background: rgba(139,92,246,0.12); }
+    .card-icon.orange { background: rgba(251,146,60,0.12); }
+    .product-card h3 { font-size: 1.15rem; font-weight: 700; margin-bottom: 10px; }
+    .product-card p  { font-size: 0.9rem; color: var(--muted); line-height: 1.65; margin-bottom: 20px; }
+    .card-examples { display: flex; flex-wrap: wrap; gap: 6px; }
+    .tag { font-size: 0.75rem; padding: 3px 10px; border-radius: 100px; background: rgba(255,255,255,0.06); color: var(--muted); border: 1px solid rgba(255,255,255,0.08); }
+    .card-price { margin-top: 20px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.07); font-size: 0.85rem; color: var(--accent); font-weight: 600; }
+
+    /* How it works */
+    #how { background: var(--black); }
+    .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 32px; }
+    .step { text-align: center; padding: 8px; }
+    .step-num {
+      width: 52px; height: 52px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem; font-weight: 900; color: var(--black); margin: 0 auto 20px;
+    }
+    .step h3 { font-size: 1.05rem; font-weight: 700; margin-bottom: 8px; }
+    .step p { font-size: 0.9rem; color: var(--muted); }
+
+    /* Gallery */
+    #gallery { background: var(--dark); }
+    .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; }
+    .gallery-item {
+      aspect-ratio: 1; border-radius: 12px; overflow: hidden; position: relative;
+      border: 1px solid var(--border); cursor: pointer; transition: transform 0.25s;
+    }
+    .gallery-item:hover { transform: scale(1.03); }
+    .gallery-placeholder {
+      width: 100%; height: 100%; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 10px; font-size: 2.4rem;
+    }
+    .gallery-item img { width: 100%; height: 100%; object-fit: cover; }
+    .gallery-label { font-size: 0.7rem; color: rgba(255,255,255,0.5); font-weight: 600; letter-spacing: 0.5px; text-align: center; }
+    .gallery-note { text-align: center; margin-top: 28px; font-size: 0.85rem; color: var(--muted); }
+
+    /* Pricing */
+    #pricing { background: var(--black); }
+    .pricing-table { width: 100%; border-collapse: collapse; border-radius: var(--radius); overflow: hidden; }
+    .pricing-table th { background: var(--card); padding: 16px 20px; text-align: left; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); border-bottom: 1px solid var(--border); }
+    .pricing-table td { padding: 16px 20px; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 0.95rem; }
+    .pricing-table tr:last-child td { border-bottom: none; }
+    .pricing-table tr:nth-child(even) td { background: rgba(255,255,255,0.02); }
+    .pricing-table tr:hover td { background: rgba(0,217,166,0.04); }
+    .price-from { color: var(--accent); font-weight: 700; }
+    .pricing-note { margin-top: 20px; font-size: 0.85rem; color: var(--muted); padding: 16px 20px; background: var(--card); border-radius: 10px; border-left: 3px solid var(--accent); }
+
+    /* Order */
+    #order {
+      background: radial-gradient(ellipse 70% 60% at 50% 50%, rgba(0,217,166,0.07) 0%, transparent 70%), var(--dark);
+      text-align: center;
+    }
+    #order h2 { margin-bottom: 16px; }
+    #order .section-sub { margin: 0 auto 40px; }
+    .order-steps { display: flex; justify-content: center; flex-wrap: wrap; gap: 16px; margin-bottom: 40px; }
+    .order-step-pill {
+      background: var(--card); border: 1px solid var(--border); border-radius: 100px;
+      padding: 10px 22px; font-size: 0.9rem; display: flex; align-items: center; gap: 10px;
+    }
+    .pill-num { width: 22px; height: 22px; border-radius: 50%; background: var(--accent); color: var(--black); font-size: 0.7rem; font-weight: 800; display: flex; align-items: center; justify-content: center; }
+    .btn-order {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: var(--accent); color: var(--black); padding: 18px 48px; border-radius: 12px;
+      font-weight: 900; font-size: 1.1rem; box-shadow: 0 0 48px rgba(0,217,166,0.3);
+      transition: transform 0.2s, box-shadow 0.2s; cursor: pointer; border: none; text-decoration: none;
+    }
+    .btn-order:hover { transform: translateY(-3px); box-shadow: 0 0 64px rgba(0,217,166,0.5); }
+    .order-sub { margin-top: 16px; font-size: 0.85rem; color: var(--muted); }
+
+    /* FAQ */
+    #faq { background: var(--black); }
+    .faq-list { max-width: 720px; }
+    .faq-item { border-bottom: 1px solid rgba(255,255,255,0.07); padding: 24px 0; }
+    .faq-q { font-weight: 700; margin-bottom: 0; display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; cursor: pointer; }
+    .faq-icon { color: var(--accent); font-size: 1.2rem; flex-shrink: 0; }
+    .faq-a { color: var(--muted); font-size: 0.95rem; line-height: 1.7; margin-top: 12px; display: none; }
+
+    /* Footer */
+    footer {
+      background: var(--dark); border-top: 1px solid rgba(255,255,255,0.06);
+      padding: 40px 5%; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;
+    }
+    .footer-logo { display: flex; align-items: center; }
+    footer p { font-size: 0.85rem; color: var(--muted); }
+    .footer-links { display: flex; gap: 24px; }
+    .footer-links a { font-size: 0.85rem; color: var(--muted); transition: color 0.2s; }
+    .footer-links a:hover { color: var(--accent); }
+
+    @media (max-width: 700px) {
+      .nav-links { display: none; flex-direction: column; gap: 20px; }
+      .nav-links.open { display: flex; position: absolute; top: 100%; left: 0; right: 0; background: var(--dark); padding: 28px 5%; border-bottom: 1px solid var(--border); }
+      .hamburger { display: flex; }
+      .hero-stats { gap: 28px; }
+      footer { flex-direction: column; text-align: center; }
+      .footer-links { justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="loader"><div class="loader-ring"></div></div>
+
+<nav id="navbar">
+  <a href="#home" class="logo">
+    <svg height="36" viewBox="0 0 188 42" xmlns="http://www.w3.org/2000/svg" aria-label="ForgeLayer">
+      <!-- Render bottom→top so bright layer sits visually on top -->
+      <polygon points="18,23 36,32 18,41 0,32"  fill="#005a42"/>
+      <polygon points="18,11 32,19 18,27 4,19"  fill="#00906a"/>
+      <polygon points="18,3 27,9 18,15 9,9"     fill="#00d9a6"/>
+      <text x="48" y="28" font-family="'Segoe UI',system-ui,sans-serif" font-size="22" font-weight="900" fill="#ffffff">Forge<tspan fill="#00d9a6" font-weight="300">Layer</tspan></text>
+    </svg>
+  </a>
+  <div class="nav-links" id="navLinks"></div>
+  <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+</nav>
+
+<div id="page-content"></div>
+<footer id="site-footer"></footer>
+
+<script>
+// ─── Default content (fallback for local file:// preview) ───────────────────
+const DEFAULT = {"site":{"name":"ForgeLayer","email":"orders@forgelayer.online","footer_text":"© 2025 ForgeLayer · Custom 3D Printing · Germany"},"hero":{"enabled":true,"badge":"Custom 3D Prints · Germany","headline":"Bring your ideas","headline_highlight":"to life in 3D","subtext":"Home-based custom 3D printing — personalised gifts, home organisation, functional prototypes and more. Printed with precision, delivered with care.","cta_primary":"Place an Order","cta_secondary":"See what we make","stats":[{"number":"Bambu","label":"A1 Series Printer"},{"number":"20+","label":"Colors available"},{"number":"3–5","label":"Days turnaround"},{"number":"100%","label":"Custom made"}]},"products":{"enabled":true,"label":"What we make","title":"Four categories, endless possibilities","subtitle":"Every item is printed to order — custom sizes, colours and text always available.","items":[{"icon":"🏠","icon_style":"green","title":"Home & Organisation","description":"Practical prints that make your space work smarter — designed for real life, printed to fit.","tags":["Cable holders","Wall hooks","Drawer inserts","Phone stands","Spice racks","Desk organisers"],"price_from":"From €4","turnaround":"2–4 days"},{"icon":"⚙️","icon_style":"blue","title":"Prototypes & Parts","description":"Need a custom bracket, replacement part or a prototype for your idea? We print it precisely.","tags":["Replacement parts","Brackets","Enclosures","Jigs & fixtures","Product prototypes"],"price_from":"From €8","turnaround":"3–5 days"},{"icon":"🔤","icon_style":"purple","title":"Custom Name & Text","description":"Personalised with any name, word or short message — perfect for gifts that actually mean something.","tags":["Name signs","Keychains","Desk nameplates","Wedding décor","Baby gifts"],"price_from":"From €5","turnaround":"2–3 days"},{"icon":"✨","icon_style":"orange","title":"Gifts & Décor","description":"Decorative prints and thoughtful gifts that stand out — unique, durable and made to order.","tags":["Planters","Vases","Wall art","Figurines","Holiday décor","Lamp shades"],"price_from":"From €6","turnaround":"3–5 days"}]},"how":{"enabled":true,"label":"The process","title":"Order in 3 simple steps","subtitle":"No complicated forms. Just send an email and we'll handle the rest.","steps":[{"title":"Tell us what you need","description":"Click the order button and send us an email with what you'd like — name, size, colour, quantity. Not sure? Just describe your idea."},{"title":"Get a quote & confirm","description":"We'll reply within 24 hours with a price, estimated time, and a preview if needed. You confirm before anything is printed."},{"title":"Receive your print","description":"We print it and arrange delivery or pickup. Payment by bank transfer or PayPal once you're happy with the result."}]},"gallery":{"enabled":true,"label":"Portfolio","title":"Recent work","subtitle":"Our latest prints — add your own photos here once you have them.","note":"📸 More photos coming soon — follow us for updates","items":[{"emoji":"📦","label":"Desk Organiser","bg":"#0d2137"},{"emoji":"🪝","label":"Wall Hook Set","bg":"#0d1f0d"},{"emoji":"🔑","label":"Name Keychain","bg":"#1f0d25"},{"emoji":"🌿","label":"Mini Planter","bg":"#1f1a0d"},{"emoji":"⚙️","label":"Custom Bracket","bg":"#1a1a2e"},{"emoji":"🎁","label":"Gift Box","bg":"#0d1f1a"}]},"pricing":{"enabled":false,"label":"Pricing guide","title":"Transparent, fair pricing","subtitle":"Every order is quoted individually — here's a rough guide. Final price depends on size, complexity, and material.","note":"💡 Not sure about the price? Just email us — quotes are free, fast and come with no obligation.","rows":[{"item_type":"Small home item","example":"Cable clip, hook, stand","price":"€4","turnaround":"1–2 days"},{"item_type":"Custom name print","example":"Keychain, nameplate","price":"€5","turnaround":"2–3 days"},{"item_type":"Decorative / gift","example":"Vase, planter, wall art","price":"€6","turnaround":"3–5 days"},{"item_type":"Functional part","example":"Bracket, enclosure, jig","price":"€8","turnaround":"3–5 days"},{"item_type":"Prototype / complex","example":"Multi-part assemblies","price":"€15+","turnaround":"5–7 days"},{"item_type":"Bulk order (10+)","example":"Gifts, event items","price":"Discounted","turnaround":"Quote on request"}]},"order":{"enabled":true,"label":"Ready to order?","title":"Let's make something","subtitle":"Send us an email with your idea — no need to have all the details figured out. We'll help you get there.","button_text":"Email us your order","sub_text":"We reply within 24 hours · No upfront payment · Free quote","steps":[{"text":"Describe your idea"},{"text":"Pick colour & size"},{"text":"We send a quote"},{"text":"Confirm & we print"}]},"faq":{"enabled":true,"label":"FAQ","title":"Common questions","items":[{"q":"What materials do you print with?","a":"Primarily PLA and PETG — durable, food-safe options available on request. PLA is great for most decorative and functional items. PETG is tougher and heat-resistant."},{"q":"Can I request a custom design I found online?","a":"Yes — send us a link or the file. We work with STL, 3MF and STEP files. If you have a sketch or photo, we can often model something simple for a small design fee."},{"q":"How do I pay?","a":"Bank transfer (Überweisung) or PayPal. Payment is due after you've seen the final item — we don't ask for money upfront unless it's a large bulk order."},{"q":"Do you ship?","a":"Yes, we ship within Germany via DHL. Shipping cost is added to the order. Local pickup is also available."},{"q":"How long does it take?","a":"Most small items are ready in 2–3 days. Larger or more complex prints take 4–7 days. We'll always confirm the timeline before you commit."},{"q":"What if I'm not happy with the result?","a":"We'll reprint or refund. Quality matters to us — we send photos before shipping so you can check before we pack it."}]}};
+
+// ─── Load content ────────────────────────────────────────────────────────────
+async function loadContent() {
+  try {
+    const r = await fetch('content.json');
+    if (r.ok) return await r.json();
+  } catch(e) {}
+  return DEFAULT;
+}
+
+// ─── Render helpers ──────────────────────────────────────────────────────────
+const esc = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+
+function mailtoLink(email, siteName) {
+  const sub = encodeURIComponent(`3D Print Order Enquiry`);
+  const body = encodeURIComponent(`Hi ${siteName},\n\nI'd like to order:\n\nItem / Idea: \nColour: \nSize / Quantity: \nDeadline (if any): \nAdditional notes: \n\nThanks!`);
+  return `mailto:${email}?subject=${sub}&body=${body}`;
+}
+
+// ─── Section renderers ───────────────────────────────────────────────────────
+function renderHero(d, site) {
+  const stats = (d.stats || []).map(s => `
+    <div><div class="stat-num">${esc(s.number)}</div><div class="stat-label">${esc(s.label)}</div></div>
+  `).join('');
+  return `
+  <section class="hero" id="home">
+    <div class="hero-inner">
+      <div class="hero-badge">${esc(d.badge)}</div>
+      <h1>${esc(d.headline)}<br/><em>${esc(d.headline_highlight)}</em></h1>
+      <p class="hero-sub">${esc(d.subtext)}</p>
+      <div class="hero-btns">
+        <a href="#order" class="btn-primary">✉ ${esc(d.cta_primary)}</a>
+        <a href="#products" class="btn-secondary">${esc(d.cta_secondary)} →</a>
+      </div>
+      ${stats ? `<div class="hero-stats">${stats}</div>` : ''}
+    </div>
+  </section>`;
+}
+
+function renderProducts(d) {
+  const cards = (d.items || []).map(item => `
+    <div class="product-card">
+      <div class="card-icon ${esc(item.icon_style || 'green')}">${item.icon}</div>
+      <h3>${esc(item.title)}</h3>
+      <p>${esc(item.description)}</p>
+      <div class="card-examples">${(item.tags||[]).map(t=>`<span class="tag">${esc(t)}</span>`).join('')}</div>
+      <div class="card-price">${esc(item.price_from)} · Turnaround ${esc(item.turnaround)}</div>
+    </div>`).join('');
+  return `
+  <section id="products">
+    <div class="section-head">
+      <div class="section-label">${esc(d.label)}</div>
+      <h2>${esc(d.title)}</h2>
+      <p class="section-sub">${esc(d.subtitle)}</p>
+    </div>
+    <div class="products-grid">${cards}</div>
+  </section>`;
+}
+
+function renderHow(d) {
+  const steps = (d.steps || []).map((s, i) => `
+    <div class="step">
+      <div class="step-num">${i + 1}</div>
+      <h3>${esc(s.title)}</h3>
+      <p>${esc(s.description)}</p>
+    </div>`).join('');
+  return `
+  <section id="how">
+    <div class="section-head">
+      <div class="section-label">${esc(d.label)}</div>
+      <h2>${esc(d.title)}</h2>
+      <p class="section-sub">${esc(d.subtitle)}</p>
+    </div>
+    <div class="steps">${steps}</div>
+  </section>`;
+}
+
+function renderGallery(d) {
+  const items = (d.items || []).map(item => {
+    const inner = item.image
+      ? `<img src="${esc(item.image)}" alt="${esc(item.label)}" loading="lazy" />`
+      : `<div class="gallery-placeholder" style="background:${esc(item.bg||'#111')}">${item.emoji||'🖨️'}<span class="gallery-label">${esc(item.label)}</span></div>`;
+    return `<div class="gallery-item">${inner}</div>`;
+  }).join('');
+  return `
+  <section id="gallery">
+    <div class="section-head">
+      <div class="section-label">${esc(d.label)}</div>
+      <h2>${esc(d.title)}</h2>
+      <p class="section-sub">${esc(d.subtitle)}</p>
+    </div>
+    <div class="gallery-grid">${items}</div>
+    ${d.note ? `<p class="gallery-note">${esc(d.note)}</p>` : ''}
+  </section>`;
+}
+
+function renderPricing(d) {
+  const rows = (d.rows || []).map(r => `
+    <tr>
+      <td>${esc(r.item_type)}</td>
+      <td>${esc(r.example)}</td>
+      <td class="price-from">${esc(r.price)}</td>
+      <td>${esc(r.turnaround)}</td>
+    </tr>`).join('');
+  return `
+  <section id="pricing">
+    <div class="section-head">
+      <div class="section-label">${esc(d.label)}</div>
+      <h2>${esc(d.title)}</h2>
+      <p class="section-sub">${esc(d.subtitle)}</p>
+    </div>
+    <table class="pricing-table">
+      <thead><tr><th>Item type</th><th>Example</th><th>From</th><th>Turnaround</th></tr></thead>
+      <tbody>${rows}</tbody>
+    </table>
+    ${d.note ? `<div class="pricing-note">${esc(d.note)}</div>` : ''}
+  </section>`;
+}
+
+function renderOrder(d, site) {
+  const pills = (d.steps || []).map((s, i) => `
+    <div class="order-step-pill"><span class="pill-num">${i+1}</span>${esc(s.text)}</div>`).join('');
+  return `
+  <section id="order">
+    <div class="section-label">${esc(d.label)}</div>
+    <h2>${esc(d.title)}</h2>
+    <p class="section-sub">${esc(d.subtitle)}</p>
+    <div class="order-steps">${pills}</div>
+    <a class="btn-order" href="${mailtoLink(site.email, site.name)}">✉ ${esc(d.button_text)}</a>
+    <p class="order-sub">${esc(d.sub_text)}</p>
+  </section>`;
+}
+
+function renderFAQ(d) {
+  const items = (d.items || []).map(item => `
+    <div class="faq-item">
+      <div class="faq-q">${esc(item.q)} <span class="faq-icon">+</span></div>
+      <div class="faq-a">${esc(item.a)}</div>
+    </div>`).join('');
+  return `
+  <section id="faq">
+    <div class="section-head">
+      <div class="section-label">${esc(d.label)}</div>
+      <h2>${esc(d.title)}</h2>
+    </div>
+    <div class="faq-list">${items}</div>
+  </section>`;
+}
+
+function renderFooter(site, enabledSections) {
+  const links = enabledSections.filter(Boolean).map(id =>
+    `<a href="#${id}">${id.charAt(0).toUpperCase()+id.slice(1)}</a>`).join('');
+  const footerLogo = `<svg height="28" viewBox="0 0 160 36" xmlns="http://www.w3.org/2000/svg" aria-label="ForgeLayer">
+    <polygon points="15,20 29,27 15,34 1,27"  fill="#005a42"/>
+    <polygon points="15,11 25,17 15,23 5,17"  fill="#00906a"/>
+    <polygon points="15,3 22,8 15,13 8,8"     fill="#00d9a6"/>
+    <text x="38" y="23" font-family="'Segoe UI',system-ui,sans-serif" font-size="19" font-weight="900" fill="#ffffff">Forge<tspan fill="#00d9a6" font-weight="300">Layer</tspan></text>
+  </svg>`;
+  return `
+    <div class="footer-logo">${footerLogo}</div>
+    <p>${esc(site.footer_text)}</p>
+    <div class="footer-links">${links}<a href="mailto:${esc(site.email)}">Contact</a></div>`;
+}
+
+// ─── Nav builder ─────────────────────────────────────────────────────────────
+function buildNav(data) {
+  const sections = [
+    data.products?.enabled && ['products', 'Products'],
+    data.how?.enabled      && ['how',      'How it works'],
+    data.gallery?.enabled  && ['gallery',  'Gallery'],
+    data.pricing?.enabled  && ['pricing',  'Pricing'],
+    data.faq?.enabled      && ['faq',      'FAQ'],
+  ].filter(Boolean);
+  const links = sections.map(([id, label]) => `<a href="#${id}">${label}</a>`).join('');
+  document.getElementById('navLinks').innerHTML =
+    links + `<a href="#order" class="nav-cta">Place an Order</a>`;
+}
+
+// ─── Main render ─────────────────────────────────────────────────────────────
+function renderSite(data) {
+  const s = data.site;
+  const sections = [];
+  const enabledIds = [];
+
+  if (data.hero?.enabled)     { sections.push(renderHero(data.hero, s)); enabledIds.push('home'); }
+  if (data.products?.enabled) { sections.push(renderProducts(data.products)); enabledIds.push('products'); }
+  if (data.how?.enabled)      { sections.push(renderHow(data.how)); enabledIds.push('how'); }
+  if (data.gallery?.enabled)  { sections.push(renderGallery(data.gallery)); enabledIds.push('gallery'); }
+  if (data.pricing?.enabled)  { sections.push(renderPricing(data.pricing)); enabledIds.push('pricing'); }
+  if (data.order?.enabled)    { sections.push(renderOrder(data.order, s)); enabledIds.push('order'); }
+  if (data.faq?.enabled)      { sections.push(renderFAQ(data.faq)); enabledIds.push('faq'); }
+
+  document.getElementById('page-content').innerHTML = sections.join('');
+  document.getElementById('site-footer').innerHTML  = renderFooter(s, enabledIds);
+  document.title = `${s.name} — Custom 3D Prints`;
+
+  buildNav(data);
+  initInteractions();
+
+  // Hide loader
+  const loader = document.getElementById('loader');
+  loader.style.opacity = '0';
+  setTimeout(() => loader.remove(), 400);
+}
+
+// ─── Interactions (after render) ─────────────────────────────────────────────
+function initInteractions() {
+  // Mobile nav
+  const hamburger = document.getElementById('hamburger');
+  const navLinks  = document.getElementById('navLinks');
+  hamburger.addEventListener('click', () => navLinks.classList.toggle('open'));
+  navLinks.querySelectorAll('a').forEach(a =>
+    a.addEventListener('click', () => navLinks.classList.remove('open')));
+
+  // FAQ accordion
+  document.querySelectorAll('.faq-q').forEach(q => {
+    q.addEventListener('click', () => {
+      const ans  = q.nextElementSibling;
+      const icon = q.querySelector('.faq-icon');
+      const open = ans.style.display === 'block';
+      ans.style.display = open ? 'none' : 'block';
+      icon.textContent  = open ? '+' : '−';
+    });
+  });
+
+  // Active nav highlight
+  const navAs = document.querySelectorAll('.nav-links a:not(.nav-cta)');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        navAs.forEach(a => a.style.color = '');
+        const active = document.querySelector(`.nav-links a[href="#${e.target.id}"]`);
+        if (active) active.style.color = '#fff';
+      }
+    });
+  }, { threshold: 0.35 });
+  document.querySelectorAll('section[id]').forEach(s => observer.observe(s));
+}
+
+// ─── Boot ────────────────────────────────────────────────────────────────────
+loadContent().then(renderSite);
+</script>
+</body>
+</html>

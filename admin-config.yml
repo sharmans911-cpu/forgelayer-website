@@ -1,0 +1,175 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "images/uploads"
+public_folder: "/images/uploads"
+
+collections:
+  - name: "site"
+    label: "Website Content"
+    files:
+      - name: "content"
+        label: "All Content"
+        file: "content.json"
+        format: json
+        fields:
+
+          # ── Site Settings ──────────────────────────────────────────────────
+          - label: "Site Settings"
+            name: "site"
+            widget: "object"
+            summary: "Business name, email, footer"
+            fields:
+              - { label: "Business Name",  name: "name",        widget: "string" }
+              - { label: "Contact Email",  name: "email",       widget: "string" }
+              - { label: "Footer Text",    name: "footer_text", widget: "string" }
+
+          # ── Hero Section ───────────────────────────────────────────────────
+          - label: "Hero Section"
+            name: "hero"
+            widget: "object"
+            summary: "Top banner — headline, subtext, stats"
+            fields:
+              - { label: "Show this section", name: "enabled",             widget: "boolean", default: true }
+              - { label: "Badge Text",         name: "badge",              widget: "string" }
+              - { label: "Headline",           name: "headline",           widget: "string" }
+              - { label: "Headline Highlight (coloured part)", name: "headline_highlight", widget: "string" }
+              - { label: "Subtext",            name: "subtext",            widget: "text" }
+              - { label: "Primary Button Text",   name: "cta_primary",    widget: "string" }
+              - { label: "Secondary Button Text", name: "cta_secondary",  widget: "string" }
+              - label: "Stats Row"
+                name: "stats"
+                widget: "list"
+                summary: "{{fields.number}} — {{fields.label}}"
+                fields:
+                  - { label: "Number / Text", name: "number", widget: "string" }
+                  - { label: "Label",         name: "label",  widget: "string" }
+
+          # ── Products Section ───────────────────────────────────────────────
+          - label: "Products Section"
+            name: "products"
+            widget: "object"
+            summary: "Product/service cards"
+            fields:
+              - { label: "Show this section", name: "enabled",  widget: "boolean", default: true }
+              - { label: "Section Label",     name: "label",    widget: "string" }
+              - { label: "Title",             name: "title",    widget: "string" }
+              - { label: "Subtitle",          name: "subtitle", widget: "text" }
+              - label: "Product Cards"
+                name: "items"
+                widget: "list"
+                summary: "{{fields.title}}"
+                fields:
+                  - { label: "Icon (emoji)",  name: "icon",       widget: "string" }
+                  - label: "Icon Colour"
+                    name: "icon_style"
+                    widget: "select"
+                    options:
+                      - { label: "Green",  value: "green" }
+                      - { label: "Blue",   value: "blue" }
+                      - { label: "Purple", value: "purple" }
+                      - { label: "Orange", value: "orange" }
+                  - { label: "Card Title",     name: "title",       widget: "string" }
+                  - { label: "Description",    name: "description", widget: "text" }
+                  - label: "Tags"
+                    name: "tags"
+                    widget: "list"
+                    field: { label: "Tag", name: "tag", widget: "string" }
+                  - { label: "Price From",   name: "price_from",  widget: "string" }
+                  - { label: "Turnaround",   name: "turnaround",  widget: "string" }
+
+          # ── How It Works Section ───────────────────────────────────────────
+          - label: "How It Works Section"
+            name: "how"
+            widget: "object"
+            summary: "Step-by-step order process"
+            fields:
+              - { label: "Show this section", name: "enabled",  widget: "boolean", default: true }
+              - { label: "Section Label",     name: "label",    widget: "string" }
+              - { label: "Title",             name: "title",    widget: "string" }
+              - { label: "Subtitle",          name: "subtitle", widget: "text" }
+              - label: "Steps"
+                name: "steps"
+                widget: "list"
+                summary: "{{fields.title}}"
+                fields:
+                  - { label: "Step Title",       name: "title",       widget: "string" }
+                  - { label: "Step Description", name: "description", widget: "text" }
+
+          # ── Gallery Section ────────────────────────────────────────────────
+          - label: "Gallery Section"
+            name: "gallery"
+            widget: "object"
+            summary: "Portfolio / photo grid"
+            fields:
+              - { label: "Show this section", name: "enabled",  widget: "boolean", default: true }
+              - { label: "Section Label",     name: "label",    widget: "string" }
+              - { label: "Title",             name: "title",    widget: "string" }
+              - { label: "Subtitle",          name: "subtitle", widget: "text" }
+              - { label: "Footer Note",       name: "note",     widget: "string" }
+              - label: "Gallery Items"
+                name: "items"
+                widget: "list"
+                summary: "{{fields.label}}"
+                fields:
+                  - { label: "Item Label",           name: "label", widget: "string" }
+                  - { label: "Photo (upload here)",  name: "image", widget: "image", required: false, hint: "Upload your print photo. Leave blank to use emoji placeholder." }
+                  - { label: "Emoji (if no photo)",  name: "emoji", widget: "string", required: false }
+                  - { label: "Background Colour",    name: "bg",    widget: "string", default: "#111827", hint: "Hex colour shown behind emoji placeholder, e.g. #1a2236" }
+
+          # ── Pricing Section ────────────────────────────────────────────────
+          - label: "Pricing Section"
+            name: "pricing"
+            widget: "object"
+            summary: "Pricing table"
+            fields:
+              - { label: "Show this section", name: "enabled",  widget: "boolean", default: true }
+              - { label: "Section Label",     name: "label",    widget: "string" }
+              - { label: "Title",             name: "title",    widget: "string" }
+              - { label: "Subtitle",          name: "subtitle", widget: "text" }
+              - { label: "Footer Note",       name: "note",     widget: "text" }
+              - label: "Pricing Rows"
+                name: "rows"
+                widget: "list"
+                summary: "{{fields.item_type}} — {{fields.price}}"
+                fields:
+                  - { label: "Item Type",   name: "item_type",  widget: "string" }
+                  - { label: "Example",     name: "example",    widget: "string" }
+                  - { label: "Price",       name: "price",      widget: "string" }
+                  - { label: "Turnaround",  name: "turnaround", widget: "string" }
+
+          # ── Order / Contact Section ────────────────────────────────────────
+          - label: "Order Section"
+            name: "order"
+            widget: "object"
+            summary: "Call to action — email order button"
+            fields:
+              - { label: "Show this section",  name: "enabled",     widget: "boolean", default: true }
+              - { label: "Section Label",      name: "label",       widget: "string" }
+              - { label: "Title",              name: "title",       widget: "string" }
+              - { label: "Subtitle",           name: "subtitle",    widget: "text" }
+              - { label: "Button Text",        name: "button_text", widget: "string" }
+              - { label: "Below-button Text",  name: "sub_text",    widget: "string" }
+              - label: "Order Steps (pills)"
+                name: "steps"
+                widget: "list"
+                summary: "{{fields.text}}"
+                field: { label: "Step Text", name: "text", widget: "string" }
+
+          # ── FAQ Section ────────────────────────────────────────────────────
+          - label: "FAQ Section"
+            name: "faq"
+            widget: "object"
+            summary: "Frequently asked questions"
+            fields:
+              - { label: "Show this section", name: "enabled", widget: "boolean", default: true }
+              - { label: "Section Label",     name: "label",   widget: "string" }
+              - { label: "Title",             name: "title",   widget: "string" }
+              - label: "FAQ Items"
+                name: "items"
+                widget: "list"
+                summary: "{{fields.q}}"
+                fields:
+                  - { label: "Question", name: "q", widget: "string" }
+                  - { label: "Answer",   name: "a", widget: "text" }

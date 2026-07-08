@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="160" viewBox="0 0 600 160" role="img">
+  <title>ForgeLayer</title>
+  <desc>ForgeLayer custom 3D printing logo</desc>
+
+  <rect width="600" height="160" rx="12" fill="#0a0a0a"/>
+
+  <!-- Render bottom → top: dark layer first, bright layer last (sits on top visually) -->
+
+  <!-- Layer 3 — bottom, large, darkest -->
+  <polygon points="72,92 136,120 72,148 8,120" fill="#005a42"/>
+
+  <!-- Layer 2 — middle (top at y=64, overlaps 28px into Layer 3) -->
+  <polygon points="72,64 118,86 72,108 26,86" fill="#00906a"/>
+
+  <!-- Layer 1 — top, small, bright (top at y=34, overlaps 30px into Layer 2) -->
+  <polygon points="72,34 102,52 72,70 42,52" fill="#00d9a6"/>
+
+  <!-- Wordmark -->
+  <text x="162" y="112"
+        font-family="'Segoe UI', system-ui, Arial, sans-serif"
+        font-size="54"
+        font-weight="900"
+        fill="#ffffff">Forge<tspan font-weight="300" fill="#00d9a6">Layer</tspan></text>
+
+  <!-- Tagline -->
+  <text x="163" y="136"
+        font-family="'Segoe UI', system-ui, Arial, sans-serif"
+        font-size="13"
+        font-weight="400"
+        fill="#475569"
+        letter-spacing="3">Custom 3D Printing · Germany</text>
+</svg>
