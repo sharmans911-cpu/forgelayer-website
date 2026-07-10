@@ -105,7 +105,7 @@ body{background:var(--bg);color:var(--txt);font-family:-apple-system,BlinkMacSys
 <div class="sb" id="sb"></div>
 <script>
 var REPO='sharmans911-cpu/forgelayer-website',FILE='content.json';
-var data=null,sha=null;
+var data=null,sha=null,Q="'";
 function gt(){return localStorage.getItem('fl_tok');}
 function esc(s){var d=document.createElement('div');d.textContent=String(s);return d.innerHTML.replace(/"/g,'&quot;');}
 document.getElementById('cb2').addEventListener('click',function(){
