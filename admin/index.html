@@ -200,7 +200,7 @@ function render(){
     sec('fq','FAQ',d.faq.enabled,listF('fl',d.faq.items||[],['question','answer'],d.faq.enabled,'fe'));
 }
 function sec(id,label,on,inner){
-  return '<div class="card"><div class="ch" onclick="tog('\''+id+'\'')"><div class="ct"><span class="dot'+(on?'':' off')+'"></span>'+label+'</div><span class="cv" id="'+id+'-v">&#9660;</span></div><div class="cb" id="'+id+'-b">'+inner+'</div></div>';
+  return '<div class="card"><div class="ch" onclick="tog('+Q+id+Q+')"><div class="ct"><span class="dot'+(on?'':' off')+'"></span>'+label+'</div><span class="cv" id="'+id+'-v">&#9660;</span></div><div class="cb" id="'+id+'-b">'+inner+'</div></div>';
 }
 function siteF(s){
   return '<div class="fr"><div class="f"><label>Site Name</label><input id="sn" value="'+esc(s.name||'')+'"></div>'+
@@ -222,12 +222,12 @@ function listF(cid,items,fields,enabled,togId){
   var rows=items.map(function(item,i){return irow(i+1,item,fields);}).join('');
   return '<div class="trow"><label class="tog"><input type="checkbox" id="'+togId+'"'+(enabled?' checked':'')+'><span class="ts"></span></label><span class="tl">Visible on site</span></div>'+
   '<div id="'+cid+'">'+rows+'</div>'+
-  '<button class="badd" onclick="addI('\''+cid+'\'',"'+JSON.stringify(fields)+')">+ Add item</button>';
+  '<button class="badd" onclick="addI('+Q+cid+Q+','+JSON.stringify(fields)+')">+ Add item</button>';
 }
 var LABS={title:'Title',description:'Description',icon:'Icon / Emoji',step:'Step #',question:'Question',answer:'Answer'};
 function irow(num,item,fields){
   var isTa=function(f){return f==='description'||f==='answer';};
-  return '<div class="li"><div class="lih"><span class="lin">Item '+num+'</span><button class="brm" onclick="this.closest(\'.li\').remove()">x</button></div>'+
+  return '<div class="li"><div class="lih"><span class="lin">Item '+num+'</span><button class="brm" onclick="this.closest('+Q+'.li'+Q+').remove()">x</button></div>'+
   fields.map(function(f){
     return '<div class="f"><label>'+(LABS[f]||f)+'</label>'+(isTa(f)?'<textarea data-f="'+f+'">'+esc(item[f]||'')+'</textarea>':'<input data-f="'+f+'" value="'+esc(item[f]||'')+'">')+'</div>';
   }).join('')+'</div>';
