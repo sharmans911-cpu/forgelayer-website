@@ -2,245 +2,206 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>ForgeLayer Admin</title>
 <style>
-:root{--bg:#0a0a0a;--sur:#141414;--bor:#222;--acc:#00d9a6;--acc2:#0098ff;--txt:#e0e0e0;--mut:#888;--dan:#ff4444}
-*{box-sizing:border-box;margin:0;padding:0}
-body{background:var(--bg);color:var(--txt);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;min-height:100vh}
-#auth{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:20px}
-.box{background:var(--sur);border:1px solid var(--bor);border-radius:12px;padding:40px;max-width:480px;width:100%}
-.box h1{font-size:22px;margin-bottom:8px}
-.box a{color:var(--acc);text-decoration:none}
-.steps{background:var(--bg);border:1px solid var(--bor);border-radius:8px;padding:16px;margin:14px 0;font-size:13px;color:var(--mut);line-height:2.2}
-.steps strong{color:var(--txt)}
-#main{display:none}
-.bar{background:var(--sur);border-bottom:1px solid var(--bor);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
-.logo{font-size:18px;font-weight:700}
-.logo span{color:var(--acc)}
-.badge{font-size:11px;background:#0a1a2a;color:var(--acc2);padding:2px 8px;border-radius:20px;border:1px solid var(--acc2);margin-left:10px}
-.tr{display:flex;gap:10px;align-items:center}
-.vl{font-size:13px;color:var(--mut);text-decoration:none}
-.vl:hover{color:var(--acc)}
-.wrap{max-width:820px;margin:0 auto;padding:28px 20px 80px}
-.pt{font-size:20px;font-weight:700;margin-bottom:20px}
-.card{background:var(--sur);border:1px solid var(--bor);border-radius:10px;margin-bottom:12px;overflow:hidden}
-.ch{padding:14px 18px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none}
-.ch:hover{background:rgba(255,255,255,.03)}
-.ct{font-weight:600;font-size:14px;display:flex;align-items:center;gap:8px}
-.dot{width:7px;height:7px;border-radius:50%;background:var(--acc);flex-shrink:0}
-.dot.off{background:#444}
-.cb{padding:16px 18px 18px;border-top:1px solid var(--bor);display:none}
-.cb.open{display:block}
-.cv{color:var(--mut);font-size:11px;transition:transform .2s}
-.cv.open{transform:rotate(180deg)}
-.f{margin-top:14px}
-.f label{display:block;font-size:11px;color:var(--mut);text-transform:uppercase;letter-spacing:.6px;margin-bottom:5px}
-.f input,.f textarea{width:100%;background:var(--bg);border:1px solid var(--bor);color:var(--txt);padding:9px 11px;border-radius:6px;font-size:14px;font-family:inherit;line-height:1.5}
-.f input:focus,.f textarea:focus{outline:none;border-color:var(--acc)}
-.f textarea{resize:vertical;min-height:75px}
-.fr{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-@media(max-width:560px){.fr{grid-template-columns:1fr}}
-.trow{display:flex;align-items:center;gap:10px;margin-top:14px}
-.tog{position:relative;width:40px;height:22px;cursor:pointer;flex-shrink:0}
-.tog input{opacity:0;width:0;height:0}
-.ts{position:absolute;inset:0;background:#333;border-radius:22px;transition:.2s}
-.ts:before{content:'';position:absolute;height:16px;width:16px;left:3px;bottom:3px;background:white;border-radius:50%;transition:.2s}
-.tog input:checked+.ts{background:var(--acc)}
-.tog input:checked+.ts:before{transform:translateX(18px)}
-.tl{font-size:13px;color:var(--mut)}
-.li{background:var(--bg);border:1px solid var(--bor);border-radius:8px;padding:12px;margin-top:10px}
-.lih{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}
-.lin{font-size:11px;color:var(--mut);text-transform:uppercase;letter-spacing:.5px}
-.brm{background:none;border:none;color:#555;cursor:pointer;font-size:20px;line-height:1;padding:0;transition:color .15s}
-.brm:hover{color:var(--dan)}
-.badd{margin-top:10px;background:none;border:1px dashed #2a2a2a;color:#555;padding:9px;width:100%;border-radius:6px;cursor:pointer;font-size:13px;transition:all .2s}
-.badd:hover{border-color:var(--acc);color:var(--acc)}
-.btn{padding:9px 18px;border-radius:6px;border:none;cursor:pointer;font-size:14px;font-weight:600;transition:all .15s}
-.btn.p{background:var(--acc);color:#000}
-.btn.p:hover{background:#00f2b8}
-.btn.p:disabled{opacity:.45;cursor:default}
-.btn.s{font-size:12px;padding:6px 12px;background:var(--sur);border:1px solid var(--bor);color:var(--mut)}
-.btn.s:hover{color:var(--txt);border-color:#444}
-.sb{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);padding:11px 22px;border-radius:8px;font-size:14px;font-weight:500;display:none;align-items:center;gap:8px;box-shadow:0 4px 20px rgba(0,0,0,.5);z-index:1000;min-width:260px;justify-content:center}
-.sb.ok{background:#0a2018;border:1px solid var(--acc);color:var(--acc);display:flex}
-.sb.er{background:#200a0a;border:1px solid var(--dan);color:var(--dan);display:flex}
-.sb.ld{background:var(--sur);border:1px solid var(--bor);color:var(--txt);display:flex}
-.sp{width:14px;height:14px;border:2px solid rgba(255,255,255,.15);border-top-color:var(--acc);border-radius:50%;animation:spin .7s linear infinite;flex-shrink:0}
-@keyframes spin{to{transform:rotate(360deg)}}
-.note{font-size:12px;color:var(--mut);line-height:1.5;margin-top:12px;padding:10px 12px;background:var(--bg);border-radius:6px;border:1px solid var(--bor)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',sans-serif;background:#09090f;color:#e0e0f0;font-size:14px;padding-bottom:80px}
+header{background:#111118;border-bottom:1px solid #2a2a38;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;flex-wrap:wrap;gap:10px}
+.logo{color:#e94560;font-weight:800;font-size:18px;letter-spacing:1px}
+.connect-row{display:flex;gap:8px;align-items:center;flex:1;min-width:280px;max-width:560px}
+.tok-input{flex:1;background:#09090f;border:1px solid #2a2a38;color:#e0e0f0;padding:7px 12px;border-radius:7px;font-size:13px;font-family:monospace}
+.tok-input:focus{outline:none;border-color:#e94560}
+.btn{padding:8px 18px;border-radius:7px;border:none;font-size:13px;font-weight:700;cursor:pointer;transition:.2s}
+.btn-red{background:#e94560;color:#fff}.btn-red:hover{background:#c73652}
+.btn-sm{padding:5px 12px;font-size:12px;border-radius:5px;border:1px solid #2a2a38;background:#22222c;color:#e0e0f0;cursor:pointer}.btn-sm:hover{border-color:#e94560}
+#status{font-size:12px;color:#8888a0}
+main{max-width:900px;margin:28px auto;padding:0 20px}
+.card{background:#141420;border:1px solid #2a2a38;border-radius:10px;margin-bottom:16px;overflow:hidden}
+.card-head{padding:14px 20px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none}
+.card-head:hover{background:#1a1a28}
+.card-title{font-weight:700;font-size:14px}
+.chev{color:#8888a0;transition:transform .2s;font-size:11px}
+.card.open .chev{transform:rotate(180deg)}
+.card-body{display:none;padding:18px 20px 22px;border-top:1px solid #2a2a38}
+.card.open .card-body{display:block}
+label{display:block;font-size:12px;color:#8888a0;margin-bottom:4px;margin-top:12px}
+label:first-child{margin-top:0}
+input[type=text],input[type=email],textarea,select{width:100%;background:#09090f;border:1px solid #2a2a38;color:#e0e0f0;padding:8px 12px;border-radius:7px;font-size:13px;font-family:inherit;resize:vertical}
+input:focus,textarea:focus,select:focus{outline:none;border-color:#e94560}
+textarea{min-height:70px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.li{background:#1a1a28;border:1px solid #2a2a38;border-radius:7px;padding:12px 14px;margin-bottom:8px}
+.li-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.li-num{font-size:11px;color:#8888a0;font-weight:600}
+.brm{background:#7f1d1d;color:#fca5a5;border:1px solid #b91c1c;border-radius:5px;padding:3px 9px;font-size:11px;cursor:pointer}.brm:hover{background:#b91c1c}
+.badd{margin-top:10px;background:#22222c;border:1px dashed #3a3a50;color:#a0a0c0;padding:8px 16px;border-radius:7px;width:100%;cursor:pointer;font-size:13px;transition:.2s}.badd:hover{border-color:#e94560;color:#f0f0f8}
+.save-bar{position:fixed;bottom:0;left:0;right:0;background:#111118;border-top:1px solid #2a2a38;padding:12px 24px;display:flex;align-items:center;gap:14px;z-index:100}
+.save-btn{background:#e94560;color:#fff;border:none;padding:10px 32px;border-radius:8px;font-size:15px;font-weight:700;cursor:pointer}.save-btn:hover{background:#c73652}
+#save-status{font-size:13px;color:#8888a0}
+.img-row{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin-top:8px}
+.img-thumb{position:relative;display:inline-block}
+.img-thumb img{width:72px;height:54px;object-fit:cover;border-radius:5px;border:1px solid #2a2a38}
+.img-rm{position:absolute;top:-4px;right:-4px;background:#e94560;color:#fff;border:none;border-radius:50%;width:16px;height:16px;font-size:10px;cursor:pointer;line-height:16px;text-align:center}
+.upload-btn{display:inline-block;padding:6px 14px;background:#22222c;border:1px dashed #3a3a50;border-radius:6px;cursor:pointer;font-size:12px;color:#a0a0c0;transition:.2s}.upload-btn:hover{border-color:#e94560;color:#f0f0f8}
+.upload-btn input{display:none}
+.uploading{color:#f6ad55;font-size:12px}
 </style>
 </head>
 <body>
-<div id="auth">
-<div class="box">
-<h1>Forge<span style="color:var(--acc)">Layer</span> Admin</h1>
-<p style="color:var(--mut);font-size:14px;margin-top:6px">Connect GitHub to edit your site content.</p>
-<div class="steps">
-<strong>Step 1:</strong> <a href="https://github.com/settings/tokens/new?scopes=repo&description=ForgeLayer+Admin+3" target="_blank">Click here to create a GitHub token</a><br>
-<strong>Step 2:</strong> Make sure <strong>repo</strong> is checked, click <strong>Generate token</strong><br>
-<strong>Step 3:</strong> Copy the token and paste it below
+<header>
+  <div class="logo">&#9650; ForgeLayer Admin</div>
+  <div class="connect-row">
+    <input class="tok-input" type="password" id="tok" placeholder="GitHub token (ghp_...)">
+    <button class="btn btn-red" onclick="boot()">Connect &amp; Load</button>
+    <span id="status">Not connected</span>
+  </div>
+</header>
+<main id="main" style="display:none">
+  <div class="card" id="sec-site">
+    <div class="card-head" onclick="tog('site')"><span class="card-title">&#9881; Site Settings</span><span class="chev">&#9660;</span></div>
+    <div class="card-body">
+      <label>Site Name</label><input type="text" id="s-name">
+      <label>Tagline</label><input type="text" id="s-tagline">
+      <label>Contact Email</label><input type="email" id="s-email">
+      <label>Footer Text</label><input type="text" id="s-footer">
+    </div>
+  </div>
+  <div class="card" id="sec-hero">
+    <div class="card-head" onclick="tog('hero')"><span class="card-title">&#9733; Hero Banner</span><span class="chev">&#9660;</span></div>
+    <div class="card-body">
+      <label>Badge / Tagline</label><input type="text" id="h-title">
+      <label>Sub-text</label><textarea id="h-sub"></textarea>
+    </div>
+  </div>
+  <div class="card" id="sec-stats">
+    <div class="card-head" onclick="tog('stats')"><span class="card-title">&#128202; Stats &amp; Colours</span><span class="chev">&#9660;</span></div>
+    <div class="card-body">
+      <b style="font-size:13px;color:#c0c0d8">Stats</b>
+      <div id="stats-list"></div>
+      <button class="badd" onclick="addStat()">+ Add Stat</button>
+      <div style="margin-top:20px"><b style="font-size:13px;color:#c0c0d8">Colours</b></div>
+      <div id="colors-list"></div>
+      <button class="badd" onclick="addColor()">+ Add Colour</button>
+    </div>
+  </div>
+  <div class="card" id="sec-cats">
+    <div class="card-head" onclick="tog('cats')"><span class="card-title">&#128196; Categories</span><span class="chev">&#9660;</span></div>
+    <div class="card-body">
+      <p style="font-size:12px;color:#8888a0;margin-bottom:12px">Edit category names, descriptions and icons. Upload a custom image to replace the emoji.</p>
+      <div id="cats-list"></div>
+      <button class="badd" onclick="addCat()">+ Add Category</button>
+    </div>
+  </div>
+  <div class="card" id="sec-prods">
+    <div class="card-head" onclick="tog('prods')"><span class="card-title">&#128722; Products</span><span class="chev">&#9660;</span></div>
+    <div class="card-body">
+      <label>Select Category</label>
+      <select id="prod-cat-sel" onchange="renderProds()"></select>
+      <div id="prods-list" style="margin-top:14px"></div>
+      <button class="badd" onclick="addProd()">+ Add Product</button>
+    </div>
+  </div>
+  <div class="card" id="sec-how">
+    <div class="card-head" onclick="tog('how')"><span class="card-title">&#128295; How It Works</span><span class="chev">&#9660;</span></div>
+    <div class="card-body">
+      <div id="how-list"></div>
+      <button class="badd" onclick="addStep()">+ Add Step</button>
+    </div>
+  </div>
+  <div class="card" id="sec-works">
+    <div class="card-head" onclick="tog('works')"><span class="card-title">&#128247; Recent Works</span><span class="chev">&#9660;</span></div>
+    <div class="card-body">
+      <p style="font-size:12px;color:#8888a0;margin-bottom:12px">Upload photos of completed prints. Images are stored in your GitHub repo.</p>
+      <div id="works-list"></div>
+      <button class="badd" onclick="addWork()">+ Add Work</button>
+    </div>
+  </div>
+  <div class="card" id="sec-faq">
+    <div class="card-head" onclick="tog('faq')"><span class="card-title">&#10067; FAQ</span><span class="chev">&#9660;</span></div>
+    <div class="card-body">
+      <div id="faq-list"></div>
+      <button class="badd" onclick="addFaq()">+ Add Question</button>
+    </div>
+  </div>
+  <div class="card" id="sec-order">
+    <div class="card-head" onclick="tog('order')"><span class="card-title">&#9993; Contact / Order</span><span class="chev">&#9660;</span></div>
+    <div class="card-body">
+      <label>Section Title</label><input type="text" id="o-title">
+      <label>Subtitle</label><textarea id="o-sub"></textarea>
+      <label>Email Address</label><input type="email" id="o-email">
+    </div>
+  </div>
+</main>
+<div class="save-bar">
+  <button class="save-btn" onclick="saveAll()">&#128190; Save Changes</button>
+  <span id="save-status"></span>
 </div>
-<div class="f"><label>GitHub Personal Access Token</label>
-<input type="password" id="ti" placeholder="ghp_xxxxxxxxxxxxxxxxxxxx" autocomplete="off"></div>
-<br>
-<button class="btn p" style="width:100%" id="cb2">Connect &amp; Open Admin</button>
-<p style="margin-top:10px;font-size:12px;color:var(--mut);text-align:center">Stored only in this browser. Never shared.</p>
-</div>
-</div>
-<div id="main">
-<div class="bar">
-<div><span class="logo">Forge<span>Layer</span></span><span class="badge">Admin Panel</span></div>
-<div class="tr">
-<a href="https://forgelayer.online" target="_blank" class="vl">View site</a>
-<button class="btn p" id="sv">Save Changes</button>
-<button class="btn s" id="lo">Logout</button>
-</div>
-</div>
-<div class="wrap">
-<div class="pt">Website Content</div>
-<div id="ca"><p style="color:var(--mut);text-align:center;padding:40px">Loading...</p></div>
-</div>
-</div>
-<div class="sb" id="sb"></div>
 <script>
-var REPO='sharmans911-cpu/forgelayer-website',FILE='content.json';
-var data=null,sha=null,Q="'";
-function gt(){return localStorage.getItem('fl_tok');}
-function esc(s){var d=document.createElement('div');d.textContent=String(s);return d.innerHTML.replace(/"/g,'&quot;');}
-document.getElementById('cb2').addEventListener('click',function(){
-  var t=(document.getElementById('ti').value||'').trim();
-  if(!t){alert('Please paste your GitHub token first.');return;}
-  localStorage.setItem('fl_tok',t);
-  boot();
-});
-document.getElementById('sv').addEventListener('click',save);
-document.getElementById('lo').addEventListener('click',function(){
-  if(!confirm('Log out?'))return;
-  localStorage.removeItem('fl_tok');
-  location.reload();
-});
-function boot(){
-  if(!gt()){
-    document.getElementById('auth').style.display='flex';
-    document.getElementById('main').style.display='none';
-  }else{
-    document.getElementById('auth').style.display='none';
-    document.getElementById('main').style.display='block';
-    load();
-  }
+var REPO='sharmans911-cpu/forgelayer-website',BRANCH='main',FILE='content.json';
+var data=null,sha=null;
+function tog(id){var c=document.getElementById('sec-'+id);if(c)c.classList.toggle('open');}
+function esc(s){var d=document.createElement('div');d.textContent=String(s||'');return d.innerHTML;}
+function gv(id){var el=document.getElementById(id);return el?el.value:'';}
+function boot(){var t=document.getElementById('tok').value.trim();if(!t){alert('Enter token.');return;}localStorage.setItem('fl_tok',t);localStorage.setItem('gh_tok',t);document.getElementById('status').textContent='Connecting…';load(t);}
+function load(t){t=t||localStorage.getItem('fl_tok')||localStorage.getItem('gh_tok')||'';if(!t)return;document.getElementById('tok').value=t;fetch('https://api.github.com/repos/'+REPO+'/contents/'+FILE,{headers:{'Authorization':'token '+t,'Accept':'application/vnd.github.v3+json'}}).then(function(r){return r.json();}).then(function(j){sha=j.sha;data=JSON.parse(decodeURIComponent(escape(atob(j.content.replace(/
+/g,'')))));document.getElementById('status').textContent='✓ Connected';document.getElementById('main').style.display='';populate();}).catch(function(e){document.getElementById('status').textContent='Error: '+e.message;});}
+function populate(){
+  var s=data.site||{};
+  document.getElementById('s-name').value=s.name||'';document.getElementById('s-tagline').value=s.tagline||'';document.getElementById('s-email').value=s.email||'';document.getElementById('s-footer').value=s.footer_text||'';
+  var h=data.hero||{};document.getElementById('h-title').value=h.title||'';document.getElementById('h-sub').value=h.subtitle||'';
+  renderStats();renderColors();renderCats();populateCatSel();renderProds();renderHow();renderWorks();renderFaq();
+  var o=data.order||{};document.getElementById('o-title').value=o.title||'';document.getElementById('o-sub').value=o.subtitle||'';document.getElementById('o-email').value=o.email||'';
 }
-function hdrs(){return{'Authorization':'token '+gt(),'Accept':'application/vnd.github.v3+json','Content-Type':'application/json'};}
-function showSb(type,msg){var el=document.getElementById('sb');el.className='sb '+type;el.innerHTML=(type==='ld'?'<div class="sp"></div> ':'')+msg;}
-function hideSb(){document.getElementById('sb').className='sb';}
-async function load(){
-  showSb('ld','Loading content...');
-  try{
-    var r=await fetch('https://api.github.com/repos/'+REPO+'/contents/'+FILE,{headers:hdrs()});
-    if(!r.ok){if(r.status===401)throw new Error('Invalid token - please log out and try again.');throw new Error('GitHub error '+r.status);}
-    var j=await r.json();
-    sha=j.sha;
-    data=JSON.parse(atob(j.content.replace(/\n/g,'')));
-    render();
-    hideSb();
-  }catch(e){showSb('er',e.message);}
+function renderStats(){var stats=data.stats||[];document.getElementById('stats-list').innerHTML=stats.map(function(s,i){return '<div class="li"><div class="li-head"><span class="li-num">Stat '+(i+1)+'</span><button class="brm" onclick="rmStat('+i+')">Remove</button></div><div class="row2"><div><label>Value</label><input type="text" id="sv'+i+'" value="'+esc(s.value||'')+'"></div><div><label>Label</label><input type="text" id="sl'+i+'" value="'+esc(s.label||'')+'"></div></div></div>';}).join('');}
+function addStat(){if(!data.stats)data.stats=[];data.stats.push({value:'',label:''});renderStats();}
+function rmStat(i){data.stats.splice(i,1);renderStats();}
+function renderColors(){var cols=data.colors||[];document.getElementById('colors-list').innerHTML=cols.map(function(c,i){return '<div class="li"><div class="li-head"><span class="li-num">Colour '+(i+1)+'</span><button class="brm" onclick="rmColor('+i+')">Remove</button></div><div class="row2"><div><label>Name</label><input type="text" id="cn'+i+'" value="'+esc(c.name||'')+'"></div><div><label>Hex</label><div style="display:flex;gap:8px;align-items:center"><input type="text" id="ch'+i+'" value="'+esc(c.hex||'')+'"><div style="width:28px;height:28px;border-radius:50%;background:'+esc(c.hex||'#ccc')+';flex-shrink:0;border:2px solid #3a3a50"></div></div></div></div></div>';}).join('');}
+function addColor(){if(!data.colors)data.colors=[];data.colors.push({name:'',hex:'#ffffff'});renderColors();}
+function rmColor(i){data.colors.splice(i,1);renderColors();}
+function renderCats(){var cats=data.categories||[];document.getElementById('cats-list').innerHTML=cats.map(function(cat,i){var prev=cat.iconImage?'<img src="'+esc(cat.iconImage)+'" style="width:56px;height:56px;object-fit:cover;border-radius:8px;border:1px solid #2a2a38;display:block;margin-bottom:6px">':'<div style="font-size:36px;margin-bottom:6px">'+esc(cat.icon||'📦')+'</div>';return '<div class="li"><div class="li-head"><span class="li-num">Category '+(i+1)+'</span><button class="brm" onclick="rmCat('+i+')">Remove</button></div><div class="row2"><div><label>Name</label><input type="text" id="catn'+i+'" value="'+esc(cat.name||'')+'"></div><div><label>Emoji Icon</label><input type="text" id="cate'+i+'" value="'+esc(cat.icon||'')+'"></div></div><label>Description</label><input type="text" id="catd'+i+'" value="'+esc(cat.description||'')+'"><label>Custom Icon Image (replaces emoji)</label><div id="ciprev'+i+'" style="margin-top:6px">'+prev+'</div><label class="upload-btn"><input type="file" accept="image/*" onchange="uploadCatIcon(this,'+i+')"> &#128247; Upload Icon</label><span id="ciprog'+i+'" style="display:none" class="uploading"> Uploading…</span></div>';}).join('');}
+function addCat(){if(!data.categories)data.categories=[];var id='cat'+Date.now();data.categories.push({id:id,name:'',icon:'📦',iconImage:'',description:''});if(!data.products)data.products={};data.products[id]=[];renderCats();populateCatSel();}
+function rmCat(i){data.categories.splice(i,1);renderCats();populateCatSel();}
+async function uploadCatIcon(input,i){var file=input.files[0];if(!file)return;document.getElementById('ciprog'+i).style.display='inline';var url=await uploadImage(file,'images/categories/'+file.name);if(data.categories[i])data.categories[i].iconImage=url;document.getElementById('ciprev'+i).innerHTML='<img src="'+esc(url)+'" style="width:56px;height:56px;object-fit:cover;border-radius:8px;border:1px solid #2a2a38;display:block;margin-bottom:6px">';document.getElementById('ciprog'+i).style.display='none';}
+function populateCatSel(){var sel=document.getElementById('prod-cat-sel'),cats=data.categories||[];sel.innerHTML=cats.map(function(c){return '<option value="'+esc(c.id)+'">'+esc(c.name)+'</option>';}).join('');}
+function getCatId(){return document.getElementById('prod-cat-sel').value;}
+function renderProds(){var cid=getCatId(),prods=(data.products&&data.products[cid])||[];document.getElementById('prods-list').innerHTML=prods.map(function(p,i){var thumbs=(p.images||[]).map(function(src,j){return '<div class="img-thumb"><img src="'+esc(src)+'"><button class="img-rm" onclick="rmProdImg(''+cid+'','+i+','+j+')">×</button></div>';}).join('');return '<div class="li"><div class="li-head"><span class="li-num">Product '+(i+1)+'</span><button class="brm" onclick="rmProd(''+cid+'','+i+')">Remove</button></div><div class="row2"><div><label>Name</label><input type="text" id="pn'+i+'" value="'+esc(p.name||'')+'"></div><div><label>Price</label><input type="text" id="pp'+i+'" value="'+esc(p.price||'')+'"></div></div><label>Description</label><textarea id="pd'+i+'">'+esc(p.description||'')+'</textarea><label>Images</label><div class="img-row">'+thumbs+'<label class="upload-btn"><input type="file" accept="image/*" multiple onchange="uploadProdImgs(this,''+cid+'','+i+')"> &#128247; Add Images</label><span id="pprog'+i+'" style="display:none" class="uploading"> Uploading…</span></div></div>';}).join('');}
+function addProd(){var cid=getCatId();if(!cid)return;if(!data.products)data.products={};if(!data.products[cid])data.products[cid]=[];data.products[cid].push({id:'p'+Date.now(),name:'',price:'',description:'',images:[]});renderProds();}
+function rmProd(cid,i){data.products[cid].splice(i,1);renderProds();}
+function rmProdImg(cid,pi,ii){data.products[cid][pi].images.splice(ii,1);renderProds();}
+async function uploadProdImgs(input,cid,pi){var files=Array.from(input.files);if(!files.length)return;document.getElementById('pprog'+pi).style.display='inline';for(var f of files){var url=await uploadImage(f,'images/products/'+f.name);if(!data.products[cid][pi].images)data.products[cid][pi].images=[];data.products[cid][pi].images.push(url);}renderProds();document.getElementById('pprog'+pi).style.display='none';}
+function renderHow(){var steps=data.how||[];document.getElementById('how-list').innerHTML=steps.map(function(s,i){return '<div class="li"><div class="li-head"><span class="li-num">Step '+(i+1)+'</span><button class="brm" onclick="rmStep('+i+')">Remove</button></div><label>Title</label><input type="text" id="hwt'+i+'" value="'+esc(s.title||'')+'"><label>Description</label><textarea id="hwd'+i+'">'+esc(s.desc||'')+'</textarea></div>';}).join('');}
+function addStep(){if(!data.how)data.how=[];data.how.push({step:String(data.how.length+1),title:'',desc:''});renderHow();}
+function rmStep(i){data.how.splice(i,1);data.how.forEach(function(s,j){s.step=String(j+1);});renderHow();}
+function renderWorks(){var works=data.recentWorks||[];document.getElementById('works-list').innerHTML=works.map(function(w,i){var prev=w.image?'<div class="img-row"><div class="img-thumb"><img src="'+esc(w.image)+'"><button class="img-rm" onclick="rmWorkImg('+i+')">×</button></div></div>':'';return '<div class="li"><div class="li-head"><span class="li-num">Work '+(i+1)+'</span><button class="brm" onclick="rmWork('+i+')">Remove</button></div><label>Title</label><input type="text" id="wt'+i+'" value="'+esc(w.title||'')+'"><label>Description</label><textarea id="wd'+i+'">'+esc(w.description||'')+'</textarea><label>Photo</label>'+prev+'<label class="upload-btn"><input type="file" accept="image/*" onchange="uploadWork(this,'+i+')"> &#128247; '+(w.image?'Change Photo':'Upload Photo')+'</label><span id="wprog'+i+'" style="display:none" class="uploading"> Uploading…</span></div>';}).join('');}
+function addWork(){if(!data.recentWorks)data.recentWorks=[];data.recentWorks.push({id:'w'+Date.now(),title:'',description:'',image:''});renderWorks();}
+function rmWork(i){data.recentWorks.splice(i,1);renderWorks();}
+function rmWorkImg(i){if(data.recentWorks[i])data.recentWorks[i].image='';renderWorks();}
+async function uploadWork(input,i){var file=input.files[0];if(!file)return;document.getElementById('wprog'+i).style.display='inline';var url=await uploadImage(file,'images/works/'+file.name);if(data.recentWorks[i])data.recentWorks[i].image=url;renderWorks();document.getElementById('wprog'+i).style.display='none';}
+function renderFaq(){var faqs=data.faq||[];if(faqs.items)faqs=faqs.items;document.getElementById('faq-list').innerHTML=faqs.map(function(f,i){return '<div class="li"><div class="li-head"><span class="li-num">Q '+(i+1)+'</span><button class="brm" onclick="rmFaq('+i+')">Remove</button></div><label>Question</label><input type="text" id="fq'+i+'" value="'+esc(f.q||f.question||'')+'"><label>Answer</label><textarea id="fa'+i+'">'+esc(f.a||f.answer||'')+'</textarea></div>';}).join('');}
+function addFaq(){if(!data.faq)data.faq=[];if(data.faq.items)data.faq=data.faq.items;data.faq.push({q:'',a:''});renderFaq();}
+function rmFaq(i){var f=Array.isArray(data.faq)?data.faq:data.faq.items||[];f.splice(i,1);if(!Array.isArray(data.faq))data.faq.items=f;else data.faq=f;renderFaq();}
+async function uploadImage(file,path){return new Promise(function(resolve,reject){var reader=new FileReader();reader.onload=async function(e){var b64=e.target.result.split(',')[1];var t=localStorage.getItem('fl_tok')||localStorage.getItem('gh_tok')||'';var existing=null;try{var r=await fetch('https://api.github.com/repos/'+REPO+'/contents/'+path,{headers:{'Authorization':'token '+t,'Accept':'application/vnd.github.v3+json'}});if(r.ok){var j=await r.json();existing=j.sha;}}catch(ex){}var body={message:'Upload '+path,content:b64,branch:BRANCH};if(existing)body.sha=existing;var res=await fetch('https://api.github.com/repos/'+REPO+'/contents/'+path,{method:'PUT',headers:{'Authorization':'token '+t,'Accept':'application/vnd.github.v3+json','Content-Type':'application/json'},body:JSON.stringify(body)});if(res.ok){resolve('https://raw.githubusercontent.com/'+REPO+'/'+BRANCH+'/'+path);}else{var err=await res.json();reject(new Error(err.message||'Upload failed'));}};reader.readAsDataURL(file);});}
+function collectProds(){var cid=getCatId();if(cid&&data.products&&data.products[cid]){data.products[cid].forEach(function(p,i){p.name=gv('pn'+i)||p.name;p.price=gv('pp'+i)||p.price;var ta=document.getElementById('pd'+i);if(ta)p.description=ta.value;});}}
+function saveAll(){
+  collectProds();
+  data.site={name:gv('s-name'),tagline:gv('s-tagline'),email:gv('s-email'),footer_text:gv('s-footer'),description:data.site&&data.site.description||''};
+  data.hero={title:gv('h-title'),subtitle:gv('h-sub'),cta:data.hero&&data.hero.cta||'Get a Quote'};
+  var stats=data.stats||[];data.stats=stats.map(function(s,i){return{value:gv('sv'+i)||s.value,label:gv('sl'+i)||s.label};});
+  var cols=data.colors||[];data.colors=cols.map(function(c,i){return{name:gv('cn'+i)||c.name,hex:gv('ch'+i)||c.hex};});
+  var cats=data.categories||[];data.categories=cats.map(function(c,i){return{id:c.id,name:gv('catn'+i)||c.name,icon:gv('cate'+i)||c.icon,iconImage:c.iconImage||'',description:gv('catd'+i)||c.description};});
+  var steps=data.how||[];data.how=steps.map(function(s,i){return{step:s.step,title:gv('hwt'+i)||s.title,desc:(document.getElementById('hwd'+i)&&document.getElementById('hwd'+i).value)||s.desc};});
+  var works=data.recentWorks||[];data.recentWorks=works.map(function(w,i){return{id:w.id||('w'+i),title:gv('wt'+i)||w.title,description:(document.getElementById('wd'+i)&&document.getElementById('wd'+i).value)||w.description,image:w.image||''};});
+  var faqs=Array.isArray(data.faq)?data.faq:(data.faq&&data.faq.items)||[];data.faq=faqs.map(function(f,i){return{q:gv('fq'+i)||f.q||'',a:(document.getElementById('fa'+i)&&document.getElementById('fa'+i).value)||f.a||''};});
+  data.order={title:gv('o-title'),subtitle:gv('o-sub'),email:gv('o-email')};
+  var t=localStorage.getItem('fl_tok')||localStorage.getItem('gh_tok')||'';
+  if(!t){alert('Not connected.');return;}
+  var st=document.getElementById('save-status');st.textContent='Saving…';st.style.color='#f6ad55';
+  var body={message:'Update content via admin',content:btoa(unescape(encodeURIComponent(JSON.stringify(data,null,2)))),branch:BRANCH};
+  if(sha)body.sha=sha;
+  fetch('https://api.github.com/repos/'+REPO+'/contents/'+FILE,{method:'PUT',headers:{'Authorization':'token '+t,'Accept':'application/vnd.github.v3+json','Content-Type':'application/json'},body:JSON.stringify(body)}).then(function(r){return r.json();}).then(function(j){if(j.content){sha=j.content.sha;st.textContent='✓ Saved! Site updates in ~30 seconds.';st.style.color='#48bb78';}else{st.textContent='Error: '+(j.message||'Unknown');st.style.color='#fc8181';}}).catch(function(e){st.textContent='Error: '+e.message;st.style.color='#fc8181';});
 }
-async function save(){
-  document.getElementById('sv').disabled=true;
-  showSb('ld','Saving...');
-  try{
-    collect();
-    var content=btoa(unescape(encodeURIComponent(JSON.stringify(data,null,2))));
-    var r=await fetch('https://api.github.com/repos/'+REPO+'/contents/'+FILE,{
-      method:'PUT',headers:hdrs(),
-      body:JSON.stringify({message:'Update website content',content:content,sha:sha})
-    });
-    if(!r.ok)throw new Error('Save failed: '+r.status);
-    var j=await r.json();sha=j.content.sha;
-    showSb('ok','Saved! Site updates in ~30 seconds.');
-    setTimeout(hideSb,5000);
-  }catch(e){showSb('er',e.message);}
-  finally{document.getElementById('sv').disabled=false;}
-}
-function collect(){
-  data.site.name=v('sn');data.site.email=v('se');data.site.footer_text=v('sf');
-  data.hero.enabled=c('he');data.hero.title=v('ht');
-  if(data.hero.subtitle!==undefined)data.hero.subtitle=v('hs');
-  if(data.hero.cta!==undefined)data.hero.cta=v('hc');
-  data.products.enabled=c('pe');data.products.items=clist('pl',['title','description','icon']);
-  data.how.enabled=c('we');data.how.steps=clist('wl',['step','title','description']);
-  data.gallery.enabled=c('ge');
-  if(data.pricing)data.pricing.enabled=c('pre');
-  data.order.enabled=c('oe');
-  if(data.order.title!==undefined)data.order.title=v('ot');
-  if(data.order.subtitle!==undefined)data.order.subtitle=v('os');
-  data.faq.enabled=c('fe');data.faq.items=clist('fl',['question','answer']);
-}
-function v(id){var el=document.getElementById(id);return el?el.value:'';}
-function c(id){var el=document.getElementById(id);return el?el.checked:false;}
-function clist(cid,fields){
-  var con=document.getElementById(cid);if(!con)return[];
-  return Array.from(con.querySelectorAll('.li')).map(function(item){
-    var obj={};
-    fields.forEach(function(f){var el=item.querySelector('[data-f="'+f+'"]');if(el)obj[f]=el.value;});
-    return obj;
-  });
-}
-function tog(id){document.getElementById(id+'-b').classList.toggle('open');document.getElementById(id+'-v').classList.toggle('open');}
-function render(){
-  var d=data;
-  document.getElementById('ca').innerHTML=
-    sec('s','Site Settings',true,siteF(d.site))+
-    sec('h','Hero / Banner',d.hero.enabled,heroF(d.hero))+
-    sec('p','Products',d.products.enabled,listF('pl',d.products.items||[],['title','description','icon'],d.products.enabled,'pe'))+
-    sec('w','How It Works',d.how.enabled,listF('wl',d.how.steps||[],['step','title','description'],d.how.enabled,'we'))+
-    sec('g','Gallery',d.gallery.enabled,'<div class="trow"><label class="tog"><input type="checkbox" id="ge"'+(d.gallery.enabled?' checked':'')+'><span class="ts"></span></label><span class="tl">Visible on site</span></div><p class="note">Gallery images are in your GitHub repo under /images/uploads/</p>')+
-    (d.pricing?sec('pr','Pricing',d.pricing.enabled,'<div class="trow"><label class="tog"><input type="checkbox" id="pre"'+(d.pricing.enabled?' checked':'')+'><span class="ts"></span></label><span class="tl">Visible on site</span></div>'):'')+
-    sec('o','Order / Contact',d.order.enabled,orderF(d.order))+
-    sec('fq','FAQ',d.faq.enabled,listF('fl',d.faq.items||[],['question','answer'],d.faq.enabled,'fe'));
-}
-function sec(id,label,on,inner){
-  return '<div class="card"><div class="ch" onclick="tog('+Q+id+Q+')"><div class="ct"><span class="dot'+(on?'':' off')+'"></span>'+label+'</div><span class="cv" id="'+id+'-v">&#9660;</span></div><div class="cb" id="'+id+'-b">'+inner+'</div></div>';
-}
-function siteF(s){
-  return '<div class="fr"><div class="f"><label>Site Name</label><input id="sn" value="'+esc(s.name||'')+'"></div>'+
-  '<div class="f"><label>Contact Email</label><input id="se" value="'+esc(s.email||'')+'"></div></div>'+
-  '<div class="f"><label>Footer Text</label><input id="sf" value="'+esc(s.footer_text||'')+'"></div>';
-}
-function heroF(h){
-  return '<div class="trow"><label class="tog"><input type="checkbox" id="he"'+(h.enabled?' checked':'')+'><span class="ts"></span></label><span class="tl">Visible on site</span></div>'+
-  '<div class="f"><label>Headline</label><input id="ht" value="'+esc(h.title||'')+'"></div>'+
-  (h.subtitle!==undefined?'<div class="f"><label>Subtitle</label><textarea id="hs">'+esc(h.subtitle||'')+'</textarea></div>':'')+
-  (h.cta!==undefined?'<div class="f"><label>Button Text</label><input id="hc" value="'+esc(h.cta||'')+'"></div>':'');
-}
-function orderF(o){
-  return '<div class="trow"><label class="tog"><input type="checkbox" id="oe"'+(o.enabled?' checked':'')+'><span class="ts"></span></label><span class="tl">Visible on site</span></div>'+
-  (o.title!==undefined?'<div class="f"><label>Section Title</label><input id="ot" value="'+esc(o.title||'')+'"></div>':'')+
-  (o.subtitle!==undefined?'<div class="f"><label>Subtitle</label><textarea id="os">'+esc(o.subtitle||'')+'</textarea></div>':'');
-}
-function listF(cid,items,fields,enabled,togId){
-  var rows=items.map(function(item,i){return irow(i+1,item,fields);}).join('');
-  return '<div class="trow"><label class="tog"><input type="checkbox" id="'+togId+'"'+(enabled?' checked':'')+'><span class="ts"></span></label><span class="tl">Visible on site</span></div>'+
-  '<div id="'+cid+'">'+rows+'</div>'+
-  '<button class="badd" onclick="addI('+Q+cid+Q+','+JSON.stringify(fields)+')">+ Add item</button>';
-}
-var LABS={title:'Title',description:'Description',icon:'Icon / Emoji',step:'Step #',question:'Question',answer:'Answer'};
-function irow(num,item,fields){
-  var isTa=function(f){return f==='description'||f==='answer';};
-  return '<div class="li"><div class="lih"><span class="lin">Item '+num+'</span><button class="brm" onclick="this.closest('+Q+'.li'+Q+').remove()">x</button></div>'+
-  fields.map(function(f){
-    return '<div class="f"><label>'+(LABS[f]||f)+'</label>'+(isTa(f)?'<textarea data-f="'+f+'">'+esc(item[f]||'')+'</textarea>':'<input data-f="'+f+'" value="'+esc(item[f]||'')+'">')+'</div>';
-  }).join('')+'</div>';
-}
-function addI(cid,fields){
-  var con=document.getElementById(cid);
-  var num=con.querySelectorAll('.li').length+1;
-  var empty={};fields.forEach(function(f){empty[f]='';});
-  var div=document.createElement('div');
-  div.innerHTML=irow(num,empty,fields);
-  con.appendChild(div.firstElementChild);
-}
-boot();
+(function(){var t=localStorage.getItem('fl_tok')||localStorage.getItem('gh_tok')||'';if(t){document.getElementById('tok').value=t;load(t);}})();
 </script>
 </body>
 </html>
