@@ -1,223 +1,164 @@
 {
   "site": {
     "name": "ForgeLayer",
+    "tagline": "Your Imagination to 3D Prints",
     "email": "orders@forgelayer.online",
-    "footer_text": "© 2025 ForgeLayer : 3D Print your Imagination · "
+    "description": "3D Printing personalised Household things, Prototypes and more. Printed with Precision, delivered with care.",
+    "footer_text": "© 2025 ForgeLayer · Custom 3D Printing · Germany"
   },
   "hero": {
-    "enabled": true,
-    "badge": "Custom 3D Prints ÃÂ· Germany",
-    "headline": "Bring your ideas",
-    "headline_highlight": "to life in 3D",
-    "subtext": "Home-based custom 3D printing Ã¢ÂÂ personalised gifts, home organisation, functional prototypes and more. Printed with precision, delivered with care.",
-    "cta_primary": "Place an Order",
-    "cta_secondary": "See what we make",
-    "stats": [
-      {
-        "number": "Bambu",
-        "label": "A1 Series Printer"
-      },
-      {
-        "number": "20+",
-        "label": "Colors available"
-      },
-      {
-        "number": "3Ã¢ÂÂ5",
-        "label": "Days turnaround"
-      },
-      {
-        "number": "100%",
-        "label": "Custom made"
-      }
-    ],
-    "title": ""
+    "title": "Your Imagination to 3D Prints",
+    "subtitle": "3D Printing personalised Household things, Prototypes and more. Printed with Precision, delivered with care.",
+    "cta": "Get a Quote"
   },
+  "stats": [
+    {
+      "value": "6+",
+      "label": "Colors available"
+    },
+    {
+      "value": "5–7",
+      "label": "Working days delivery"
+    },
+    {
+      "value": "100%",
+      "label": "Custom made"
+    }
+  ],
+  "colors": [
+    {
+      "name": "Black",
+      "hex": "#1a1a1a"
+    },
+    {
+      "name": "White",
+      "hex": "#f0f0f0"
+    },
+    {
+      "name": "Red",
+      "hex": "#e53e3e"
+    },
+    {
+      "name": "Pink",
+      "hex": "#ed64a6"
+    },
+    {
+      "name": "Orange",
+      "hex": "#dd6b20"
+    },
+    {
+      "name": "Sky Blue",
+      "hex": "#4299e1"
+    },
+    {
+      "name": "Grey",
+      "hex": "#718096"
+    }
+  ],
+  "categories": [
+    {
+      "id": "household",
+      "name": "Household Items",
+      "icon": "🏠",
+      "iconImage": "",
+      "description": "Organisers, holders, hooks and everyday home essentials"
+    },
+    {
+      "id": "gifts",
+      "name": "Personalised Gifts",
+      "icon": "🎁",
+      "iconImage": "",
+      "description": "Unique custom gifts for every occasion"
+    },
+    {
+      "id": "prototypes",
+      "name": "Prototypes",
+      "icon": "⚙️",
+      "iconImage": "",
+      "description": "Functional prototypes to bring your ideas to life"
+    },
+    {
+      "id": "decor",
+      "name": "Home Decor",
+      "icon": "🖼️",
+      "iconImage": "",
+      "description": "Decorative prints to beautify your space"
+    }
+  ],
   "products": {
-    "enabled": true,
-    "label": "What we make",
-    "title": "Four categories, endless possibilities",
-    "subtitle": "Every item is printed to order Ã¢ÂÂ custom sizes, colours and text always available.",
-    "items": [
-      {
-        "title": "Home & Organisation",
-        "description": "Practical prints that make your space work smarter Ã¢ÂÂ designed for real life, printed to fit.",
-        "icon": "Ã°ÂÂÂ "
-      },
-      {
-        "title": "Prototypes & Parts",
-        "description": "Need a custom bracket, replacement part or a prototype for your idea? We print it precisely.",
-        "icon": "Ã¢ÂÂÃ¯Â¸Â"
-      },
-      {
-        "title": "Custom Name & Text",
-        "description": "Personalised with any name, word or short message Ã¢ÂÂ perfect for gifts that actually mean something.",
-        "icon": "Ã°ÂÂÂ¤"
-      },
-      {
-        "title": "Gifts & DÃÂ©cor",
-        "description": "Decorative prints and thoughtful gifts that stand out Ã¢ÂÂ unique, durable and made to order.",
-        "icon": "Ã¢ÂÂ¨"
-      }
-    ]
+    "household": [],
+    "gifts": [],
+    "prototypes": [],
+    "decor": []
   },
-  "how": {
-    "enabled": true,
-    "label": "The process",
-    "title": "Order in 3 simple steps",
-    "subtitle": "No complicated forms. Just send an email and we'll handle the rest.",
-    "steps": [
-      {
-        "step": "",
-        "title": "Tell us what you need",
-        "description": "Click the order button and send us an email with what you'd like Ã¢ÂÂ name, size, colour, quantity. Not sure? Just describe your idea."
-      },
-      {
-        "step": "",
-        "title": "Get a quote & confirm",
-        "description": "We'll reply within 24 hours with a price, estimated time, and a preview if needed. You confirm before anything is printed."
-      },
-      {
-        "step": "",
-        "title": "Receive your print",
-        "description": "We print it and arrange delivery or pickup. Payment by bank transfer or PayPal once you're happy with the result."
-      }
-    ]
-  },
-  "gallery": {
-    "enabled": true,
-    "label": "Portfolio",
-    "title": "Recent work",
-    "subtitle": "Our latest prints Ã¢ÂÂ add your own photos here once you have them.",
-    "note": "Ã°ÂÂÂ¸ More photos coming soon Ã¢ÂÂ follow us for updates",
-    "items": [
-      {
-        "emoji": "Ã°ÂÂÂ¦",
-        "label": "Desk Organiser",
-        "bg": "#0d2137"
-      },
-      {
-        "emoji": "Ã°ÂÂªÂ",
-        "label": "Wall Hook Set",
-        "bg": "#0d1f0d"
-      },
-      {
-        "emoji": "Ã°ÂÂÂ",
-        "label": "Name Keychain",
-        "bg": "#1f0d25"
-      },
-      {
-        "emoji": "Ã°ÂÂÂ¿",
-        "label": "Mini Planter",
-        "bg": "#1f1a0d"
-      },
-      {
-        "emoji": "Ã¢ÂÂÃ¯Â¸Â",
-        "label": "Custom Bracket",
-        "bg": "#1a1a2e"
-      },
-      {
-        "emoji": "Ã°ÂÂÂ",
-        "label": "Gift Box",
-        "bg": "#0d1f1a"
-      }
-    ]
-  },
-  "pricing": {
-    "enabled": false,
-    "label": "Pricing guide",
-    "title": "Transparent, fair pricing",
-    "subtitle": "Every order is quoted individually Ã¢ÂÂ here's a rough guide. Final price depends on size, complexity, and material.",
-    "note": "Ã°ÂÂÂ¡ Not sure about the price? Just email us Ã¢ÂÂ quotes are free, fast and come with no obligation.",
-    "rows": [
-      {
-        "item_type": "Small home item",
-        "example": "Cable clip, hook, stand",
-        "price": "Ã¢ÂÂ¬4",
-        "turnaround": "1Ã¢ÂÂ2 days"
-      },
-      {
-        "item_type": "Custom name print",
-        "example": "Keychain, nameplate",
-        "price": "Ã¢ÂÂ¬5",
-        "turnaround": "2Ã¢ÂÂ3 days"
-      },
-      {
-        "item_type": "Decorative / gift",
-        "example": "Vase, planter, wall art",
-        "price": "Ã¢ÂÂ¬6",
-        "turnaround": "3Ã¢ÂÂ5 days"
-      },
-      {
-        "item_type": "Functional part",
-        "example": "Bracket, enclosure, jig",
-        "price": "Ã¢ÂÂ¬8",
-        "turnaround": "3Ã¢ÂÂ5 days"
-      },
-      {
-        "item_type": "Prototype / complex",
-        "example": "Multi-part assemblies",
-        "price": "Ã¢ÂÂ¬15+",
-        "turnaround": "5Ã¢ÂÂ7 days"
-      },
-      {
-        "item_type": "Bulk order (10+)",
-        "example": "Gifts, event items",
-        "price": "Discounted",
-        "turnaround": "Quote on request"
-      }
-    ]
-  },
+  "how": [
+    {
+      "step": "1",
+      "title": "Share Your Idea",
+      "desc": "Tell us what you want — a sketch, description or reference image is enough."
+    },
+    {
+      "step": "2",
+      "title": "We Design & Quote",
+      "desc": "We prepare a digital model and send you a quote within 24 hours."
+    },
+    {
+      "step": "3",
+      "title": "Approve & Print",
+      "desc": "Once you approve, we start printing with precision on our professional 3D printer."
+    },
+    {
+      "step": "4",
+      "title": "Delivered to You",
+      "desc": "Your print is carefully packaged and delivered within 5–7 working days."
+    }
+  ],
+  "recentWorks": [],
+  "faq": [
+    {
+      "q": "What materials do you use?",
+      "a": "We primarily use PLA filament — durable, eco-friendly and available in all our colour options."
+    },
+    {
+      "q": "How long does an order take?",
+      "a": "Standard orders take 5–7 working days from confirmation."
+    },
+    {
+      "q": "Can I order a completely custom design?",
+      "a": "Absolutely! Contact us at orders@forgelayer.online with your idea, sketch or reference image. We quote within 24 hours."
+    },
+    {
+      "q": "Which colours are available?",
+      "a": "Black, White, Red, Pink, Orange, Sky Blue and Grey. Contact us if you need something different."
+    },
+    {
+      "q": "How do I place an order?",
+      "a": "Browse our categories, pick a product, then email orders@forgelayer.online."
+    },
+    {
+      "q": "Can I see a preview before printing?",
+      "a": "Yes! For custom orders we send a digital render for your approval before printing."
+    },
+    {
+      "q": "What is the maximum print size?",
+      "a": "Our printer supports up to 256 × 256 × 256 mm. Larger items can be printed in sections and joined."
+    },
+    {
+      "q": "Do you ship across Germany?",
+      "a": "Yes, we ship throughout Germany. Shipping costs confirmed at order."
+    },
+    {
+      "q": "What is your return policy?",
+      "a": "Since all prints are custom-made, we do not accept returns unless there is a manufacturing defect."
+    },
+    {
+      "q": "How do I send my design files?",
+      "a": "Send STL, OBJ or 3MF files to orders@forgelayer.online. We can also design from scratch."
+    }
+  ],
   "order": {
-    "enabled": true,
-    "label": "Ready to order?",
-    "title": "Let's make something",
-    "subtitle": "Send us an email with your idea Ã¢ÂÂ no need to have all the details figured out. We'll help you get there.",
-    "button_text": "Email us your order",
-    "sub_text": "We reply within 24 hours ÃÂ· No upfront payment ÃÂ· Free quote",
-    "steps": [
-      {
-        "text": "Describe your idea"
-      },
-      {
-        "text": "Pick colour & size"
-      },
-      {
-        "text": "We send a quote"
-      },
-      {
-        "text": "Confirm & we print"
-      }
-    ]
-  },
-  "faq": {
-    "enabled": true,
-    "label": "FAQ",
-    "title": "Common questions",
-    "items": [
-      {
-        "question": "",
-        "answer": ""
-      },
-      {
-        "question": "",
-        "answer": ""
-      },
-      {
-        "question": "",
-        "answer": ""
-      },
-      {
-        "question": "",
-        "answer": ""
-      },
-      {
-        "question": "",
-        "answer": ""
-      },
-      {
-        "question": "",
-        "answer": ""
-      }
-    ]
+    "title": "Get in Touch",
+    "subtitle": "Ready to bring your idea to life? Contact us — we reply within 24 hours.",
+    "email": "orders@forgelayer.online"
   }
 }
