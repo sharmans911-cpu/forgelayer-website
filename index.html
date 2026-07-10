@@ -486,5 +486,172 @@ function initInteractions() {
 // ─── Boot ────────────────────────────────────────────────────────────────────
 loadContent().then(renderSite);
 </script>
+
+<style>
+#fl-cat-page,#fl-prod-page{display:none;min-height:80vh;padding:48px 5%;background:var(--black)}
+.fl-back{background:none;border:1px solid var(--border);color:var(--muted);padding:8px 18px;border-radius:var(--radius);cursor:pointer;font-size:14px;margin-bottom:32px;display:inline-flex;align-items:center;gap:6px;transition:.2s}
+.fl-back:hover{border-color:var(--accent);color:var(--accent)}
+.fl-cat-title{font-size:2rem;font-weight:800;color:var(--white);margin-bottom:6px}
+.fl-cat-sub{color:var(--muted);margin-bottom:36px;font-size:15px}
+.fl-prod-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.fl-prod-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;cursor:pointer;transition:transform .2s,border-color .2s}
+.fl-prod-card:hover{transform:translateY(-3px);border-color:var(--accent)}
+.fl-prod-img{width:100%;aspect-ratio:4/3;background:#0d1a2e;display:flex;align-items:center;justify-content:center;font-size:42px;overflow:hidden}
+.fl-prod-img img{width:100%;height:100%;object-fit:cover}
+.fl-prod-body{padding:14px}
+.fl-prod-name{font-size:14px;font-weight:600;color:var(--text);margin-bottom:4px;line-height:1.3}
+.fl-prod-price{font-size:16px;font-weight:800;color:var(--accent)}
+.fl-empty{grid-column:1/-1;text-align:center;padding:80px 20px;color:var(--muted)}
+.fl-empty .fl-empty-icon{font-size:3rem;margin-bottom:16px}
+.fl-empty h3{font-size:1.2rem;color:var(--white);margin-bottom:8px}
+.fl-empty a{display:inline-block;margin-top:20px;background:var(--accent);color:#000;font-weight:700;padding:12px 28px;border-radius:var(--radius);text-decoration:none}
+.fl-detail{display:grid;grid-template-columns:1fr 1fr;gap:48px;max-width:1000px}
+.fl-gallery{display:flex;flex-direction:column;gap:12px}
+.fl-main-img{width:100%;aspect-ratio:4/3;background:#0d1a2e;border-radius:var(--radius);display:flex;align-items:center;justify-content:center;font-size:72px;overflow:hidden}
+.fl-main-img img{width:100%;height:100%;object-fit:cover}
+.fl-thumbs{display:flex;gap:8px;flex-wrap:wrap}
+.fl-thumb{width:72px;height:54px;border-radius:8px;object-fit:cover;cursor:pointer;border:2px solid var(--border);transition:border-color .2s}
+.fl-thumb:hover,.fl-thumb.active{border-color:var(--accent)}
+.fl-prod-info h1{font-size:1.8rem;font-weight:800;color:var(--white);margin-bottom:8px}
+.fl-prod-info .fl-price{font-size:2rem;font-weight:800;color:var(--accent);margin-bottom:20px}
+.fl-prod-info p{color:var(--muted);font-size:15px;line-height:1.7;margin-bottom:28px}
+.fl-order-btn{display:block;width:100%;background:var(--accent);color:#000;font-weight:700;font-size:16px;padding:14px;border-radius:var(--radius);text-align:center;text-decoration:none;border:none;cursor:pointer;transition:.2s}
+.fl-order-btn:hover{background:var(--accent2);color:#fff}
+.product-card{cursor:pointer}
+@media(max-width:900px){.fl-prod-grid{grid-template-columns:repeat(2,1fr)}.fl-detail{grid-template-columns:1fr}}
+@media(max-width:600px){.fl-prod-grid{grid-template-columns:repeat(2,1fr)}}
+</style>
+
+<div id="fl-cat-page">
+  <button class="fl-back" onclick="flShowHome()">&#8592; All Categories</button>
+  <h1 class="fl-cat-title" id="fl-cat-title"></h1>
+  <p class="fl-cat-sub" id="fl-cat-sub"></p>
+  <div class="fl-prod-grid" id="fl-prod-grid"></div>
+</div>
+
+<div id="fl-prod-page">
+  <button class="fl-back" id="fl-prod-back">&#8592; Back</button>
+  <div class="fl-detail">
+    <div class="fl-gallery">
+      <div class="fl-main-img" id="fl-main-img">🖨️</div>
+      <div class="fl-thumbs" id="fl-thumbs"></div>
+    </div>
+    <div class="fl-prod-info">
+      <h1 id="fl-pname"></h1>
+      <div class="fl-price" id="fl-pprice"></div>
+      <p id="fl-pdesc"></p>
+      <a class="fl-order-btn" id="fl-porder" href="#">Order This Item</a>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var _C = null;
+  var _catId = null;
+
+  // Wait for the main site's data to be available, then wire up clicks
+  function init(){
+    // The main site stores content in window.siteData or fetches it — re-fetch ourselves
+    fetch('content.json?fl=1').then(function(r){return r.json();}).then(function(d){
+      _C = d;
+      wireCards();
+    }).catch(function(){wireCards();});
+  }
+
+  function wireCards(){
+    // Add onclick to all existing product-card elements
+    document.querySelectorAll('.product-card').forEach(function(card, i){
+      var cats = (_C && _C.categories) || [
+        {id:'household', name:'Home & Organisation'},
+        {id:'gifts',     name:'Personalised Gifts'},
+        {id:'prototypes',name:'Prototypes & Parts'},
+        {id:'decor',     name:'Gifts & Decor'}
+      ];
+      var cat = cats[i] || cats[0];
+      card.style.cursor = 'pointer';
+      card.addEventListener('click', function(){ openCat(cat.id, cat.name, cat.description||''); });
+    });
+  }
+
+  window.flShowHome = function(){
+    document.getElementById('fl-cat-page').style.display='none';
+    document.getElementById('fl-prod-page').style.display='none';
+    // Show all original sections
+    document.querySelectorAll('body > *:not(#fl-cat-page):not(#fl-prod-page):not(script):not(style)').forEach(function(el){
+      if(el._flHidden){ el.style.display=''; el._flHidden=false; }
+    });
+    window.scrollTo(0,0);
+  };
+
+  function hideHome(){
+    document.querySelectorAll('body > *:not(#fl-cat-page):not(#fl-prod-page):not(script):not(style)').forEach(function(el){
+      if(el.style.display !== 'none'){
+        el._flHidden = true;
+        el.style.display = 'none';
+      }
+    });
+  }
+
+  function openCat(catId, name, desc){
+    _catId = catId;
+    hideHome();
+    document.getElementById('fl-cat-page').style.display='block';
+    document.getElementById('fl-prod-page').style.display='none';
+    document.getElementById('fl-cat-title').textContent = name || catId;
+    document.getElementById('fl-cat-sub').textContent = desc || '';
+    var prods = (_C && _C.products && _C.products[catId]) || [];
+    var grid = document.getElementById('fl-prod-grid');
+    var email = (_C && _C.order && _C.order.email) || 'orders@forgelayer.online';
+    if(!prods.length){
+      grid.innerHTML = '<div class="fl-empty"><div class="fl-empty-icon">🛒</div><h3>Products coming soon</h3><p>We're adding items to this category. In the meantime, contact us for a custom quote.</p><a href="mailto:'+email+'">Email us your idea</a></div>';
+    } else {
+      grid.innerHTML = prods.map(function(p){
+        var img = p.images && p.images[0] ? '<img src="'+p.images[0]+'" alt="">' : '🖨️';
+        return '<div class="fl-prod-card" onclick="flOpenProd(''+catId+'',''+p.id+'')" ><div class="fl-prod-img">'+img+'</div><div class="fl-prod-body"><div class="fl-prod-name">'+p.name+'</div><div class="fl-prod-price">'+p.price+'</div></div></div>';
+      }).join('');
+    }
+    window.scrollTo(0,0);
+  }
+
+  window.flOpenProd = function(catId, pid){
+    var prods = (_C && _C.products && _C.products[catId]) || [];
+    var p = prods.find(function(x){return x.id===pid;});
+    if(!p) return;
+    document.getElementById('fl-cat-page').style.display='none';
+    document.getElementById('fl-prod-page').style.display='block';
+    document.getElementById('fl-pname').textContent = p.name||'';
+    document.getElementById('fl-pprice').textContent = p.price||'';
+    document.getElementById('fl-pdesc').textContent = p.description||'';
+    var email = (_C && _C.order && _C.order.email)||'orders@forgelayer.online';
+    document.getElementById('fl-porder').href = 'mailto:'+email+'?subject=Order: '+encodeURIComponent(p.name||'');
+    var imgs = p.images||[];
+    var mi = document.getElementById('fl-main-img');
+    var th = document.getElementById('fl-thumbs');
+    if(imgs.length){
+      mi.innerHTML='<img src="'+imgs[0]+'" alt="">';
+      th.innerHTML=imgs.map(function(s,i){return '<img class="fl-thumb'+(i===0?' active':'')+'" src="'+s+'" onclick="flSetImg(this,''+s+'')">';}).join('');
+    } else { mi.innerHTML='🖨️'; th.innerHTML=''; }
+    document.getElementById('fl-prod-back').onclick=function(){
+      document.getElementById('fl-prod-page').style.display='none';
+      openCat(catId, (_C&&_C.categories||[]).find(function(c){return c.id===catId;})||{name:catId});
+    };
+    window.scrollTo(0,0);
+  };
+
+  window.flSetImg = function(el,src){
+    document.getElementById('fl-main-img').innerHTML='<img src="'+src+'" alt="">';
+    document.querySelectorAll('.fl-thumb').forEach(function(t){t.classList.remove('active');});
+    el.classList.add('active');
+  };
+
+  // Run after page loads
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    setTimeout(init, 800);
+  }
+})();
+</script>
 </body>
 </html>
