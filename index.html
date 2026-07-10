@@ -487,170 +487,169 @@ function initInteractions() {
 loadContent().then(renderSite);
 </script>
 
+
 <style>
 #fl-cat-page,#fl-prod-page{display:none;min-height:80vh;padding:48px 5%;background:var(--black)}
-.fl-back{background:none;border:1px solid var(--border);color:var(--muted);padding:8px 18px;border-radius:var(--radius);cursor:pointer;font-size:14px;margin-bottom:32px;display:inline-flex;align-items:center;gap:6px;transition:.2s}
-.fl-back:hover{border-color:var(--accent);color:var(--accent)}
-.fl-cat-title{font-size:2rem;font-weight:800;color:var(--white);margin-bottom:6px}
-.fl-cat-sub{color:var(--muted);margin-bottom:36px;font-size:15px}
+#fl-cat-page h2{color:var(--text);font-size:2rem;margin-bottom:8px}
+#fl-cat-page p.fl-desc{color:var(--muted);margin-bottom:32px}
+.fl-back{background:none;border:1px solid var(--border);color:var(--muted);padding:8px 20px;border-radius:var(--radius);cursor:pointer;margin-bottom:32px;font-size:0.9rem}
+.fl-back:hover{color:var(--text);border-color:var(--muted)}
 .fl-prod-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
-.fl-prod-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;cursor:pointer;transition:transform .2s,border-color .2s}
-.fl-prod-card:hover{transform:translateY(-3px);border-color:var(--accent)}
-.fl-prod-img{width:100%;aspect-ratio:4/3;background:#0d1a2e;display:flex;align-items:center;justify-content:center;font-size:42px;overflow:hidden}
-.fl-prod-img img{width:100%;height:100%;object-fit:cover}
-.fl-prod-body{padding:14px}
-.fl-prod-name{font-size:14px;font-weight:600;color:var(--text);margin-bottom:4px;line-height:1.3}
-.fl-prod-price{font-size:16px;font-weight:800;color:var(--accent)}
-.fl-empty{grid-column:1/-1;text-align:center;padding:80px 20px;color:var(--muted)}
-.fl-empty .fl-empty-icon{font-size:3rem;margin-bottom:16px}
-.fl-empty h3{font-size:1.2rem;color:var(--white);margin-bottom:8px}
-.fl-empty a{display:inline-block;margin-top:20px;background:var(--accent);color:#000;font-weight:700;padding:12px 28px;border-radius:var(--radius);text-decoration:none}
-.fl-detail{display:grid;grid-template-columns:1fr 1fr;gap:48px;max-width:1000px}
-.fl-gallery{display:flex;flex-direction:column;gap:12px}
-.fl-main-img{width:100%;aspect-ratio:4/3;background:#0d1a2e;border-radius:var(--radius);display:flex;align-items:center;justify-content:center;font-size:72px;overflow:hidden}
-.fl-main-img img{width:100%;height:100%;object-fit:cover}
-.fl-thumbs{display:flex;gap:8px;flex-wrap:wrap}
-.fl-thumb{width:72px;height:54px;border-radius:8px;object-fit:cover;cursor:pointer;border:2px solid var(--border);transition:border-color .2s}
-.fl-thumb:hover,.fl-thumb.active{border-color:var(--accent)}
-.fl-prod-info h1{font-size:1.8rem;font-weight:800;color:var(--white);margin-bottom:8px}
-.fl-prod-info .fl-price{font-size:2rem;font-weight:800;color:var(--accent);margin-bottom:20px}
-.fl-prod-info p{color:var(--muted);font-size:15px;line-height:1.7;margin-bottom:28px}
-.fl-order-btn{display:block;width:100%;background:var(--accent);color:#000;font-weight:700;font-size:16px;padding:14px;border-radius:var(--radius);text-align:center;text-decoration:none;border:none;cursor:pointer;transition:.2s}
-.fl-order-btn:hover{background:var(--accent2);color:#fff}
+@media(max-width:900px){.fl-prod-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:500px){.fl-prod-grid{grid-template-columns:1fr}}
+.fl-prod-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;cursor:pointer;transition:transform 0.2s,box-shadow 0.2s}
+.fl-prod-card:hover{transform:translateY(-4px);box-shadow:0 8px 24px rgba(0,0,0,0.3)}
+.fl-prod-img{width:100%;aspect-ratio:4/3;object-fit:cover;background:var(--dark);display:flex;align-items:center;justify-content:center;font-size:3rem;color:var(--muted)}
+.fl-prod-name{padding:12px 14px 4px;color:var(--text);font-weight:600;font-size:0.95rem}
+.fl-prod-price{padding:4px 14px 12px;color:var(--accent);font-size:0.85rem}
+#fl-prod-page h2{color:var(--text);font-size:1.8rem;margin-bottom:8px}
+.fl-prod-detail{display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-top:32px}
+@media(max-width:700px){.fl-prod-detail{grid-template-columns:1fr}}
+.fl-gal-main{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:var(--radius);background:var(--dark);display:flex;align-items:center;justify-content:center;font-size:5rem;color:var(--muted)}
+.fl-prod-info h3{color:var(--text);font-size:1.5rem;margin-bottom:8px}
+.fl-prod-info .fl-price{color:var(--accent);font-size:1.3rem;font-weight:700;margin-bottom:16px}
+.fl-prod-info p{color:var(--muted);line-height:1.7;margin-bottom:24px}
+.fl-order-btn{background:var(--accent);color:#000;border:none;padding:14px 32px;border-radius:var(--radius);font-weight:700;font-size:1rem;cursor:pointer;text-decoration:none;display:inline-block}
+.fl-order-btn:hover{opacity:0.9}
 .product-card{cursor:pointer}
-@media(max-width:900px){.fl-prod-grid{grid-template-columns:repeat(2,1fr)}.fl-detail{grid-template-columns:1fr}}
-@media(max-width:600px){.fl-prod-grid{grid-template-columns:repeat(2,1fr)}}
+.product-card::after{pointer-events:none!important}
 </style>
 
 <div id="fl-cat-page">
-  <button class="fl-back" onclick="flShowHome()">&#8592; All Categories</button>
-  <h1 class="fl-cat-title" id="fl-cat-title"></h1>
-  <p class="fl-cat-sub" id="fl-cat-sub"></p>
+  <button class="fl-back" onclick="window.flShowHome()">&#8592; Back</button>
+  <h2 id="fl-cat-title"></h2>
+  <p class="fl-desc" id="fl-cat-desc"></p>
   <div class="fl-prod-grid" id="fl-prod-grid"></div>
 </div>
 
 <div id="fl-prod-page">
-  <button class="fl-back" id="fl-prod-back">&#8592; Back</button>
-  <div class="fl-detail">
-    <div class="fl-gallery">
-      <div class="fl-main-img" id="fl-main-img">🖨️</div>
-      <div class="fl-thumbs" id="fl-thumbs"></div>
-    </div>
+  <button class="fl-back" id="fl-prod-back">&#8592; Back to category</button>
+  <div class="fl-prod-detail">
+    <div><div class="fl-gal-main" id="fl-gal-main">&#128424;</div></div>
     <div class="fl-prod-info">
-      <h1 id="fl-pname"></h1>
-      <div class="fl-price" id="fl-pprice"></div>
-      <p id="fl-pdesc"></p>
-      <a class="fl-order-btn" id="fl-porder" href="#">Order This Item</a>
+      <h3 id="fl-detail-name"></h3>
+      <div class="fl-price" id="fl-detail-price"></div>
+      <p id="fl-detail-desc"></p>
+      <a class="fl-order-btn" id="fl-order-btn" href="mailto:orders@forgelayer.online">Order this item</a>
     </div>
   </div>
 </div>
 
 <script>
 (function(){
-  var _C = null;
-  var _catId = null;
-
-  // Wait for the main site's data to be available, then wire up clicks
-  function init(){
-    // The main site stores content in window.siteData or fetches it — re-fetch ourselves
-    fetch('content.json?fl=1').then(function(r){return r.json();}).then(function(d){
-      _C = d;
-      wireCards();
-    }).catch(function(){wireCards();});
-  }
-
-  function wireCards(){
-    // Add onclick to all existing product-card elements
-    document.querySelectorAll('.product-card').forEach(function(card, i){
-      var cats = (_C && _C.categories) || [
-        {id:'household', name:'Home & Organisation'},
-        {id:'gifts',     name:'Personalised Gifts'},
-        {id:'prototypes',name:'Prototypes & Parts'},
-        {id:'decor',     name:'Gifts & Decor'}
-      ];
-      var cat = cats[i] || cats[0];
-      card.style.cursor = 'pointer';
-      card.addEventListener('click', function(){ openCat(cat.id, cat.name, cat.description||''); });
+var _C=null,_curCatId=null,_curCatName=null;
+var CATS=[
+  {id:'household',name:'Home & Organisation',description:'Practical prints that make your space work smarter.'},
+  {id:'prototypes',name:'Prototypes & Parts',description:'Custom brackets, replacement parts and prototypes.'},
+  {id:'gifts',name:'Custom Name & Text',description:'Personalised with any name, word or short message.'},
+  {id:'decor',name:'Gifts & Decor',description:'Decorative prints and thoughtful gifts that stand out.'}
+];
+var PRODUCTS={
+  household:[
+    {id:'h1',name:'Desk Cable Organiser',price:'€6',description:'Keep your desk tidy with this custom cable management solution.'},
+    {id:'h2',name:'Wall Hook Set (3 pcs)',price:'€5',description:'Sturdy wall hooks for coats, bags or keys. Available in any colour.'},
+    {id:'h3',name:'Bedside Phone Stand',price:'€4',description:'Adjustable phone stand perfect for nightstands.'},
+    {id:'h4',name:'Spice Jar Label Clips',price:'€4',description:'Clip-on labels for standard spice jars. Custom text printed.'},
+    {id:'h5',name:'Drawer Divider Set',price:'€8',description:'Custom-sized dividers for any drawer. Keeps things neat.'},
+    {id:'h6',name:'Toothbrush & Soap Holder',price:'€5',description:'Hygienic bathroom organiser. Easy to clean, waterproof PLA.'}
+  ],
+  prototypes:[
+    {id:'p1',name:'Custom Bracket / Mount',price:'€10',description:'Need a specific bracket or mount? We design and print to your exact dimensions.'},
+    {id:'p2',name:'Enclosure / Housing',price:'€15',description:'Custom enclosures for electronics, sensors or small devices.'},
+    {id:'p3',name:'Replacement Part',price:'€8',description:'Broken plastic part? Send us a photo and we will print a replacement.'},
+    {id:'p4',name:'Jig or Fixture',price:'€12',description:'Workshop jigs and fixtures printed to your specifications.'},
+    {id:'p5',name:'Concept Prototype',price:'€20',description:'Turn your idea into a physical prototype from sketches or CAD files.'},
+    {id:'p6',name:'Mechanical Test Part',price:'€14',description:'Test fit and function before committing to expensive manufacturing.'}
+  ],
+  gifts:[
+    {id:'g1',name:'Custom Name Keychain',price:'€5',description:'Personalised keychain with any name or short text. Durable PLA.'},
+    {id:'g2',name:'Desk Name Plate',price:'€7',description:'Professional desk nameplate for home or office. Custom text, any colour.'},
+    {id:'g3',name:'Mini Planter (personalised)',price:'€8',description:'Small planter with your name or message. Perfect for succulents.'},
+    {id:'g4',name:'Baby Name Wall Letters',price:'€12',description:'Individual letters to spell any name. Great for nurseries.'},
+    {id:'g5',name:'Wedding Favour Tags (10 pcs)',price:'€15',description:'Custom tags for wedding favours. Names or dates printed. Pack of 10.'},
+    {id:'g6',name:'Pet Name Tag',price:'€4',description:'Durable pet ID tag with name and phone number. Bright colours available.'}
+  ],
+  decor:[
+    {id:'d1',name:'Geometric Vase (small)',price:'€9',description:'Modern geometric vase for dried or artificial flowers.'},
+    {id:'d2',name:'Wall Art Panel',price:'€12',description:'Decorative wall panel in geometric or nature-inspired patterns.'},
+    {id:'d3',name:'Floating Shelf Bracket',price:'€7',description:'Stylish shelf brackets in modern geometric design. Sold as a pair.'},
+    {id:'d4',name:'Candle Holder Set (3 pcs)',price:'€10',description:'Set of 3 geometric candle holders. Fits standard tea light candles.'},
+    {id:'d5',name:'Plant Pot Stand',price:'€8',description:'Elevated stand for plant pots up to 15cm diameter.'},
+    {id:'d6',name:'Lamp Shade (geometric)',price:'€18',description:'Geometric lamp shade that casts beautiful shadow patterns.'}
+  ]
+};
+function getProd(catId){
+  if(_C&&_C.products&&_C.products[catId]&&_C.products[catId].length)return _C.products[catId];
+  return PRODUCTS[catId]||[];
+}
+function getCats(){
+  if(_C&&_C.products&&_C.products.items&&_C.products.items.length){
+    return _C.products.items.map(function(item,i){
+      return{id:CATS[i]?CATS[i].id:'household',name:item.title||(CATS[i]?CATS[i].name:''),description:item.description||(CATS[i]?CATS[i].description:'')};
     });
   }
-
-  window.flShowHome = function(){
-    document.getElementById('fl-cat-page').style.display='none';
-    document.getElementById('fl-prod-page').style.display='none';
-    // Show all original sections
-    document.querySelectorAll('body > *:not(#fl-cat-page):not(#fl-prod-page):not(script):not(style)').forEach(function(el){
-      if(el._flHidden){ el.style.display=''; el._flHidden=false; }
-    });
-    window.scrollTo(0,0);
-  };
-
-  function hideHome(){
-    document.querySelectorAll('body > *:not(#fl-cat-page):not(#fl-prod-page):not(script):not(style)').forEach(function(el){
-      if(el.style.display !== 'none'){
-        el._flHidden = true;
-        el.style.display = 'none';
-      }
-    });
-  }
-
-  function openCat(catId, name, desc){
-    _catId = catId;
-    hideHome();
-    document.getElementById('fl-cat-page').style.display='block';
-    document.getElementById('fl-prod-page').style.display='none';
-    document.getElementById('fl-cat-title').textContent = name || catId;
-    document.getElementById('fl-cat-sub').textContent = desc || '';
-    var prods = (_C && _C.products && _C.products[catId]) || [];
-    var grid = document.getElementById('fl-prod-grid');
-    var email = (_C && _C.order && _C.order.email) || 'orders@forgelayer.online';
-    if(!prods.length){
-      grid.innerHTML = '<div class="fl-empty"><div class="fl-empty-icon">🛒</div><h3>Products coming soon</h3><p>We're adding items to this category. In the meantime, contact us for a custom quote.</p><a href="mailto:'+email+'">Email us your idea</a></div>';
-    } else {
-      grid.innerHTML = prods.map(function(p){
-        var img = p.images && p.images[0] ? '<img src="'+p.images[0]+'" alt="">' : '🖨️';
-        return '<div class="fl-prod-card" onclick="flOpenProd(''+catId+'',''+p.id+'')" ><div class="fl-prod-img">'+img+'</div><div class="fl-prod-body"><div class="fl-prod-name">'+p.name+'</div><div class="fl-prod-price">'+p.price+'</div></div></div>';
-      }).join('');
-    }
-    window.scrollTo(0,0);
-  }
-
-  window.flOpenProd = function(catId, pid){
-    var prods = (_C && _C.products && _C.products[catId]) || [];
-    var p = prods.find(function(x){return x.id===pid;});
-    if(!p) return;
-    document.getElementById('fl-cat-page').style.display='none';
-    document.getElementById('fl-prod-page').style.display='block';
-    document.getElementById('fl-pname').textContent = p.name||'';
-    document.getElementById('fl-pprice').textContent = p.price||'';
-    document.getElementById('fl-pdesc').textContent = p.description||'';
-    var email = (_C && _C.order && _C.order.email)||'orders@forgelayer.online';
-    document.getElementById('fl-porder').href = 'mailto:'+email+'?subject=Order: '+encodeURIComponent(p.name||'');
-    var imgs = p.images||[];
-    var mi = document.getElementById('fl-main-img');
-    var th = document.getElementById('fl-thumbs');
-    if(imgs.length){
-      mi.innerHTML='<img src="'+imgs[0]+'" alt="">';
-      th.innerHTML=imgs.map(function(s,i){return '<img class="fl-thumb'+(i===0?' active':'')+'" src="'+s+'" onclick="flSetImg(this,''+s+'')">';}).join('');
-    } else { mi.innerHTML='🖨️'; th.innerHTML=''; }
-    document.getElementById('fl-prod-back').onclick=function(){
-      document.getElementById('fl-prod-page').style.display='none';
-      openCat(catId, (_C&&_C.categories||[]).find(function(c){return c.id===catId;})||{name:catId});
-    };
-    window.scrollTo(0,0);
-  };
-
-  window.flSetImg = function(el,src){
-    document.getElementById('fl-main-img').innerHTML='<img src="'+src+'" alt="">';
-    document.querySelectorAll('.fl-thumb').forEach(function(t){t.classList.remove('active');});
-    el.classList.add('active');
-  };
-
-  // Run after page loads
-  if(document.readyState==='loading'){
-    document.addEventListener('DOMContentLoaded', init);
-  } else {
-    setTimeout(init, 800);
-  }
+  return CATS;
+}
+function wireCards(){
+  var cards=document.querySelectorAll('.product-card');
+  if(!cards.length)return false;
+  var cats=getCats();
+  cards.forEach(function(card,i){
+    if(card._flWired)return;
+    card._flWired=true;
+    var cat=cats[i]||cats[0];
+    card.style.cursor='pointer';
+    card.addEventListener('click',function(e){e.preventDefault();openCat(cat.id,cat.name,cat.description||'');});
+  });
+  return true;
+}
+function tryWire(n){n=n||0;if(wireCards())return;if(n<30)setTimeout(function(){tryWire(n+1);},300);}
+function init(){
+  fetch('content.json?t='+Date.now()).then(function(r){return r.json();}).then(function(d){_C=d;tryWire(0);}).catch(function(){tryWire(0);});
+  tryWire(0);
+}
+window.flShowHome=function(){
+  document.getElementById('fl-cat-page').style.display='none';
+  document.getElementById('fl-prod-page').style.display='none';
+  document.querySelectorAll('body>*:not(#fl-cat-page):not(#fl-prod-page):not(script):not(style)').forEach(function(el){if(el._flHidden){el.style.display='';el._flHidden=false;}});
+  window.scrollTo(0,0);
+};
+function hideHome(){
+  document.querySelectorAll('body>*:not(#fl-cat-page):not(#fl-prod-page):not(script):not(style)').forEach(function(el){if(el.style.display!=='none'){el._flHidden=true;el.style.display='none';}});
+}
+function openCat(catId,name,desc){
+  _curCatId=catId;_curCatName=name;
+  hideHome();
+  document.getElementById('fl-cat-page').style.display='block';
+  document.getElementById('fl-prod-page').style.display='none';
+  document.getElementById('fl-cat-title').textContent=name;
+  document.getElementById('fl-cat-desc').textContent=desc;
+  var grid=document.getElementById('fl-prod-grid');
+  var prods=getProd(catId);
+  grid.innerHTML=prods.map(function(p){
+    var img=(p.images&&p.images.length)?'<img src="'+p.images[0]+'" alt="'+p.name+'" style="width:100%;height:100%;object-fit:cover" onerror="this.outerHTML='&#128424;'">'
+      :'<div style="display:flex;align-items:center;justify-content:center;width:100%;height:100%;font-size:3rem">&#128424;</div>';
+    return'<div class="fl-prod-card" onclick="window.flOpenProd(''+catId+'',''+p.id+'')"><div class="fl-prod-img">'+img+'</div><div class="fl-prod-name">'+p.name+'</div><div class="fl-prod-price">'+p.price+'</div></div>';
+  }).join('');
+  window.scrollTo(0,0);
+}
+window.flOpenProd=function(catId,pid){
+  var prods=getProd(catId);
+  var prod=prods.find(function(p){return p.id===pid;})||prods[0];
+  if(!prod)return;
+  document.getElementById('fl-cat-page').style.display='none';
+  document.getElementById('fl-prod-page').style.display='block';
+  var main=document.getElementById('fl-gal-main');
+  if(prod.images&&prod.images.length){main.innerHTML='<img src="'+prod.images[0]+'" style="width:100%;height:100%;object-fit:cover;border-radius:var(--radius)">';}
+  else{main.innerHTML='<div style="display:flex;align-items:center;justify-content:center;width:100%;height:100%;font-size:5rem">&#128424;</div>';}
+  document.getElementById('fl-detail-name').textContent=prod.name;
+  document.getElementById('fl-detail-price').textContent=prod.price;
+  document.getElementById('fl-detail-desc').textContent=prod.description;
+  document.getElementById('fl-order-btn').href='mailto:orders@forgelayer.online?subject=Order: '+encodeURIComponent(prod.name);
+  document.getElementById('fl-prod-back').onclick=function(){document.getElementById('fl-prod-page').style.display='none';document.getElementById('fl-cat-page').style.display='block';window.scrollTo(0,0);};
+  window.scrollTo(0,0);
+};
+if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',init);}else{setTimeout(init,200);}
 })();
 </script>
 </body>
