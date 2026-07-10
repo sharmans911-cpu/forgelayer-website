@@ -2,14 +2,14 @@
   "site": {
     "name": "ForgeLayer",
     "email": "orders@forgelayer.online",
-    "footer_text": "Â© 2025 ForgeLayer Â· Custom 3D Printing Â· Germany"
+    "footer_text": "ÃÂ© 2025 ForgeLayer ÃÂ· 3D Print your Imagination ÃÂ· "
   },
   "hero": {
     "enabled": true,
-    "badge": "Custom 3D Prints Â· Germany",
+    "badge": "Custom 3D Prints ÃÂ· Germany",
     "headline": "Bring your ideas",
     "headline_highlight": "to life in 3D",
-    "subtext": "Home-based custom 3D printing â personalised gifts, home organisation, functional prototypes and more. Printed with precision, delivered with care.",
+    "subtext": "Home-based custom 3D printing Ã¢ÂÂ personalised gifts, home organisation, functional prototypes and more. Printed with precision, delivered with care.",
     "cta_primary": "Place an Order",
     "cta_secondary": "See what we make",
     "stats": [
@@ -22,7 +22,7 @@
         "label": "Colors available"
       },
       {
-        "number": "3â5",
+        "number": "3Ã¢ÂÂ5",
         "label": "Days turnaround"
       },
       {
@@ -36,27 +36,27 @@
     "enabled": true,
     "label": "What we make",
     "title": "Four categories, endless possibilities",
-    "subtitle": "Every item is printed to order â custom sizes, colours and text always available.",
+    "subtitle": "Every item is printed to order Ã¢ÂÂ custom sizes, colours and text always available.",
     "items": [
       {
         "title": "Home & Organisation",
-        "description": "Practical prints that make your space work smarter â designed for real life, printed to fit.",
-        "icon": "ð "
+        "description": "Practical prints that make your space work smarter Ã¢ÂÂ designed for real life, printed to fit.",
+        "icon": "Ã°ÂÂÂ "
       },
       {
         "title": "Prototypes & Parts",
         "description": "Need a custom bracket, replacement part or a prototype for your idea? We print it precisely.",
-        "icon": "âï¸"
+        "icon": "Ã¢ÂÂÃ¯Â¸Â"
       },
       {
         "title": "Custom Name & Text",
-        "description": "Personalised with any name, word or short message â perfect for gifts that actually mean something.",
-        "icon": "ð¤"
+        "description": "Personalised with any name, word or short message Ã¢ÂÂ perfect for gifts that actually mean something.",
+        "icon": "Ã°ÂÂÂ¤"
       },
       {
-        "title": "Gifts & DÃ©cor",
-        "description": "Decorative prints and thoughtful gifts that stand out â unique, durable and made to order.",
-        "icon": "â¨"
+        "title": "Gifts & DÃÂ©cor",
+        "description": "Decorative prints and thoughtful gifts that stand out Ã¢ÂÂ unique, durable and made to order.",
+        "icon": "Ã¢ÂÂ¨"
       }
     ]
   },
@@ -69,7 +69,7 @@
       {
         "step": "",
         "title": "Tell us what you need",
-        "description": "Click the order button and send us an email with what you'd like â name, size, colour, quantity. Not sure? Just describe your idea."
+        "description": "Click the order button and send us an email with what you'd like Ã¢ÂÂ name, size, colour, quantity. Not sure? Just describe your idea."
       },
       {
         "step": "",
@@ -87,36 +87,36 @@
     "enabled": true,
     "label": "Portfolio",
     "title": "Recent work",
-    "subtitle": "Our latest prints â add your own photos here once you have them.",
-    "note": "ð¸ More photos coming soon â follow us for updates",
+    "subtitle": "Our latest prints Ã¢ÂÂ add your own photos here once you have them.",
+    "note": "Ã°ÂÂÂ¸ More photos coming soon Ã¢ÂÂ follow us for updates",
     "items": [
       {
-        "emoji": "ð¦",
+        "emoji": "Ã°ÂÂÂ¦",
         "label": "Desk Organiser",
         "bg": "#0d2137"
       },
       {
-        "emoji": "ðª",
+        "emoji": "Ã°ÂÂªÂ",
         "label": "Wall Hook Set",
         "bg": "#0d1f0d"
       },
       {
-        "emoji": "ð",
+        "emoji": "Ã°ÂÂÂ",
         "label": "Name Keychain",
         "bg": "#1f0d25"
       },
       {
-        "emoji": "ð¿",
+        "emoji": "Ã°ÂÂÂ¿",
         "label": "Mini Planter",
         "bg": "#1f1a0d"
       },
       {
-        "emoji": "âï¸",
+        "emoji": "Ã¢ÂÂÃ¯Â¸Â",
         "label": "Custom Bracket",
         "bg": "#1a1a2e"
       },
       {
-        "emoji": "ð",
+        "emoji": "Ã°ÂÂÂ",
         "label": "Gift Box",
         "bg": "#0d1f1a"
       }
@@ -126,38 +126,38 @@
     "enabled": false,
     "label": "Pricing guide",
     "title": "Transparent, fair pricing",
-    "subtitle": "Every order is quoted individually â here's a rough guide. Final price depends on size, complexity, and material.",
-    "note": "ð¡ Not sure about the price? Just email us â quotes are free, fast and come with no obligation.",
+    "subtitle": "Every order is quoted individually Ã¢ÂÂ here's a rough guide. Final price depends on size, complexity, and material.",
+    "note": "Ã°ÂÂÂ¡ Not sure about the price? Just email us Ã¢ÂÂ quotes are free, fast and come with no obligation.",
     "rows": [
       {
         "item_type": "Small home item",
         "example": "Cable clip, hook, stand",
-        "price": "â¬4",
-        "turnaround": "1â2 days"
+        "price": "Ã¢ÂÂ¬4",
+        "turnaround": "1Ã¢ÂÂ2 days"
       },
       {
         "item_type": "Custom name print",
         "example": "Keychain, nameplate",
-        "price": "â¬5",
-        "turnaround": "2â3 days"
+        "price": "Ã¢ÂÂ¬5",
+        "turnaround": "2Ã¢ÂÂ3 days"
       },
       {
         "item_type": "Decorative / gift",
         "example": "Vase, planter, wall art",
-        "price": "â¬6",
-        "turnaround": "3â5 days"
+        "price": "Ã¢ÂÂ¬6",
+        "turnaround": "3Ã¢ÂÂ5 days"
       },
       {
         "item_type": "Functional part",
         "example": "Bracket, enclosure, jig",
-        "price": "â¬8",
-        "turnaround": "3â5 days"
+        "price": "Ã¢ÂÂ¬8",
+        "turnaround": "3Ã¢ÂÂ5 days"
       },
       {
         "item_type": "Prototype / complex",
         "example": "Multi-part assemblies",
-        "price": "â¬15+",
-        "turnaround": "5â7 days"
+        "price": "Ã¢ÂÂ¬15+",
+        "turnaround": "5Ã¢ÂÂ7 days"
       },
       {
         "item_type": "Bulk order (10+)",
@@ -171,9 +171,9 @@
     "enabled": true,
     "label": "Ready to order?",
     "title": "Let's make something",
-    "subtitle": "Send us an email with your idea â no need to have all the details figured out. We'll help you get there.",
+    "subtitle": "Send us an email with your idea Ã¢ÂÂ no need to have all the details figured out. We'll help you get there.",
     "button_text": "Email us your order",
-    "sub_text": "We reply within 24 hours Â· No upfront payment Â· Free quote",
+    "sub_text": "We reply within 24 hours ÃÂ· No upfront payment ÃÂ· Free quote",
     "steps": [
       {
         "text": "Describe your idea"
