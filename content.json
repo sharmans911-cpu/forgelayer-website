@@ -1,164 +1,224 @@
 {
   "site": {
     "name": "ForgeLayer",
-    "tagline": "Your Imagination to 3D Prints",
     "email": "orders@forgelayer.online",
-    "description": "3D Printing personalised Household things, Prototypes and more. Printed with Precision, delivered with care.",
     "footer_text": "© 2025 ForgeLayer · Custom 3D Printing · Germany"
   },
   "hero": {
-    "title": "Your Imagination to 3D Prints",
-    "subtitle": "3D Printing personalised Household things, Prototypes and more. Printed with Precision, delivered with care.",
-    "cta": "Get a Quote"
+    "enabled": true,
+    "badge": "Your Imagination to 3D Prints",
+    "headline": "Bring your ideas",
+    "headline_highlight": "to life in 3D",
+    "subtext": "3D Printing personalised Household things, Prototypes and more. Printed with Precision, delivered with care.",
+    "cta_primary": "Place an Order",
+    "cta_secondary": "See what we make",
+    "stats": [
+      {
+        "number": "6+",
+        "label": "Colors available"
+      },
+      {
+        "number": "5–7",
+        "label": "Working days"
+      },
+      {
+        "number": "100%",
+        "label": "Custom made"
+      }
+    ]
   },
-  "stats": [
-    {
-      "value": "6+",
-      "label": "Colors available"
-    },
-    {
-      "value": "5–7",
-      "label": "Working days delivery"
-    },
-    {
-      "value": "100%",
-      "label": "Custom made"
-    }
-  ],
-  "colors": [
-    {
-      "name": "Black",
-      "hex": "#1a1a1a"
-    },
-    {
-      "name": "White",
-      "hex": "#f0f0f0"
-    },
-    {
-      "name": "Red",
-      "hex": "#e53e3e"
-    },
-    {
-      "name": "Pink",
-      "hex": "#ed64a6"
-    },
-    {
-      "name": "Orange",
-      "hex": "#dd6b20"
-    },
-    {
-      "name": "Sky Blue",
-      "hex": "#4299e1"
-    },
-    {
-      "name": "Grey",
-      "hex": "#718096"
-    }
-  ],
-  "categories": [
-    {
-      "id": "household",
-      "name": "Household Items",
-      "icon": "🏠",
-      "iconImage": "",
-      "description": "Organisers, holders, hooks and everyday home essentials"
-    },
-    {
-      "id": "gifts",
-      "name": "Personalised Gifts",
-      "icon": "🎁",
-      "iconImage": "",
-      "description": "Unique custom gifts for every occasion"
-    },
-    {
-      "id": "prototypes",
-      "name": "Prototypes",
-      "icon": "⚙️",
-      "iconImage": "",
-      "description": "Functional prototypes to bring your ideas to life"
-    },
-    {
-      "id": "decor",
-      "name": "Home Decor",
-      "icon": "🖼️",
-      "iconImage": "",
-      "description": "Decorative prints to beautify your space"
-    }
-  ],
   "products": {
-    "household": [],
-    "gifts": [],
-    "prototypes": [],
-    "decor": []
+    "enabled": true,
+    "label": "What we make",
+    "title": "Four categories, endless possibilities",
+    "subtitle": "Every item is printed to order — custom sizes, colours and text always available.",
+    "items": [
+      {
+        "icon": "🏠",
+        "icon_style": "green",
+        "title": "Home & Organisation",
+        "description": "Practical prints that make your space work smarter — designed for real life, printed to fit.",
+        "tags": [
+          "Cable holders",
+          "Wall hooks",
+          "Drawer inserts",
+          "Phone stands",
+          "Spice racks",
+          "Desk organisers"
+        ]
+      },
+      {
+        "icon": "⚙️",
+        "icon_style": "blue",
+        "title": "Prototypes & Parts",
+        "description": "Need a custom bracket, replacement part or a prototype for your idea? We print it precisely.",
+        "tags": [
+          "Replacement parts",
+          "Brackets",
+          "Enclosures",
+          "Jigs & fixtures",
+          "Product prototypes"
+        ]
+      },
+      {
+        "icon": "🔤",
+        "icon_style": "purple",
+        "title": "Custom Name & Text",
+        "description": "Personalised with any name, word or short message — perfect for gifts that actually mean something.",
+        "tags": [
+          "Name signs",
+          "Keychains",
+          "Desk nameplates",
+          "Wedding décor",
+          "Baby gifts"
+        ]
+      },
+      {
+        "icon": "✨",
+        "icon_style": "orange",
+        "title": "Gifts & Décor",
+        "description": "Decorative prints and thoughtful gifts that stand out — unique, durable and made to order.",
+        "tags": [
+          "Planters",
+          "Vases",
+          "Wall art",
+          "Figurines",
+          "Holiday décor",
+          "Lamp shades"
+        ]
+      }
+    ]
   },
-  "how": [
-    {
-      "step": "1",
-      "title": "Share Your Idea",
-      "desc": "Tell us what you want — a sketch, description or reference image is enough."
-    },
-    {
-      "step": "2",
-      "title": "We Design & Quote",
-      "desc": "We prepare a digital model and send you a quote within 24 hours."
-    },
-    {
-      "step": "3",
-      "title": "Approve & Print",
-      "desc": "Once you approve, we start printing with precision on our professional 3D printer."
-    },
-    {
-      "step": "4",
-      "title": "Delivered to You",
-      "desc": "Your print is carefully packaged and delivered within 5–7 working days."
-    }
-  ],
-  "recentWorks": [],
-  "faq": [
-    {
-      "q": "What materials do you use?",
-      "a": "We primarily use PLA filament — durable, eco-friendly and available in all our colour options."
-    },
-    {
-      "q": "How long does an order take?",
-      "a": "Standard orders take 5–7 working days from confirmation."
-    },
-    {
-      "q": "Can I order a completely custom design?",
-      "a": "Absolutely! Contact us at orders@forgelayer.online with your idea, sketch or reference image. We quote within 24 hours."
-    },
-    {
-      "q": "Which colours are available?",
-      "a": "Black, White, Red, Pink, Orange, Sky Blue and Grey. Contact us if you need something different."
-    },
-    {
-      "q": "How do I place an order?",
-      "a": "Browse our categories, pick a product, then email orders@forgelayer.online."
-    },
-    {
-      "q": "Can I see a preview before printing?",
-      "a": "Yes! For custom orders we send a digital render for your approval before printing."
-    },
-    {
-      "q": "What is the maximum print size?",
-      "a": "Our printer supports up to 256 × 256 × 256 mm. Larger items can be printed in sections and joined."
-    },
-    {
-      "q": "Do you ship across Germany?",
-      "a": "Yes, we ship throughout Germany. Shipping costs confirmed at order."
-    },
-    {
-      "q": "What is your return policy?",
-      "a": "Since all prints are custom-made, we do not accept returns unless there is a manufacturing defect."
-    },
-    {
-      "q": "How do I send my design files?",
-      "a": "Send STL, OBJ or 3MF files to orders@forgelayer.online. We can also design from scratch."
-    }
-  ],
+  "how": {
+    "enabled": true,
+    "label": "The process",
+    "title": "Order in 3 simple steps",
+    "subtitle": "No complicated forms. Just send an email and we'll handle the rest.",
+    "steps": [
+      {
+        "title": "Tell us what you need",
+        "description": "Send us an email with what you'd like — name, size, colour, quantity. Not sure? Just describe your idea."
+      },
+      {
+        "title": "Get a quote & confirm",
+        "description": "We'll reply within 24 hours with a price, estimated time, and a preview if needed. You confirm before anything is printed."
+      },
+      {
+        "title": "Receive your print",
+        "description": "We print it and arrange delivery. Payment by bank transfer or PayPal once you're happy with the result."
+      }
+    ]
+  },
+  "gallery": {
+    "enabled": true,
+    "label": "Portfolio",
+    "title": "Recent work",
+    "subtitle": "Our latest prints — add your own photos here once you have them.",
+    "note": "📸 More photos coming soon — follow us for updates",
+    "items": [
+      {
+        "emoji": "📦",
+        "label": "Desk Organiser",
+        "bg": "#0d2137"
+      },
+      {
+        "emoji": "🪝",
+        "label": "Wall Hook Set",
+        "bg": "#0d1f0d"
+      },
+      {
+        "emoji": "🔑",
+        "label": "Name Keychain",
+        "bg": "#1f0d25"
+      },
+      {
+        "emoji": "🌿",
+        "label": "Mini Planter",
+        "bg": "#1f1a0d"
+      },
+      {
+        "emoji": "⚙️",
+        "label": "Custom Bracket",
+        "bg": "#1a1a2e"
+      },
+      {
+        "emoji": "🎁",
+        "label": "Gift Box",
+        "bg": "#0d1f1a"
+      }
+    ]
+  },
+  "pricing": {
+    "enabled": false
+  },
   "order": {
-    "title": "Get in Touch",
-    "subtitle": "Ready to bring your idea to life? Contact us — we reply within 24 hours.",
-    "email": "orders@forgelayer.online"
+    "enabled": true,
+    "label": "Ready to order?",
+    "title": "Let's make something",
+    "subtitle": "Send us an email with your idea — no need to have all the details figured out. We'll help you get there.",
+    "email": "orders@forgelayer.online",
+    "button_text": "Email us your order",
+    "sub_text": "We reply within 24 hours · No upfront payment · Free quote",
+    "steps": [
+      {
+        "text": "Describe your idea"
+      },
+      {
+        "text": "Pick colour & size"
+      },
+      {
+        "text": "We send a quote"
+      },
+      {
+        "text": "Confirm & we print"
+      }
+    ]
+  },
+  "faq": {
+    "enabled": true,
+    "label": "FAQ",
+    "title": "Common questions",
+    "items": [
+      {
+        "q": "What materials do you print with?",
+        "a": "Primarily PLA — durable and eco-friendly. Available in all our standard colours. We can discuss alternatives for specific functional needs."
+      },
+      {
+        "q": "How long does an order take?",
+        "a": "Standard orders take 5–7 working days from confirmation. Complex or large items may take longer — we always confirm the timeline upfront."
+      },
+      {
+        "q": "Can I request a completely custom design?",
+        "a": "Absolutely. Send us your idea, sketch or reference image at orders@forgelayer.online. We'll quote you within 24 hours — no obligation."
+      },
+      {
+        "q": "Which colours are available?",
+        "a": "Black, White, Red, Pink, Orange, Sky Blue and Grey. Need something else? Just ask."
+      },
+      {
+        "q": "How do I place an order?",
+        "a": "Browse our categories, then email orders@forgelayer.online. We reply within 24 hours."
+      },
+      {
+        "q": "Can I see a preview before printing?",
+        "a": "Yes — for custom orders we send a digital render for your approval before anything is printed."
+      },
+      {
+        "q": "What is the maximum print size?",
+        "a": "Up to 256 × 256 × 256 mm. Larger items can be printed in sections and joined seamlessly."
+      },
+      {
+        "q": "Do you ship across Germany?",
+        "a": "Yes, we ship throughout Germany. Shipping cost is confirmed at the time of order. Local pickup is also available."
+      },
+      {
+        "q": "What is your return policy?",
+        "a": "Since all prints are custom-made, we do not accept returns unless there is a manufacturing defect. We send photos before shipping so you can approve."
+      },
+      {
+        "q": "How do I send you my design files?",
+        "a": "Send STL, OBJ or 3MF files to orders@forgelayer.online. We can also design from scratch based on your description or sketch."
+      }
+    ]
   }
 }
