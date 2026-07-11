@@ -499,13 +499,14 @@ loadContent().then(renderSite);
 @media(max-width:500px){.fl-prod-grid{grid-template-columns:1fr}}
 .fl-prod-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;cursor:pointer;transition:transform 0.2s,box-shadow 0.2s}
 .fl-prod-card:hover{transform:translateY(-4px);box-shadow:0 8px 24px rgba(0,0,0,0.3)}
-.fl-prod-img{width:100%;aspect-ratio:4/3;object-fit:cover;background:var(--dark);display:flex;align-items:center;justify-content:center;font-size:3rem;color:var(--muted)}
+.fl-prod-img{width:100%;aspect-ratio:4/3;background:var(--dark);display:flex;align-items:center;justify-content:center;font-size:3rem;color:var(--muted)}
+.fl-prod-img img{width:100%;height:100%;object-fit:cover}
 .fl-prod-name{padding:12px 14px 4px;color:var(--text);font-weight:600;font-size:0.95rem}
 .fl-prod-price{padding:4px 14px 12px;color:var(--accent);font-size:0.85rem}
-#fl-prod-page h2{color:var(--text);font-size:1.8rem;margin-bottom:8px}
 .fl-prod-detail{display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-top:32px}
 @media(max-width:700px){.fl-prod-detail{grid-template-columns:1fr}}
-.fl-gal-main{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:var(--radius);background:var(--dark);display:flex;align-items:center;justify-content:center;font-size:5rem;color:var(--muted)}
+.fl-gal-main{width:100%;aspect-ratio:4/3;border-radius:var(--radius);background:var(--dark);display:flex;align-items:center;justify-content:center;font-size:5rem;color:var(--muted);overflow:hidden}
+.fl-gal-main img{width:100%;height:100%;object-fit:cover}
 .fl-prod-info h3{color:var(--text);font-size:1.5rem;margin-bottom:8px}
 .fl-prod-info .fl-price{color:var(--accent);font-size:1.3rem;font-weight:700;margin-bottom:16px}
 .fl-prod-info p{color:var(--muted);line-height:1.7;margin-bottom:24px}
@@ -537,45 +538,45 @@ loadContent().then(renderSite);
 
 <script>
 (function(){
-var _C=null,_curCatId=null,_curCatName=null;
+var _C=null,_curCatId=null;
 var CATS=[
-  {id:'household',name:'Home & Organisation',description:'Practical prints that make your space work smarter.'},
-  {id:'prototypes',name:'Prototypes & Parts',description:'Custom brackets, replacement parts and prototypes.'},
-  {id:'gifts',name:'Custom Name & Text',description:'Personalised with any name, word or short message.'},
-  {id:'decor',name:'Gifts & Decor',description:'Decorative prints and thoughtful gifts that stand out.'}
+  {id:"household",name:"Home & Organisation",description:"Practical prints that make your space work smarter."},
+  {id:"prototypes",name:"Prototypes & Parts",description:"Custom brackets, parts and prototypes."},
+  {id:"gifts",name:"Custom Name & Text",description:"Personalised with any name or message."},
+  {id:"decor",name:"Gifts & Decor",description:"Decorative prints and thoughtful gifts."}
 ];
 var PRODUCTS={
   household:[
-    {id:'h1',name:'Desk Cable Organiser',price:'€6',description:'Keep your desk tidy with this custom cable management solution.'},
-    {id:'h2',name:'Wall Hook Set (3 pcs)',price:'€5',description:'Sturdy wall hooks for coats, bags or keys. Available in any colour.'},
-    {id:'h3',name:'Bedside Phone Stand',price:'€4',description:'Adjustable phone stand perfect for nightstands.'},
-    {id:'h4',name:'Spice Jar Label Clips',price:'€4',description:'Clip-on labels for standard spice jars. Custom text printed.'},
-    {id:'h5',name:'Drawer Divider Set',price:'€8',description:'Custom-sized dividers for any drawer. Keeps things neat.'},
-    {id:'h6',name:'Toothbrush & Soap Holder',price:'€5',description:'Hygienic bathroom organiser. Easy to clean, waterproof PLA.'}
+    {id:"h1",name:"Desk Cable Organiser",price:"€6",description:"Keep your desk tidy with this custom cable management solution."},
+    {id:"h2",name:"Wall Hook Set (3 pcs)",price:"€5",description:"Sturdy wall hooks for coats, bags or keys. Available in any colour."},
+    {id:"h3",name:"Bedside Phone Stand",price:"€4",description:"Adjustable phone stand for nightstands. Custom angle available."},
+    {id:"h4",name:"Spice Jar Label Clips",price:"€4",description:"Clip-on labels for standard spice jars. Custom text printed."},
+    {id:"h5",name:"Drawer Divider Set",price:"€8",description:"Custom-sized dividers for any drawer. Keeps things neat."},
+    {id:"h6",name:"Toothbrush & Soap Holder",price:"€5",description:"Hygienic bathroom organiser. Easy to clean, waterproof PLA."}
   ],
   prototypes:[
-    {id:'p1',name:'Custom Bracket / Mount',price:'€10',description:'Need a specific bracket or mount? We design and print to your exact dimensions.'},
-    {id:'p2',name:'Enclosure / Housing',price:'€15',description:'Custom enclosures for electronics, sensors or small devices.'},
-    {id:'p3',name:'Replacement Part',price:'€8',description:'Broken plastic part? Send us a photo and we will print a replacement.'},
-    {id:'p4',name:'Jig or Fixture',price:'€12',description:'Workshop jigs and fixtures printed to your specifications.'},
-    {id:'p5',name:'Concept Prototype',price:'€20',description:'Turn your idea into a physical prototype from sketches or CAD files.'},
-    {id:'p6',name:'Mechanical Test Part',price:'€14',description:'Test fit and function before committing to expensive manufacturing.'}
+    {id:"p1",name:"Custom Bracket / Mount",price:"€10",description:"Need a specific bracket or mount? We design and print to your exact dimensions."},
+    {id:"p2",name:"Enclosure / Housing",price:"€15",description:"Custom enclosures for electronics or small devices. Send your dimensions."},
+    {id:"p3",name:"Replacement Part",price:"€8",description:"Broken plastic part? Send us a photo and we will print a replacement."},
+    {id:"p4",name:"Jig or Fixture",price:"€12",description:"Workshop jigs and fixtures printed to your specifications."},
+    {id:"p5",name:"Concept Prototype",price:"€20",description:"Turn your idea into a physical prototype from sketches or CAD files."},
+    {id:"p6",name:"Mechanical Test Part",price:"€14",description:"Test fit and function before committing to expensive manufacturing."}
   ],
   gifts:[
-    {id:'g1',name:'Custom Name Keychain',price:'€5',description:'Personalised keychain with any name or short text. Durable PLA.'},
-    {id:'g2',name:'Desk Name Plate',price:'€7',description:'Professional desk nameplate for home or office. Custom text, any colour.'},
-    {id:'g3',name:'Mini Planter (personalised)',price:'€8',description:'Small planter with your name or message. Perfect for succulents.'},
-    {id:'g4',name:'Baby Name Wall Letters',price:'€12',description:'Individual letters to spell any name. Great for nurseries.'},
-    {id:'g5',name:'Wedding Favour Tags (10 pcs)',price:'€15',description:'Custom tags for wedding favours. Names or dates printed. Pack of 10.'},
-    {id:'g6',name:'Pet Name Tag',price:'€4',description:'Durable pet ID tag with name and phone number. Bright colours available.'}
+    {id:"g1",name:"Custom Name Keychain",price:"€5",description:"Personalised keychain with any name or short text. Durable PLA."},
+    {id:"g2",name:"Desk Name Plate",price:"€7",description:"Professional desk nameplate for home or office. Custom text, any colour."},
+    {id:"g3",name:"Mini Planter (personalised)",price:"€8",description:"Small planter with your name or message. Perfect for succulents."},
+    {id:"g4",name:"Baby Name Wall Letters",price:"€12",description:"Individual letters to spell any name. Great for nurseries."},
+    {id:"g5",name:"Wedding Favour Tags (10 pcs)",price:"€15",description:"Custom tags for wedding favours. Names or dates printed. Pack of 10."},
+    {id:"g6",name:"Pet Name Tag",price:"€4",description:"Durable pet ID tag with name and phone number. Bright colours available."}
   ],
   decor:[
-    {id:'d1',name:'Geometric Vase (small)',price:'€9',description:'Modern geometric vase for dried or artificial flowers.'},
-    {id:'d2',name:'Wall Art Panel',price:'€12',description:'Decorative wall panel in geometric or nature-inspired patterns.'},
-    {id:'d3',name:'Floating Shelf Bracket',price:'€7',description:'Stylish shelf brackets in modern geometric design. Sold as a pair.'},
-    {id:'d4',name:'Candle Holder Set (3 pcs)',price:'€10',description:'Set of 3 geometric candle holders. Fits standard tea light candles.'},
-    {id:'d5',name:'Plant Pot Stand',price:'€8',description:'Elevated stand for plant pots up to 15cm diameter.'},
-    {id:'d6',name:'Lamp Shade (geometric)',price:'€18',description:'Geometric lamp shade that casts beautiful shadow patterns.'}
+    {id:"d1",name:"Geometric Vase (small)",price:"€9",description:"Modern geometric vase for dried or artificial flowers."},
+    {id:"d2",name:"Wall Art Panel",price:"€12",description:"Decorative wall panel in geometric or nature-inspired patterns."},
+    {id:"d3",name:"Floating Shelf Bracket",price:"€7",description:"Stylish shelf brackets in modern geometric design. Sold as a pair."},
+    {id:"d4",name:"Candle Holder Set (3 pcs)",price:"€10",description:"Set of 3 geometric candle holders. Fits standard tea light candles."},
+    {id:"d5",name:"Plant Pot Stand",price:"€8",description:"Elevated stand for plant pots up to 15cm diameter."},
+    {id:"d6",name:"Lamp Shade (geometric)",price:"€18",description:"Geometric lamp shade that casts beautiful shadow patterns."}
   ]
 };
 function getProd(catId){
@@ -585,71 +586,72 @@ function getProd(catId){
 function getCats(){
   if(_C&&_C.products&&_C.products.items&&_C.products.items.length){
     return _C.products.items.map(function(item,i){
-      return{id:CATS[i]?CATS[i].id:'household',name:item.title||(CATS[i]?CATS[i].name:''),description:item.description||(CATS[i]?CATS[i].description:'')};
+      return{id:CATS[i]?CATS[i].id:"household",name:item.title||(CATS[i]?CATS[i].name:""),description:item.description||(CATS[i]?CATS[i].description:"")};
     });
   }
   return CATS;
 }
 function wireCards(){
-  var cards=document.querySelectorAll('.product-card');
+  var cards=document.querySelectorAll(".product-card");
   if(!cards.length)return false;
   var cats=getCats();
   cards.forEach(function(card,i){
     if(card._flWired)return;
     card._flWired=true;
     var cat=cats[i]||cats[0];
-    card.style.cursor='pointer';
-    card.addEventListener('click',function(e){e.preventDefault();openCat(cat.id,cat.name,cat.description||'');});
+    card.style.cursor="pointer";
+    card.addEventListener("click",function(e){e.preventDefault();openCat(cat.id,cat.name,cat.description||"");});
   });
   return true;
 }
 function tryWire(n){n=n||0;if(wireCards())return;if(n<30)setTimeout(function(){tryWire(n+1);},300);}
 function init(){
-  fetch('content.json?t='+Date.now()).then(function(r){return r.json();}).then(function(d){_C=d;tryWire(0);}).catch(function(){tryWire(0);});
+  fetch("content.json?t="+Date.now()).then(function(r){return r.json();}).then(function(d){_C=d;tryWire(0);}).catch(function(){tryWire(0);});
   tryWire(0);
 }
 window.flShowHome=function(){
-  document.getElementById('fl-cat-page').style.display='none';
-  document.getElementById('fl-prod-page').style.display='none';
-  document.querySelectorAll('body>*:not(#fl-cat-page):not(#fl-prod-page):not(script):not(style)').forEach(function(el){if(el._flHidden){el.style.display='';el._flHidden=false;}});
+  document.getElementById("fl-cat-page").style.display="none";
+  document.getElementById("fl-prod-page").style.display="none";
+  document.querySelectorAll("body>*:not(#fl-cat-page):not(#fl-prod-page):not(script):not(style)").forEach(function(el){if(el._flHidden){el.style.display="";el._flHidden=false;}});
   window.scrollTo(0,0);
 };
 function hideHome(){
-  document.querySelectorAll('body>*:not(#fl-cat-page):not(#fl-prod-page):not(script):not(style)').forEach(function(el){if(el.style.display!=='none'){el._flHidden=true;el.style.display='none';}});
+  document.querySelectorAll("body>*:not(#fl-cat-page):not(#fl-prod-page):not(script):not(style)").forEach(function(el){if(el.style.display!=="none"){el._flHidden=true;el.style.display="none";}});
 }
 function openCat(catId,name,desc){
-  _curCatId=catId;_curCatName=name;
+  _curCatId=catId;
   hideHome();
-  document.getElementById('fl-cat-page').style.display='block';
-  document.getElementById('fl-prod-page').style.display='none';
-  document.getElementById('fl-cat-title').textContent=name;
-  document.getElementById('fl-cat-desc').textContent=desc;
-  var grid=document.getElementById('fl-prod-grid');
+  document.getElementById("fl-cat-page").style.display="block";
+  document.getElementById("fl-prod-page").style.display="none";
+  document.getElementById("fl-cat-title").textContent=name;
+  document.getElementById("fl-cat-desc").textContent=desc;
+  var grid=document.getElementById("fl-prod-grid");
   var prods=getProd(catId);
   grid.innerHTML=prods.map(function(p){
-    var img=(p.images&&p.images.length)?'<img src="'+p.images[0]+'" alt="'+p.name+'" style="width:100%;height:100%;object-fit:cover" onerror="this.outerHTML='&#128424;'">'
-      :'<div style="display:flex;align-items:center;justify-content:center;width:100%;height:100%;font-size:3rem">&#128424;</div>';
-    return'<div class="fl-prod-card" onclick="window.flOpenProd(''+catId+'',''+p.id+'')"><div class="fl-prod-img">'+img+'</div><div class="fl-prod-name">'+p.name+'</div><div class="fl-prod-price">'+p.price+'</div></div>';
-  }).join('');
+    var imgHtml=(p.images&&p.images.length)
+      ?"<div class=\"fl-prod-img\"><img src=\""+p.images[0]+"\" alt=\""+p.name+"\"></div>"
+      :"<div class=\"fl-prod-img\">&#128424;</div>";
+    return "<div class=\"fl-prod-card\" onclick=\"window.flOpenProd('"+catId+"','"+p.id+"')\">"+imgHtml+"<div class=\"fl-prod-name\">"+p.name+"</div><div class=\"fl-prod-price\">"+p.price+"</div></div>";
+  }).join("");
   window.scrollTo(0,0);
 }
 window.flOpenProd=function(catId,pid){
   var prods=getProd(catId);
   var prod=prods.find(function(p){return p.id===pid;})||prods[0];
   if(!prod)return;
-  document.getElementById('fl-cat-page').style.display='none';
-  document.getElementById('fl-prod-page').style.display='block';
-  var main=document.getElementById('fl-gal-main');
-  if(prod.images&&prod.images.length){main.innerHTML='<img src="'+prod.images[0]+'" style="width:100%;height:100%;object-fit:cover;border-radius:var(--radius)">';}
-  else{main.innerHTML='<div style="display:flex;align-items:center;justify-content:center;width:100%;height:100%;font-size:5rem">&#128424;</div>';}
-  document.getElementById('fl-detail-name').textContent=prod.name;
-  document.getElementById('fl-detail-price').textContent=prod.price;
-  document.getElementById('fl-detail-desc').textContent=prod.description;
-  document.getElementById('fl-order-btn').href='mailto:orders@forgelayer.online?subject=Order: '+encodeURIComponent(prod.name);
-  document.getElementById('fl-prod-back').onclick=function(){document.getElementById('fl-prod-page').style.display='none';document.getElementById('fl-cat-page').style.display='block';window.scrollTo(0,0);};
+  document.getElementById("fl-cat-page").style.display="none";
+  document.getElementById("fl-prod-page").style.display="block";
+  var main=document.getElementById("fl-gal-main");
+  if(prod.images&&prod.images.length){main.innerHTML="<img src=\""+prod.images[0]+"\">"; }
+  else{main.textContent="\uD83D\uDDA8";}
+  document.getElementById("fl-detail-name").textContent=prod.name;
+  document.getElementById("fl-detail-price").textContent=prod.price;
+  document.getElementById("fl-detail-desc").textContent=prod.description;
+  document.getElementById("fl-order-btn").href="mailto:orders@forgelayer.online?subject=Order: "+encodeURIComponent(prod.name);
+  document.getElementById("fl-prod-back").onclick=function(){document.getElementById("fl-prod-page").style.display="none";document.getElementById("fl-cat-page").style.display="block";window.scrollTo(0,0);};
   window.scrollTo(0,0);
 };
-if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',init);}else{setTimeout(init,200);}
+if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",init);}else{setTimeout(init,200);}
 })();
 </script>
 </body>
