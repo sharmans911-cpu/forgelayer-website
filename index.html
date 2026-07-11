@@ -488,30 +488,106 @@ loadContent().then(renderSite);
 </script>
 
 
+
 <style>
-#fl-cat-page,#fl-prod-page{display:none;min-height:80vh;padding:48px 5%;background:var(--black)}
-#fl-cat-page h2{color:var(--text);font-size:2rem;margin-bottom:8px}
-#fl-cat-page p.fl-desc{color:var(--muted);margin-bottom:32px}
+#fl-cat-page,#fl-prod-page,#fl-about-page,#fl-shipping-page,#fl-all-page{display:none;min-height:80vh;padding:48px 5%;background:var(--black)}
 .fl-back{background:none;border:1px solid var(--border);color:var(--muted);padding:8px 20px;border-radius:var(--radius);cursor:pointer;margin-bottom:32px;font-size:0.9rem}
 .fl-back:hover{color:var(--text);border-color:var(--muted)}
 .fl-prod-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
 @media(max-width:900px){.fl-prod-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:500px){.fl-prod-grid{grid-template-columns:1fr}}
-.fl-prod-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;cursor:pointer;transition:transform 0.2s,box-shadow 0.2s}
+.fl-prod-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;cursor:pointer;transition:transform 0.2s,box-shadow 0.2s;position:relative}
 .fl-prod-card:hover{transform:translateY(-4px);box-shadow:0 8px 24px rgba(0,0,0,0.3)}
 .fl-prod-img{width:100%;aspect-ratio:4/3;background:var(--dark);display:flex;align-items:center;justify-content:center;font-size:3rem;color:var(--muted)}
 .fl-prod-img img{width:100%;height:100%;object-fit:cover}
 .fl-prod-name{padding:12px 14px 4px;color:var(--text);font-weight:600;font-size:0.95rem}
 .fl-prod-price{padding:4px 14px 12px;color:var(--accent);font-size:0.85rem}
+.fl-prod-badge{position:absolute;top:10px;left:10px;background:var(--accent);color:#000;font-size:0.7rem;font-weight:700;padding:3px 8px;border-radius:4px;text-transform:uppercase;letter-spacing:0.5px}
+#fl-cat-page h2{color:var(--text);font-size:2rem;margin-bottom:8px}
+#fl-cat-page p.fl-desc{color:var(--muted);margin-bottom:32px}
 .fl-prod-detail{display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-top:32px}
 @media(max-width:700px){.fl-prod-detail{grid-template-columns:1fr}}
 .fl-gal-main{width:100%;aspect-ratio:4/3;border-radius:var(--radius);background:var(--dark);display:flex;align-items:center;justify-content:center;font-size:5rem;color:var(--muted);overflow:hidden}
 .fl-gal-main img{width:100%;height:100%;object-fit:cover}
 .fl-prod-info h3{color:var(--text);font-size:1.5rem;margin-bottom:8px}
 .fl-prod-info .fl-price{color:var(--accent);font-size:1.3rem;font-weight:700;margin-bottom:16px}
-.fl-prod-info p{color:var(--muted);line-height:1.7;margin-bottom:24px}
-.fl-order-btn{background:var(--accent);color:#000;border:none;padding:14px 32px;border-radius:var(--radius);font-weight:700;font-size:1rem;cursor:pointer;text-decoration:none;display:inline-block}
+.fl-prod-info p{color:var(--muted);line-height:1.7;margin-bottom:16px}
+.fl-order-btn{background:var(--accent);color:#000;border:none;padding:14px 32px;border-radius:var(--radius);font-weight:700;font-size:1rem;cursor:pointer;text-decoration:none;display:inline-block;margin-top:8px}
 .fl-order-btn:hover{opacity:0.9}
+.fl-color-section{margin-bottom:20px}
+.fl-color-label{color:var(--muted);font-size:0.8rem;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px}
+.fl-color-swatches{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:8px}
+.fl-swatch{width:30px;height:30px;border-radius:50%;cursor:pointer;border:2px solid transparent;transition:transform 0.15s,border-color 0.15s}
+.fl-swatch:hover{transform:scale(1.15)}
+.fl-swatch.selected{border-color:var(--accent);transform:scale(1.2)}
+.fl-selected-color{color:var(--muted);font-size:0.85rem;min-height:18px}
+.fl-float-btns{position:fixed;bottom:24px;right:24px;display:flex;flex-direction:column;gap:10px;z-index:9999}
+.fl-float-btn{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;box-shadow:0 4px 14px rgba(0,0,0,0.5);transition:transform 0.2s;font-size:22px;border:none;cursor:pointer}
+.fl-float-btn:hover{transform:scale(1.12)}
+.fl-float-wa{background:#25D366}
+.fl-float-ig{background:linear-gradient(135deg,#f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%)}
+#fl-search-modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.88);z-index:10000;align-items:flex-start;justify-content:center;padding-top:80px}
+#fl-search-modal.open{display:flex}
+.fl-search-inner{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);width:90%;max-width:620px;padding:24px;max-height:80vh;overflow-y:auto}
+.fl-search-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.fl-search-header span{color:var(--text);font-weight:600;font-size:1.1rem}
+.fl-search-close{background:none;border:none;color:var(--muted);font-size:1.4rem;cursor:pointer;line-height:1;padding:4px}
+#fl-search-input{width:100%;background:var(--dark);border:1px solid var(--border);color:var(--text);padding:12px 16px;border-radius:8px;font-size:1rem;outline:none}
+#fl-search-input:focus{border-color:var(--accent)}
+.fl-s-result{display:flex;align-items:center;gap:14px;padding:12px 0;border-bottom:1px solid var(--border);cursor:pointer}
+.fl-s-result:hover .fl-s-name{color:var(--accent)}
+.fl-s-result:last-child{border-bottom:none}
+.fl-s-icon{font-size:1.4rem;flex-shrink:0}
+.fl-s-name{color:var(--text);font-weight:600;font-size:0.95rem}
+.fl-s-cat{color:var(--muted);font-size:0.8rem;margin-top:2px}
+.fl-s-price{color:var(--accent);margin-left:auto;font-weight:600;white-space:nowrap}
+#fl-search-results{margin-top:14px}
+.fl-s-empty{color:var(--muted);padding:20px 0;text-align:center}
+.fl-testimonials{padding:80px 5%;background:var(--dark)}
+.fl-t-label{color:var(--accent);font-size:0.8rem;text-transform:uppercase;letter-spacing:2px;font-weight:600;margin-bottom:8px}
+.fl-t-title{color:var(--text);font-size:2rem;font-weight:700;margin-bottom:36px}
+.fl-t-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+@media(max-width:700px){.fl-t-grid{grid-template-columns:1fr}}
+.fl-t-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:24px}
+.fl-stars{color:#f59e0b;font-size:1rem;margin-bottom:12px;letter-spacing:2px}
+.fl-t-text{color:var(--muted);line-height:1.7;margin-bottom:16px;font-style:italic;font-size:0.95rem}
+.fl-t-name{color:var(--text);font-weight:600;font-size:0.9rem}
+.fl-t-loc{color:var(--muted);font-size:0.8rem;margin-top:2px}
+.fl-about-wrap{max-width:760px}
+.fl-about-wrap h2{color:var(--text);font-size:2.2rem;margin-bottom:8px}
+.fl-about-wrap .fl-a-sub{color:var(--muted);font-size:1.1rem;margin-bottom:40px}
+.fl-about-wrap h3{color:var(--accent);font-size:0.9rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin:32px 0 12px}
+.fl-about-wrap p,.fl-about-wrap li{color:var(--muted);line-height:1.8;margin-bottom:8px}
+.fl-about-wrap ul{padding-left:20px}
+.fl-about-wrap li::marker{color:var(--accent)}
+.fl-about-cta{margin-top:40px;padding-top:32px;border-top:1px solid var(--border)}
+.fl-about-cta a{color:var(--accent);text-decoration:none;font-size:1rem}
+#fl-shipping-page h2{color:var(--text);font-size:2rem;margin-bottom:32px}
+.fl-ship-section{margin-bottom:40px}
+.fl-ship-section h3{color:var(--text);font-size:1.2rem;margin-bottom:16px}
+.fl-ship-section p,.fl-ship-section li{color:var(--muted);line-height:1.8;margin-bottom:8px}
+.fl-ship-section ul{padding-left:20px}
+.fl-ship-table{width:100%;border-collapse:collapse;margin-bottom:16px}
+.fl-ship-table th{color:var(--accent);text-align:left;padding:10px 14px;border-bottom:2px solid var(--border);font-size:0.8rem;text-transform:uppercase;letter-spacing:1px}
+.fl-ship-table td{padding:12px 14px;border-bottom:1px solid var(--border);color:var(--muted)}
+.fl-ship-table td:first-child{color:var(--text);font-weight:600}
+.fl-calc{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:28px;margin-bottom:40px}
+.fl-calc h3{color:var(--text);font-size:1.1rem;margin-bottom:16px}
+.fl-calc select{background:var(--dark);border:1px solid var(--border);color:var(--text);padding:12px 16px;border-radius:8px;font-size:0.95rem;width:100%;max-width:360px;cursor:pointer;outline:none}
+.fl-calc select:focus{border-color:var(--accent)}
+.fl-calc-result{margin-top:20px;padding:16px 20px;background:var(--dark);border-radius:8px;display:none}
+.fl-calc-result.show{display:block}
+.fl-calc-days{color:var(--accent);font-size:1.4rem;font-weight:700}
+.fl-calc-info{color:var(--muted);margin-top:4px;font-size:0.9rem}
+#fl-all-page h2{color:var(--text);font-size:2rem;margin-bottom:8px}
+.fl-all-sub{color:var(--muted);margin-bottom:24px}
+.fl-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:28px}
+.fl-tab{background:var(--card);border:1px solid var(--border);color:var(--muted);padding:8px 20px;border-radius:50px;cursor:pointer;font-size:0.9rem;transition:all 0.2s}
+.fl-tab.active,.fl-tab:hover{background:var(--accent);border-color:var(--accent);color:#000;font-weight:700}
+.fl-nav-link{cursor:pointer;color:var(--text);text-decoration:none;font-size:0.9rem;transition:color 0.2s;background:none;border:none;padding:0;font-family:inherit}
+.fl-nav-link:hover{color:var(--accent)}
+.fl-nav-search{cursor:pointer;background:none;border:none;color:var(--text);font-size:1.1rem;padding:0 4px;transition:color 0.2s;font-family:inherit}
+.fl-nav-search:hover{color:var(--accent)}
 .product-card{cursor:pointer}
 .product-card::after{pointer-events:none!important}
 </style>
@@ -531,14 +607,132 @@ loadContent().then(renderSite);
       <h3 id="fl-detail-name"></h3>
       <div class="fl-price" id="fl-detail-price"></div>
       <p id="fl-detail-desc"></p>
+      <div class="fl-color-section">
+        <div class="fl-color-label">Choose colour</div>
+        <div class="fl-color-swatches">
+          <div class="fl-swatch" data-color="Black" title="Black" style="background:#1a1a1a"></div>
+          <div class="fl-swatch" data-color="White" title="White" style="background:#fff;box-shadow:inset 0 0 0 1px #555"></div>
+          <div class="fl-swatch" data-color="Red" title="Red" style="background:#e53935"></div>
+          <div class="fl-swatch" data-color="Pink" title="Pink" style="background:#f48fb1"></div>
+          <div class="fl-swatch" data-color="Orange" title="Orange" style="background:#fb8c00"></div>
+          <div class="fl-swatch" data-color="Sky Blue" title="Sky Blue" style="background:#29b6f6"></div>
+          <div class="fl-swatch" data-color="Grey" title="Grey" style="background:#9e9e9e"></div>
+        </div>
+        <div class="fl-selected-color" id="fl-sel-color">No colour selected</div>
+      </div>
       <a class="fl-order-btn" id="fl-order-btn" href="mailto:orders@forgelayer.online">Order this item</a>
     </div>
   </div>
 </div>
 
+<div id="fl-about-page">
+  <button class="fl-back" onclick="window.flShowHome()">&#8592; Back</button>
+  <div class="fl-about-wrap">
+    <h2>About ForgeLayer</h2>
+    <p class="fl-a-sub">Home-based custom 3D printing studio &#8212; based in Germany</p>
+    <p>ForgeLayer is a small, passion-driven 3D printing business run from home. We specialise in custom, made-to-order prints &#8212; from practical home organisation items to personalised gifts and functional prototypes. Every item is printed fresh for you, in the colour and size you need.</p>
+    <h3>Why ForgeLayer?</h3>
+    <ul>
+      <li>Every item is printed to order &#8212; no stock, no waste</li>
+      <li>Custom sizes, colours and text always available</li>
+      <li>You receive a photo before we ship</li>
+      <li>Payment only after you are happy with the result</li>
+      <li>Free quote, no obligation &#8212; just send us an email</li>
+    </ul>
+    <h3>Our setup</h3>
+    <p>We print using a Bambu Lab A1 series printer with high-quality PLA and PETG filaments. Available in 6 colours: Black, White, Red, Pink, Orange, Sky Blue and Grey. PETG is used for heat-resistant and tougher items on request.</p>
+    <h3>Based in Germany</h3>
+    <p>We ship within Germany via DHL. Local pickup is also available. Most small items are ready within 2&#8211;4 working days.</p>
+    <div class="fl-about-cta">
+      <p>Have a question or want a quote?</p>
+      <a href="mailto:orders@forgelayer.online">orders@forgelayer.online</a>
+    </div>
+  </div>
+</div>
+
+<div id="fl-shipping-page">
+  <button class="fl-back" onclick="window.flShowHome()">&#8592; Back</button>
+  <h2>Shipping &amp; Returns</h2>
+  <div class="fl-calc">
+    <h3>&#128336; Delivery time calculator</h3>
+    <select id="fl-calc-select" onchange="window.flCalcChange(this.value)">
+      <option value="">&#8212; Select a product type &#8212;</option>
+      <option value="small">Small home item (hook, clip, stand)</option>
+      <option value="name">Custom name or text print</option>
+      <option value="gift">Gift or decorative item</option>
+      <option value="proto">Prototype or functional part</option>
+      <option value="bulk">Bulk order (10+ pieces)</option>
+    </select>
+    <div class="fl-calc-result" id="fl-calc-result">
+      <div class="fl-calc-days" id="fl-calc-days"></div>
+      <div class="fl-calc-info" id="fl-calc-info"></div>
+    </div>
+  </div>
+  <div class="fl-ship-section">
+    <h3>Delivery times by product type</h3>
+    <table class="fl-ship-table">
+      <tr><th>Type</th><th>Est. time</th><th>Starting price</th></tr>
+      <tr><td>Small home item</td><td>2&#8211;3 working days</td><td>From &#8364;4</td></tr>
+      <tr><td>Custom name / text</td><td>2&#8211;3 working days</td><td>From &#8364;5</td></tr>
+      <tr><td>Gift &amp; decor</td><td>3&#8211;5 working days</td><td>From &#8364;6</td></tr>
+      <tr><td>Prototype / part</td><td>4&#8211;7 working days</td><td>From &#8364;8</td></tr>
+      <tr><td>Bulk order (10+)</td><td>Quote on request</td><td>Discounted</td></tr>
+    </table>
+    <p>All times are from order confirmation. We confirm every order before printing begins.</p>
+  </div>
+  <div class="fl-ship-section">
+    <h3>Shipping within Germany</h3>
+    <ul>
+      <li>We ship via <strong>DHL</strong> within Germany</li>
+      <li>Shipping cost is added to the order quote (typically &#8364;3&#8211;&#8364;5 for standard parcels)</li>
+      <li>Local pickup is available free of charge</li>
+      <li>We send a tracking number once dispatched</li>
+    </ul>
+  </div>
+  <div class="fl-ship-section">
+    <h3>Returns &amp; quality guarantee</h3>
+    <ul>
+      <li>We send you a <strong>photo before shipping</strong> so you can check the result</li>
+      <li>If you are not happy, we reprint or refund &#8212; no questions asked</li>
+      <li>Payment is due <strong>after</strong> you confirm you are happy &#8212; not upfront</li>
+      <li>For bulk or complex orders, a 50% deposit may be required</li>
+    </ul>
+  </div>
+</div>
+
+<div id="fl-all-page">
+  <button class="fl-back" onclick="window.flShowHome()">&#8592; Back</button>
+  <h2>All Products</h2>
+  <p class="fl-all-sub">Browse everything we make &#8212; click any item to see details and order</p>
+  <div class="fl-tabs" id="fl-all-tabs">
+    <button class="fl-tab active" data-cat="all">All</button>
+    <button class="fl-tab" data-cat="household">Home &amp; Organisation</button>
+    <button class="fl-tab" data-cat="prototypes">Prototypes &amp; Parts</button>
+    <button class="fl-tab" data-cat="gifts">Custom Name &amp; Text</button>
+    <button class="fl-tab" data-cat="decor">Gifts &amp; Decor</button>
+  </div>
+  <div class="fl-prod-grid" id="fl-all-grid"></div>
+</div>
+
+<div id="fl-search-modal">
+  <div class="fl-search-inner">
+    <div class="fl-search-header">
+      <span>Search products</span>
+      <button class="fl-search-close" onclick="window.flCloseSearch()">&#215;</button>
+    </div>
+    <input type="text" id="fl-search-input" placeholder="Type to search..." oninput="window.flDoSearch(this.value)">
+    <div id="fl-search-results"><p class="fl-s-empty">Start typing to search across all products</p></div>
+  </div>
+</div>
+
+<div class="fl-float-btns">
+  <a href="https://wa.me/4912345678900" class="fl-float-btn fl-float-wa" target="_blank" rel="noopener" title="Chat on WhatsApp">&#128172;</a>
+  <a href="https://instagram.com/forgelayer" class="fl-float-btn fl-float-ig" target="_blank" rel="noopener" title="Follow on Instagram">&#128247;</a>
+</div>
+
 <script>
 (function(){
-var _C=null,_curCatId=null;
+var _C=null,_curCatId=null,_selColor="";
 var CATS=[
   {id:"household",name:"Home & Organisation",description:"Practical prints that make your space work smarter."},
   {id:"prototypes",name:"Prototypes & Parts",description:"Custom brackets, parts and prototypes."},
@@ -547,9 +741,9 @@ var CATS=[
 ];
 var PRODUCTS={
   household:[
-    {id:"h1",name:"Desk Cable Organiser",price:"€6",description:"Keep your desk tidy with this custom cable management solution."},
+    {id:"h1",name:"Desk Cable Organiser",price:"€6",badge:"Popular",description:"Keep your desk tidy with this custom cable management solution. Available in all colours."},
     {id:"h2",name:"Wall Hook Set (3 pcs)",price:"€5",description:"Sturdy wall hooks for coats, bags or keys. Available in any colour."},
-    {id:"h3",name:"Bedside Phone Stand",price:"€4",description:"Adjustable phone stand for nightstands. Custom angle available."},
+    {id:"h3",name:"Bedside Phone Stand",price:"€4",badge:"New",description:"Adjustable phone stand for nightstands. Custom angle available."},
     {id:"h4",name:"Spice Jar Label Clips",price:"€4",description:"Clip-on labels for standard spice jars. Custom text printed."},
     {id:"h5",name:"Drawer Divider Set",price:"€8",description:"Custom-sized dividers for any drawer. Keeps things neat."},
     {id:"h6",name:"Toothbrush & Soap Holder",price:"€5",description:"Hygienic bathroom organiser. Easy to clean, waterproof PLA."}
@@ -557,21 +751,21 @@ var PRODUCTS={
   prototypes:[
     {id:"p1",name:"Custom Bracket / Mount",price:"€10",description:"Need a specific bracket or mount? We design and print to your exact dimensions."},
     {id:"p2",name:"Enclosure / Housing",price:"€15",description:"Custom enclosures for electronics or small devices. Send your dimensions."},
-    {id:"p3",name:"Replacement Part",price:"€8",description:"Broken plastic part? Send us a photo and we will print a replacement."},
+    {id:"p3",name:"Replacement Part",price:"€8",badge:"Popular",description:"Broken plastic part? Send us a photo and we will print a replacement."},
     {id:"p4",name:"Jig or Fixture",price:"€12",description:"Workshop jigs and fixtures printed to your specifications."},
     {id:"p5",name:"Concept Prototype",price:"€20",description:"Turn your idea into a physical prototype from sketches or CAD files."},
     {id:"p6",name:"Mechanical Test Part",price:"€14",description:"Test fit and function before committing to expensive manufacturing."}
   ],
   gifts:[
-    {id:"g1",name:"Custom Name Keychain",price:"€5",description:"Personalised keychain with any name or short text. Durable PLA."},
+    {id:"g1",name:"Custom Name Keychain",price:"€5",badge:"Popular",description:"Personalised keychain with any name or short text. Durable PLA."},
     {id:"g2",name:"Desk Name Plate",price:"€7",description:"Professional desk nameplate for home or office. Custom text, any colour."},
     {id:"g3",name:"Mini Planter (personalised)",price:"€8",description:"Small planter with your name or message. Perfect for succulents."},
-    {id:"g4",name:"Baby Name Wall Letters",price:"€12",description:"Individual letters to spell any name. Great for nurseries."},
+    {id:"g4",name:"Baby Name Wall Letters",price:"€12",badge:"New",description:"Individual letters to spell any name. Great for nurseries."},
     {id:"g5",name:"Wedding Favour Tags (10 pcs)",price:"€15",description:"Custom tags for wedding favours. Names or dates printed. Pack of 10."},
     {id:"g6",name:"Pet Name Tag",price:"€4",description:"Durable pet ID tag with name and phone number. Bright colours available."}
   ],
   decor:[
-    {id:"d1",name:"Geometric Vase (small)",price:"€9",description:"Modern geometric vase for dried or artificial flowers."},
+    {id:"d1",name:"Geometric Vase (small)",price:"€9",badge:"New",description:"Modern geometric vase for dried or artificial flowers."},
     {id:"d2",name:"Wall Art Panel",price:"€12",description:"Decorative wall panel in geometric or nature-inspired patterns."},
     {id:"d3",name:"Floating Shelf Bracket",price:"€7",description:"Stylish shelf brackets in modern geometric design. Sold as a pair."},
     {id:"d4",name:"Candle Holder Set (3 pcs)",price:"€10",description:"Set of 3 geometric candle holders. Fits standard tea light candles."},
@@ -591,6 +785,43 @@ function getCats(){
   }
   return CATS;
 }
+function getAllProds(){
+  var all=[];
+  ["household","prototypes","gifts","decor"].forEach(function(catId){
+    getProd(catId).forEach(function(p){
+      all.push(Object.assign({},p,{catId:catId}));
+    });
+  });
+  return all;
+}
+function prodCardHTML(p,catId){
+  var badge=p.badge?"<div class=\"fl-prod-badge\">"+p.badge+"</div>":"";
+  var img=(p.images&&p.images.length)
+    ?"<div class=\"fl-prod-img\"><img src=\""+p.images[0]+"\" alt=\""+p.name+"\">"+badge+"</div>"
+    :"<div class=\"fl-prod-img\">&#128424;"+badge+"</div>";
+  return "<div class=\"fl-prod-card\" onclick=\"window.flOpenProd('"+catId+"','"+p.id+"')\">" +img+"<div class=\"fl-prod-name\">"+p.name+"</div><div class=\"fl-prod-price\">"+p.price+"</div></div>";
+}
+function hideHome(){
+  document.querySelectorAll("body>*:not(#fl-cat-page):not(#fl-prod-page):not(#fl-about-page):not(#fl-shipping-page):not(#fl-all-page):not(#fl-search-modal):not(.fl-float-btns):not(script):not(style)").forEach(function(el){
+    if(el.style.display!=="none"){el._flHidden=true;el.style.display="none";}
+  });
+}
+function showPage(id){
+  hideHome();
+  ["fl-cat-page","fl-prod-page","fl-about-page","fl-shipping-page","fl-all-page"].forEach(function(p){
+    document.getElementById(p).style.display=(p===id)?"block":"none";
+  });
+  window.scrollTo(0,0);
+}
+window.flShowHome=function(){
+  ["fl-cat-page","fl-prod-page","fl-about-page","fl-shipping-page","fl-all-page"].forEach(function(p){
+    document.getElementById(p).style.display="none";
+  });
+  document.querySelectorAll("body>*").forEach(function(el){
+    if(el._flHidden){el.style.display="";el._flHidden=false;}
+  });
+  window.scrollTo(0,0);
+};
 function wireCards(){
   var cards=document.querySelectorAll(".product-card");
   if(!cards.length)return false;
@@ -605,52 +836,159 @@ function wireCards(){
   return true;
 }
 function tryWire(n){n=n||0;if(wireCards())return;if(n<30)setTimeout(function(){tryWire(n+1);},300);}
-function init(){
-  fetch("content.json?t="+Date.now()).then(function(r){return r.json();}).then(function(d){_C=d;tryWire(0);}).catch(function(){tryWire(0);});
-  tryWire(0);
-}
-window.flShowHome=function(){
-  document.getElementById("fl-cat-page").style.display="none";
-  document.getElementById("fl-prod-page").style.display="none";
-  document.querySelectorAll("body>*:not(#fl-cat-page):not(#fl-prod-page):not(script):not(style)").forEach(function(el){if(el._flHidden){el.style.display="";el._flHidden=false;}});
-  window.scrollTo(0,0);
-};
-function hideHome(){
-  document.querySelectorAll("body>*:not(#fl-cat-page):not(#fl-prod-page):not(script):not(style)").forEach(function(el){if(el.style.display!=="none"){el._flHidden=true;el.style.display="none";}});
-}
 function openCat(catId,name,desc){
   _curCatId=catId;
-  hideHome();
-  document.getElementById("fl-cat-page").style.display="block";
-  document.getElementById("fl-prod-page").style.display="none";
+  showPage("fl-cat-page");
   document.getElementById("fl-cat-title").textContent=name;
   document.getElementById("fl-cat-desc").textContent=desc;
-  var grid=document.getElementById("fl-prod-grid");
-  var prods=getProd(catId);
-  grid.innerHTML=prods.map(function(p){
-    var imgHtml=(p.images&&p.images.length)
-      ?"<div class=\"fl-prod-img\"><img src=\""+p.images[0]+"\" alt=\""+p.name+"\"></div>"
-      :"<div class=\"fl-prod-img\">&#128424;</div>";
-    return "<div class=\"fl-prod-card\" onclick=\"window.flOpenProd('"+catId+"','"+p.id+"')\">"+imgHtml+"<div class=\"fl-prod-name\">"+p.name+"</div><div class=\"fl-prod-price\">"+p.price+"</div></div>";
-  }).join("");
-  window.scrollTo(0,0);
+  document.getElementById("fl-prod-grid").innerHTML=getProd(catId).map(function(p){return prodCardHTML(p,catId);}).join("");
 }
 window.flOpenProd=function(catId,pid){
   var prods=getProd(catId);
   var prod=prods.find(function(p){return p.id===pid;})||prods[0];
   if(!prod)return;
+  _selColor="";
   document.getElementById("fl-cat-page").style.display="none";
   document.getElementById("fl-prod-page").style.display="block";
   var main=document.getElementById("fl-gal-main");
-  if(prod.images&&prod.images.length){main.innerHTML="<img src=\""+prod.images[0]+"\">"; }
+  if(prod.images&&prod.images.length){main.innerHTML="<img src=\""+prod.images[0]+"\">";}
   else{main.textContent="\uD83D\uDDA8";}
   document.getElementById("fl-detail-name").textContent=prod.name;
   document.getElementById("fl-detail-price").textContent=prod.price;
   document.getElementById("fl-detail-desc").textContent=prod.description;
-  document.getElementById("fl-order-btn").href="mailto:orders@forgelayer.online?subject=Order: "+encodeURIComponent(prod.name);
-  document.getElementById("fl-prod-back").onclick=function(){document.getElementById("fl-prod-page").style.display="none";document.getElementById("fl-cat-page").style.display="block";window.scrollTo(0,0);};
+  document.getElementById("fl-sel-color").textContent="No colour selected";
+  document.querySelectorAll(".fl-swatch").forEach(function(s){s.classList.remove("selected");});
+  document.querySelectorAll(".fl-swatch").forEach(function(s){
+    s.onclick=function(){
+      document.querySelectorAll(".fl-swatch").forEach(function(x){x.classList.remove("selected");});
+      s.classList.add("selected");
+      _selColor=s.getAttribute("data-color");
+      document.getElementById("fl-sel-color").textContent="Selected: "+_selColor;
+      var subj="Order: "+prod.name+(_selColor?" (Colour: "+_selColor+")":"");
+      document.getElementById("fl-order-btn").href="mailto:orders@forgelayer.online?subject="+encodeURIComponent(subj);
+    };
+  });
+  document.getElementById("fl-order-btn").href="mailto:orders@forgelayer.online?subject="+encodeURIComponent("Order: "+prod.name);
+  document.getElementById("fl-prod-back").onclick=function(){
+    document.getElementById("fl-prod-page").style.display="none";
+    if(_curCatId){document.getElementById("fl-cat-page").style.display="block";}
+    else{document.getElementById("fl-all-page").style.display="block";}
+    window.scrollTo(0,0);
+  };
   window.scrollTo(0,0);
 };
+window.flShowAbout=function(){showPage("fl-about-page");};
+window.flShowShipping=function(){showPage("fl-shipping-page");};
+window.flCalcChange=function(val){
+  var r=document.getElementById("fl-calc-result");
+  var d=document.getElementById("fl-calc-days");
+  var info=document.getElementById("fl-calc-info");
+  var map={
+    small:{days:"2-3 working days",price:"From €4",note:"Small items print fast. Ready for pickup or shipping within 3 days of confirmation."},
+    name:{days:"2-3 working days",price:"From €5",note:"Name and text prints are quick to prepare. We confirm the text with you before printing."},
+    gift:{days:"3-5 working days",price:"From €6",note:"Decorative items may need extra print time for detail. You get a photo before we ship."},
+    proto:{days:"4-7 working days",price:"From €8",note:"Prototypes need design review time. We reply with a quote within 24 hours."},
+    bulk:{days:"Quote on request",price:"Discounted pricing",note:"Bulk orders are quoted individually. Email us with quantity and item type."}
+  };
+  if(!val){r.classList.remove("show");return;}
+  var m=map[val];
+  d.textContent=m.days+" • "+m.price;
+  info.textContent=m.note;
+  r.classList.add("show");
+};
+window.flShowAll=function(){
+  showPage("fl-all-page");
+  renderAllGrid("all");
+  document.querySelectorAll(".fl-tab").forEach(function(t){t.classList.toggle("active",t.getAttribute("data-cat")==="all");});
+  document.querySelectorAll(".fl-tab").forEach(function(t){
+    t.onclick=function(){
+      document.querySelectorAll(".fl-tab").forEach(function(x){x.classList.remove("active");});
+      t.classList.add("active");
+      var cat=t.getAttribute("data-cat");
+      _curCatId=cat==="all"?null:cat;
+      renderAllGrid(cat);
+    };
+  });
+};
+function renderAllGrid(catFilter){
+  var grid=document.getElementById("fl-all-grid");
+  var prods=catFilter&&catFilter!=="all"?getProd(catFilter).map(function(p){return Object.assign({},p,{catId:catFilter});}):getAllProds();
+  grid.innerHTML=prods.map(function(p){return prodCardHTML(p,p.catId||catFilter||"household");}).join("");
+}
+window.flOpenSearch=function(){
+  document.getElementById("fl-search-modal").classList.add("open");
+  document.getElementById("fl-search-input").value="";
+  document.getElementById("fl-search-results").innerHTML="<p class=\"fl-s-empty\">Start typing to search across all products</p>";
+  setTimeout(function(){document.getElementById("fl-search-input").focus();},100);
+};
+window.flCloseSearch=function(){
+  document.getElementById("fl-search-modal").classList.remove("open");
+};
+window.flDoSearch=function(q){
+  var res=document.getElementById("fl-search-results");
+  if(!q||q.length<2){res.innerHTML="<p class=\"fl-s-empty\">Start typing to search across all products</p>";return;}
+  var ql=q.toLowerCase();
+  var cats=getCats();
+  var matches=getAllProds().filter(function(p){return p.name.toLowerCase().indexOf(ql)!==-1||p.description.toLowerCase().indexOf(ql)!==-1||p.price.toLowerCase().indexOf(ql)!==-1;});
+  if(!matches.length){res.innerHTML="<p class=\"fl-s-empty\">No products found for \""+q+"\"</p>";return;}
+  res.innerHTML=matches.map(function(p){
+    var catName=cats.find(function(c){return c.id===p.catId;})||{name:p.catId};
+    return "<div class=\"fl-s-result\" onclick=\"window.flCloseSearch();window.flOpenProd('"+p.catId+"','"+p.id+"')\">"
+      +"<div class=\"fl-s-icon\">&#128424;</div>"
+      +"<div><div class=\"fl-s-name\">"+p.name+"</div><div class=\"fl-s-cat\">"+catName.name+"</div></div>"
+      +"<div class=\"fl-s-price\">"+p.price+"</div>"
+      +"</div>";
+  }).join("");
+};
+function wireNav(){
+  var navLinks=document.querySelectorAll("nav a, nav ul li a, header a");
+  if(!navLinks.length)return;
+  var lastLink=navLinks[navLinks.length-1];
+  var nav=lastLink.parentElement;
+  function addLink(label,fn){
+    var btn=document.createElement("button");
+    btn.className="fl-nav-link";
+    btn.textContent=label;
+    btn.onclick=fn;
+    nav.insertBefore(btn,lastLink);
+  }
+  function addSrch(){
+    var btn=document.createElement("button");
+    btn.className="fl-nav-search";
+    btn.title="Search products";
+    btn.textContent="\uD83D\uDD0D";
+    btn.onclick=window.flOpenSearch;
+    nav.insertBefore(btn,lastLink);
+  }
+  addLink("All Products",window.flShowAll);
+  addLink("About",window.flShowAbout);
+  addLink("Shipping",window.flShowShipping);
+  addSrch();
+}
+function injectTestimonials(){
+  var html="<section class=\"fl-testimonials\">"
+    +"<div class=\"fl-t-label\">Customer reviews</div>"
+    +"<div class=\"fl-t-title\">What our customers say</div>"
+    +"<div class=\"fl-t-grid\">"
+    +"<div class=\"fl-t-card\"><div class=\"fl-stars\">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class=\"fl-t-text\">Ordered a custom cable organiser and a set of wall hooks. Arrived super fast and the quality is great. Will definitely order again!</p><div class=\"fl-t-name\">Markus R.</div><div class=\"fl-t-loc\">Munich, Germany</div></div>"
+    +"<div class=\"fl-t-card\"><div class=\"fl-stars\">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class=\"fl-t-text\">Got a personalised name sign for my daughter's room. It looks amazing and the colour is exactly what I asked for. The photo preview before shipping is a great touch.</p><div class=\"fl-t-name\">Laura S.</div><div class=\"fl-t-loc\">Berlin, Germany</div></div>"
+    +"<div class=\"fl-t-card\"><div class=\"fl-stars\">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class=\"fl-t-text\">Needed a custom bracket for a shelf mount and ForgeLayer delivered perfectly. Printed to my exact measurements. Great communication throughout.</p><div class=\"fl-t-name\">Thomas W.</div><div class=\"fl-t-loc\">Hamburg, Germany</div></div>"
+    +"</div></section>";
+  var faq=document.querySelector("#faq,section[id*=faq],[class*=faq]");
+  if(faq){faq.insertAdjacentHTML("beforebegin",html);}
+  else{
+    var sections=document.querySelectorAll("body>section,body>div[class]");
+    if(sections.length>1)sections[sections.length-2].insertAdjacentHTML("afterend",html);
+  }
+}
+function init(){
+  var modal=document.getElementById("fl-search-modal");
+  if(modal)modal.addEventListener("click",function(e){if(e.target===this)window.flCloseSearch();});
+  fetch("content.json?t="+Date.now()).then(function(r){return r.json();}).then(function(d){_C=d;tryWire(0);}).catch(function(){tryWire(0);});
+  tryWire(0);
+  setTimeout(wireNav,500);
+  setTimeout(injectTestimonials,600);
+}
 if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",init);}else{setTimeout(init,200);}
 })();
 </script>
