@@ -332,11 +332,11 @@ function renderProducts(d) {
     return `
     <div class="product-card">
       <div class="card-icon ${esc(item.icon_style || 'green')}">${item.icon}</div>
-      <h3>${esc(item.title)}</h3>
+      <h3>${esc(item.title||item.name||'')}</h3>
       <p>${esc(item.description)}</p>
       <div class="card-examples">${(item.tags||[]).map(t=>`<span class="tag">${esc(t)}</span>`).join('')}</div>
       ${sizesHtml}
-      <div class="card-price">${esc(item.price_from)} Â· Turnaround ${esc(item.turnaround)}</div>
+      ${item.price_from?`<div class="card-price">${esc(item.price_from)}${item.turnaround?` \u00B7 Turnaround ${esc(item.turnaround)}`:``}</div>`:``}
     </div>`; }).join('');
   return `
   <section id="products">
