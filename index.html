@@ -225,13 +225,19 @@
     .nav-search {
       display: flex; align-items: center;
       background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.12);
-      border-radius: 8px; padding: 7px 16px; gap: 8px; margin-left: 8px;
+      border-radius: 20px; padding: 7px 16px; gap: 8px; margin-left: 8px;
     }
     .nav-search input {
       background: none; border: none; outline: none;
-      color: var(--text); font-size: 0.85rem; width: 200px; font-family: inherit;
+      color: var(--text); font-size: 0.85rem; width: 180px; font-family: inherit;
     }
     .nav-search input::placeholder { color: var(--muted); }
+
+    /* Sizes on product cards */
+    .card-sizes { margin-top: 14px; padding-top: 13px; border-top: 1px solid rgba(255,255,255,0.07); }
+    .sizes-label { font-size: 0.72rem; color: var(--muted); font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 7px; }
+    .size-options { display: flex; flex-wrap: wrap; gap: 5px; }
+    .size-tag { font-size: 0.78rem; padding: 3px 10px; border-radius: 100px; background: rgba(0,217,166,0.1); color: var(--accent); border: 1px solid rgba(0,217,166,0.25); }
 
     /* Why ForgeLayer */
     #why { background: var(--dark); }
@@ -267,6 +273,7 @@
   </a>
   <div class="nav-links" id="navLinks"></div>
   <div class="nav-search">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="color:#94a3b8;flex-shrink:0"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
     <input type="text" id="siteSearch" placeholder="Search products..." autocomplete="off" spellcheck="false" />
   </div>
   <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
@@ -318,7 +325,11 @@ function renderHero(d, site) {
 }
 
 function renderProducts(d) {
-  const cards = (d.items || []).map(item => `
+  const cards = (d.items || []).map(item => {
+    const sizesHtml = (item.sizes_enabled && item.sizes && item.sizes.length > 0)
+      ? `<div class="card-sizes"><div class="sizes-label">Available sizes</div><div class="size-options">${item.sizes.map(s=>`<span class="size-tag">${esc(s)}</span>`).join('')}</div></div>`
+      : '';
+    return `
     <div class="product-card">
       <div class="card-icon ${esc(item.icon_style || 'green')}">${item.icon}</div>
       <h3>${esc(item.title)}</h3>
