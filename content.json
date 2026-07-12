@@ -37,27 +37,47 @@
     "items": [
       {
         "icon": "ð ",
-        "name": "Home & Organisation",
+        "icon_style": "green",
+        "title": "Home & Organisation",
         "description": "Practical prints that make your space work smarter â designed for real life, printed to fit.",
-        "id": "household"
+        "tags": [],
+        "price_from": "",
+        "turnaround": "",
+        "sizes_enabled": false,
+        "sizes": []
       },
       {
         "icon": "âï¸",
-        "name": "Prototypes & Parts",
+        "icon_style": "green",
+        "title": "Prototypes & Parts",
         "description": "Need a custom bracket, replacement part or a prototype for your idea? We print it precisely.",
-        "id": "gifts"
+        "tags": [],
+        "price_from": "",
+        "turnaround": "",
+        "sizes_enabled": false,
+        "sizes": []
       },
       {
         "icon": "ð¤",
-        "name": "Custom Name & Text",
+        "icon_style": "green",
+        "title": "Custom Name & Text",
         "description": "Personalised with any name, word or short message â perfect for gifts that actually mean something.",
-        "id": "prototypes"
+        "tags": [],
+        "price_from": "",
+        "turnaround": "",
+        "sizes_enabled": false,
+        "sizes": []
       },
       {
         "icon": "â¨",
-        "name": "Gifts & DÃ©cor",
+        "icon_style": "green",
+        "title": "Gifts & DÃ©cor",
         "description": "Decorative prints and thoughtful gifts that stand out â unique, durable and made to order.",
-        "id": "decor"
+        "tags": [],
+        "price_from": "",
+        "turnaround": "",
+        "sizes_enabled": false,
+        "sizes": []
       }
     ],
     "household": [
@@ -268,8 +288,8 @@
     "enabled": true,
     "label": "Portfolio",
     "title": "Recent work",
-    "subtitle": "Our latest prints â add your own photos here once you have them.",
-    "note": "ð¸ More photos coming soon â follow us for updates",
+    "subtitle": "Our latest prints.",
+    "note": "More photos coming soon. Follow us  on instagram for updates",
     "items": [
       {
         "emoji": "ð¦",
