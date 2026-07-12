@@ -272,10 +272,6 @@
     </svg>
   </a>
   <div class="nav-links" id="navLinks"></div>
-  <div class="nav-search">
-    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="color:#94a3b8;flex-shrink:0"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-    <input type="text" id="siteSearch" placeholder="Search products..." autocomplete="off" spellcheck="false" />
-  </div>
   <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
 </nav>
 
@@ -316,8 +312,7 @@ function renderHero(d, site) {
       <h1>${esc(d.headline)}<br/><em>${esc(d.headline_highlight)}</em></h1>
       <p class="hero-sub">${esc(d.subtext)}</p>
       <div class="hero-btns">
-        <a href="#order" class="btn-primary">â ${esc(d.cta_primary)}</a>
-        <a href="#products" class="btn-secondary">${esc(d.cta_secondary)} â</a>
+        <a href="#products" class="btn-secondary">${esc(d.cta_secondary)} ↗</a>
       </div>
       ${stats ? `<div class="hero-stats">${stats}</div>` : ''}
     </div>
@@ -513,7 +508,6 @@ function renderSite(data) {
   if (data.gallery?.enabled)  { sections.push(renderGallery(data.gallery)); enabledIds.push('gallery'); }
   if (data.pricing?.enabled)  { sections.push(renderPricing(data.pricing)); enabledIds.push('pricing'); }
   sections.push(renderWhy()); enabledIds.push('why');
-  if (data.order?.enabled)    { sections.push(renderOrder(data.order, s)); enabledIds.push('order'); }
   if (data.faq?.enabled)      { sections.push(renderFAQ(data.faq)); enabledIds.push('faq'); }
 
   document.getElementById('page-content').innerHTML = sections.join('');
@@ -561,7 +555,7 @@ function initInteractions() {
   });
 
   // Site search — filters product cards
-  const siteSearch = document.getElementById('siteSearch');
+  const siteSearch = (document.getElementById('siteSearch')||document.createElement('input'));
   if (siteSearch) {
     siteSearch.addEventListener('input', function() {
       const q = this.value.toLowerCase().trim();
@@ -727,7 +721,6 @@ loadContent().then(renderSite);
         </div>
         <div class="fl-selected-color" id="fl-sel-color">No colour selected</div>
       </div>
-      <a class="fl-order-btn" id="fl-order-btn" href="mailto:orders@forgelayer.online">Order this item</a>
     </div>
   </div>
 </div>
@@ -972,10 +965,10 @@ window.flOpenProd=function(catId,pid){
       _selColor=s.getAttribute("data-color");
       document.getElementById("fl-sel-color").textContent="Selected: "+_selColor;
       var subj="Order: "+prod.name+(_selColor?" (Colour: "+_selColor+")":"");
-      document.getElementById("fl-order-btn").href="mailto:orders@forgelayer.online?subject="+encodeURIComponent(subj);
+      (document.getElementById("fl-order-btn")||document.createElement('a')).href="mailto:orders@forgelayer.online?subject="+encodeURIComponent(subj);
     };
   });
-  document.getElementById("fl-order-btn").href="mailto:orders@forgelayer.online?subject="+encodeURIComponent("Order: "+prod.name);
+  (document.getElementById("fl-order-btn")||document.createElement('a')).href="mailto:orders@forgelayer.online?subject="+encodeURIComponent("Order: "+prod.name);
   document.getElementById("fl-prod-back").onclick=function(){
     document.getElementById("fl-prod-page").style.display="none";
     if(_curCatId){document.getElementById("fl-cat-page").style.display="block";}
