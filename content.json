@@ -18,7 +18,7 @@
         "label": "Colors available"
       },
       {
-        "number": "5Ã¢ÂÂ7",
+        "number": "5–7",
         "label": "Working days"
       },
       {
@@ -31,72 +31,72 @@
     "enabled": true,
     "label": "What we make",
     "title": "Four categories, endless possibilities",
-    "subtitle": "Every item is printed to order Ã¢ÂÂ custom sizes, colours and text always available.",
+    "subtitle": "Every item is printed to order — custom sizes, colours and text always available.",
     "items": [
       {
-        "icon": "Ã°ÂÂÂ ",
-        "name": "",
-        "description": "Practical prints that make your space work smarter Ã¢ÂÂ designed for real life, printed to fit.",
+        "icon": "🏠",
+        "name": "Home & Organisation",
+        "description": "Practical prints that make your space work smarter — designed for real life, printed to fit.",
         "id": "household"
       },
       {
-        "icon": "Ã¢ÂÂÃ¯Â¸Â",
-        "name": "",
+        "icon": "⚙️",
+        "name": "Prototypes & Parts",
         "description": "Need a custom bracket, replacement part or a prototype for your idea? We print it precisely.",
         "id": "gifts"
       },
       {
-        "icon": "Ã°ÂÂÂ¤",
-        "name": "",
-        "description": "Personalised with any name, word or short message Ã¢ÂÂ perfect for gifts that actually mean something.",
+        "icon": "🔤",
+        "name": "Custom Name & Text",
+        "description": "Personalised with any name, word or short message — perfect for gifts that actually mean something.",
         "id": "prototypes"
       },
       {
-        "icon": "Ã¢ÂÂ¨",
-        "name": "",
-        "description": "Decorative prints and thoughtful gifts that stand out Ã¢ÂÂ unique, durable and made to order.",
+        "icon": "✨",
+        "name": "Gifts & Décor",
+        "description": "Decorative prints and thoughtful gifts that stand out — unique, durable and made to order.",
         "id": "decor"
       }
     ],
     "household": [
       {
         "name": "Desk Cable Organiser",
-        "price": "Ã¢ÂÂ¬6",
+        "price": "€6",
         "description": "Keep your desk tidy with this sleek cable management clip set. Mounts to the edge of any desk and holds up to 4 cables neatly in place. Available in all standard colours.",
         "id": "h1",
         "images": []
       },
       {
         "name": "Wall Hook Set (3 pcs)",
-        "price": "Ã¢ÂÂ¬5",
+        "price": "€5",
         "description": "Minimalist wall hooks for coats, bags, keys or towels. Each hook holds up to 2 kg. Comes as a set of 3. Just drill, mount and done.",
         "id": "h2",
         "images": []
       },
       {
         "name": "Bedside Phone Stand",
-        "price": "Ã¢ÂÂ¬4",
+        "price": "€4",
         "description": "A slim angled stand that holds your phone at the perfect viewing angle on a nightstand or desk. Stable, lightweight and printed in one piece.",
         "id": "h3",
         "images": []
       },
       {
         "name": "Spice Jar Label Clips",
-        "price": "Ã¢ÂÂ¬4",
-        "description": "Clip-on label holders for standard spice jars (fits most 40Ã¢ÂÂ50mm diameter jars). Print any label you like and slot it in. Set of 6.",
+        "price": "€4",
+        "description": "Clip-on label holders for standard spice jars (fits most 40–50mm diameter jars). Print any label you like and slot it in. Set of 6.",
         "id": "h4",
         "images": []
       },
       {
         "name": "Drawer Divider Set",
-        "price": "Ã¢ÂÂ¬8",
+        "price": "€8",
         "description": "Custom-fit drawer dividers for kitchen or desk drawers. Tell us your drawer dimensions and we will print dividers that slot in perfectly. Set of 4.",
         "id": "h5",
         "images": []
       },
       {
         "name": "Toothbrush & Soap Holder",
-        "price": "Ã¢ÂÂ¬5",
+        "price": "€5",
         "description": "Bathroom organiser with slots for 2 toothbrushes and a small soap dish. Compact, easy to clean and printed in moisture-resistant PLA.",
         "id": "h6",
         "images": []
@@ -113,43 +113,43 @@
       {
         "id": "g1",
         "name": "Custom Name Keychain",
-        "price": "Ã¢ÂÂ¬5",
+        "price": "€5",
         "description": "Personalised keychain with any name, word or short phrase. Printed in your chosen colour. A simple, meaningful gift that actually gets used every day.",
         "images": []
       },
       {
         "id": "g2",
         "name": "Desk Name Plate",
-        "price": "Ã¢ÂÂ¬7",
+        "price": "€7",
         "description": "A stylish desk nameplate with your name or title in clean raised lettering. Perfect for a home office or as a gift for a new job or promotion.",
         "images": []
       },
       {
         "id": "g3",
         "name": "Mini Planter (personalised)",
-        "price": "Ã¢ÂÂ¬8",
+        "price": "€8",
         "description": "A small geometric planter with your name or initials embossed on the side. Fits a standard succulent or small cactus pot. Drainage hole included.",
         "images": []
       },
       {
         "id": "g4",
         "name": "Baby Name Wall Letters",
-        "price": "Ã¢ÂÂ¬12",
+        "price": "€12",
         "description": "Spell out any name in chunky 3D letters for a nursery or kids room wall. Each letter is approximately 80mm tall. Priced per 3 letters.",
         "images": []
       },
       {
         "id": "g5",
         "name": "Wedding Favour Tags (10 pcs)",
-        "price": "Ã¢ÂÂ¬15",
+        "price": "€15",
         "description": "Customised wedding favour tags with the couple's names and date. Light, elegant and far more durable than paper. Set of 10.",
         "images": []
       },
       {
         "id": "g6",
         "name": "Pet Name Tag",
-        "price": "Ã¢ÂÂ¬4",
-        "description": "A durable, lightweight tag for your pet's collar with their name and your phone number. Bone shape or round Ã¢ÂÂ your choice.",
+        "price": "€4",
+        "description": "A durable, lightweight tag for your pet's collar with their name and your phone number. Bone shape or round — your choice.",
         "images": []
       }
     ],
@@ -157,43 +157,43 @@
       {
         "id": "p1",
         "name": "Custom Bracket / Mount",
-        "price": "Ã¢ÂÂ¬10",
-        "description": "Have something that needs a custom mounting bracket or support? Send us the dimensions and we will design and print a precise fit. Price varies by complexity Ã¢ÂÂ this is a base rate.",
+        "price": "€10",
+        "description": "Have something that needs a custom mounting bracket or support? Send us the dimensions and we will design and print a precise fit. Price varies by complexity — this is a base rate.",
         "images": []
       },
       {
         "id": "p2",
         "name": "Enclosure / Housing",
-        "price": "Ã¢ÂÂ¬15",
+        "price": "€15",
         "description": "Custom enclosure for electronics, sensors or small devices. Send us your PCB dimensions or a sketch and we will design a clean, functional housing.",
         "images": []
       },
       {
         "id": "p3",
         "name": "Replacement Part",
-        "price": "Ã¢ÂÂ¬8",
+        "price": "€8",
         "description": "Broken plastic clip, knob, handle or fitting? If you can describe it or send a photo, we can very likely print a functional replacement. Fast turnaround.",
         "images": []
       },
       {
         "id": "p4",
         "name": "Jig or Fixture",
-        "price": "Ã¢ÂÂ¬12",
+        "price": "€12",
         "description": "Workshop jig, drilling template, alignment tool or assembly fixture. Tell us what you are trying to align or repeat and we will design it for you.",
         "images": []
       },
       {
         "id": "p5",
         "name": "Concept Prototype",
-        "price": "Ã¢ÂÂ¬20",
+        "price": "€20",
         "description": "Have a product idea you want to hold in your hand? We will print a concept prototype from your sketch or description. Great for pitches, testing and feedback.",
         "images": []
       },
       {
         "id": "p6",
         "name": "Mechanical Test Part",
-        "price": "Ã¢ÂÂ¬14",
-        "description": "Functional mechanical component for fit and function testing Ã¢ÂÂ gears, clips, hinges, connectors. Printed in tough PLA or PETG. Quote based on your specs.",
+        "price": "€14",
+        "description": "Functional mechanical component for fit and function testing — gears, clips, hinges, connectors. Printed in tough PLA or PETG. Quote based on your specs.",
         "images": []
       }
     ],
@@ -201,42 +201,42 @@
       {
         "id": "d1",
         "name": "Geometric Vase (small)",
-        "price": "Ã¢ÂÂ¬9",
+        "price": "€9",
         "description": "A faceted geometric vase in a modern low-poly style. Holds dried flowers, pampas grass or thin real stems with a small glass insert. Approx 15 cm tall.",
         "images": []
       },
       {
         "id": "d2",
         "name": "Wall Art Panel",
-        "price": "Ã¢ÂÂ¬12",
+        "price": "€12",
         "description": "A decorative 3D wall panel in a geometric or organic pattern. Available in multiple sizes. Looks great as a single panel or in a set of 3.",
         "images": []
       },
       {
         "id": "d3",
         "name": "Floating Shelf Bracket",
-        "price": "Ã¢ÂÂ¬7",
+        "price": "€7",
         "description": "A stylish geometric shelf bracket that doubles as wall decor. Strong enough for light shelving (books, plants, decor). Sold as a pair.",
         "images": []
       },
       {
         "id": "d4",
         "name": "Candle Holder Set (3 pcs)",
-        "price": "Ã¢ÂÂ¬10",
+        "price": "€10",
         "description": "A set of 3 minimalist taper or tea-light candle holders in varying heights. Clean lines, stable base, printed in any colour.",
         "images": []
       },
       {
         "id": "d5",
         "name": "Plant Pot Stand",
-        "price": "Ã¢ÂÂ¬8",
-        "description": "Elevated stand for a standard 10Ã¢ÂÂ12 cm plant pot. Adds height and style to any windowsill or shelf. Available in all colours.",
+        "price": "€8",
+        "description": "Elevated stand for a standard 10–12 cm plant pot. Adds height and style to any windowsill or shelf. Available in all colours.",
         "images": []
       },
       {
         "id": "d6",
         "name": "Lamp Shade (geometric)",
-        "price": "Ã¢ÂÂ¬18",
+        "price": "€18",
         "description": "A geometric low-poly lamp shade designed for a standard E27 bulb fitting. Creates beautiful patterned light effects. Approx 20 cm diameter.",
         "images": []
       }
@@ -250,7 +250,7 @@
     "steps": [
       {
         "title": "Tell us what you need",
-        "description": "Send us an email with what you'd like Ã¢ÂÂ name, size, colour, quantity. Not sure? Just describe your idea."
+        "description": "Send us an email with what you'd like — name, size, colour, quantity. Not sure? Just describe your idea."
       },
       {
         "title": "Get a quote & confirm",
@@ -266,36 +266,36 @@
     "enabled": true,
     "label": "Portfolio",
     "title": "Recent work",
-    "subtitle": "Our latest prints Ã¢ÂÂ add your own photos here once you have them.",
-    "note": "Ã°ÂÂÂ¸ More photos coming soon Ã¢ÂÂ follow us for updates",
+    "subtitle": "Our latest prints — add your own photos here once you have them.",
+    "note": "📸 More photos coming soon — follow us for updates",
     "items": [
       {
-        "emoji": "Ã°ÂÂÂ¦",
+        "emoji": "📦",
         "label": "Desk Organiser",
         "bg": "#0d2137"
       },
       {
-        "emoji": "Ã°ÂÂªÂ",
+        "emoji": "🪝",
         "label": "Wall Hook Set",
         "bg": "#0d1f0d"
       },
       {
-        "emoji": "Ã°ÂÂÂ",
+        "emoji": "🔑",
         "label": "Name Keychain",
         "bg": "#1f0d25"
       },
       {
-        "emoji": "Ã°ÂÂÂ¿",
+        "emoji": "🌿",
         "label": "Mini Planter",
         "bg": "#1f1a0d"
       },
       {
-        "emoji": "Ã¢ÂÂÃ¯Â¸Â",
+        "emoji": "⚙️",
         "label": "Custom Bracket",
         "bg": "#1a1a2e"
       },
       {
-        "emoji": "Ã°ÂÂÂ",
+        "emoji": "🎁",
         "label": "Gift Box",
         "bg": "#0d1f1a"
       }
@@ -308,10 +308,10 @@
     "enabled": true,
     "label": "Ready to order?",
     "title": "Let's make something",
-    "subtitle": "Send us an email with your idea Ã¢ÂÂ no need to have all the details figured out. We'll help you get there.",
+    "subtitle": "Send us an email with your idea — no need to have all the details figured out. We'll help you get there.",
     "email": "orders@forgelayer.online",
     "button_text": "Email us your order",
-    "sub_text": "We reply within 24 hours ÃÂ· No upfront payment ÃÂ· Free quote",
+    "sub_text": "We reply within 24 hours · No upfront payment · Free quote",
     "steps": [
       {
         "text": "Describe your idea"
@@ -334,15 +334,15 @@
     "items": [
       {
         "q": "What materials do you print with?",
-        "a": "Primarily PLA Ã¢ÂÂ durable and eco-friendly. Available in all our standard colours. We can discuss alternatives for specific functional needs."
+        "a": "Primarily PLA — durable and eco-friendly. Available in all our standard colours. We can discuss alternatives for specific functional needs."
       },
       {
         "q": "How long does an order take?",
-        "a": "Standard orders take 5Ã¢ÂÂ7 working days from confirmation. Complex or large items may take longer Ã¢ÂÂ we always confirm the timeline upfront."
+        "a": "Standard orders take 5–7 working days from confirmation. Complex or large items may take longer — we always confirm the timeline upfront."
       },
       {
         "q": "Can I request a completely custom design?",
-        "a": "Absolutely. Send us your idea, sketch or reference image at orders@forgelayer.online. We'll quote you within 24 hours Ã¢ÂÂ no obligation."
+        "a": "Absolutely. Send us your idea, sketch or reference image at orders@forgelayer.online. We'll quote you within 24 hours — no obligation."
       },
       {
         "q": "Which colours are available?",
@@ -354,11 +354,11 @@
       },
       {
         "q": "Can I see a preview before printing?",
-        "a": "Yes Ã¢ÂÂ for custom orders we send a digital render for your approval before anything is printed."
+        "a": "Yes — for custom orders we send a digital render for your approval before anything is printed."
       },
       {
         "q": "What is the maximum print size?",
-        "a": "Up to 256 ÃÂ 256 ÃÂ 256 mm. Larger items can be printed in sections and joined seamlessly."
+        "a": "Up to 256 × 256 × 256 mm. Larger items can be printed in sections and joined seamlessly."
       },
       {
         "q": "Do you ship across Germany?",
