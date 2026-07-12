@@ -1088,5 +1088,39 @@ function init(){
 if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",init);}else{setTimeout(init,200);}
 })();
 </script>
+
+<style>
+.fl-navsb{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:20px;padding:7px 16px;color:var(--text);font-size:0.85rem;font-family:inherit;outline:none;width:180px;transition:border-color .2s}
+.fl-navsb::placeholder{color:var(--muted)}
+.fl-navsb:focus{border-color:var(--accent)}
+.fl-nav-search.fl-hidden{display:none}
+@media(max-width:820px){.fl-navsb{display:none}.fl-nav-search.fl-hidden{display:inline-flex}}
+</style>
+<script>
+(function(){
+function conv(){
+  var btns=document.querySelectorAll("button.fl-nav-search");
+  for(var k=0;k<btns.length;k++){(function(btn){
+    if(btn.getAttribute("data-flbar"))return;
+    btn.setAttribute("data-flbar","1");
+    var inp=document.createElement("input");
+    inp.type="text";inp.className="fl-navsb";inp.placeholder="Search products...";
+    inp.setAttribute("autocomplete","off");inp.setAttribute("spellcheck","false");
+    btn.parentNode.insertBefore(inp,btn);
+    btn.classList.add("fl-hidden");
+    function openM(){
+      var modal=document.getElementById("fl-search-modal");
+      var mi=document.getElementById("fl-search-input");
+      if(modal&&getComputedStyle(modal).display==="none"){btn.click();}
+      if(mi){ if(inp.value){mi.value=inp.value;mi.dispatchEvent(new Event("input",{bubbles:true}));} setTimeout(function(){try{mi.focus();}catch(e){}},20); }
+    }
+    inp.addEventListener("focus",openM);
+    inp.addEventListener("input",openM);
+  })(btns[k]);}
+}
+if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",conv);}else{conv();}
+try{new MutationObserver(conv).observe(document.documentElement,{childList:true,subtree:true});}catch(e){}
+})();
+</script>
 </body>
 </html>
