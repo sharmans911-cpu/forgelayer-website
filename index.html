@@ -337,8 +337,7 @@ function renderProducts(d) {
       <div class="card-examples">${(item.tags||[]).map(t=>`<span class="tag">${esc(t)}</span>`).join('')}</div>
       ${sizesHtml}
       <div class="card-price">${esc(item.price_from)} Â· Turnaround ${esc(item.turnaround)}</div>
-    </div>`;
-  }).join('');
+    </div>`; }).join('');
   return `
   <section id="products">
     <div class="section-head">
@@ -356,8 +355,7 @@ function renderHow(d) {
       <div class="step-num">${i + 1}</div>
       <h3>${esc(s.title)}</h3>
       <p>${esc(s.description)}</p>
-    </div>`;
-  }).join('');
+    </div>`).join('');
   return `
   <section id="how">
     <div class="section-head">
@@ -438,8 +436,7 @@ function renderWhy() {
       <div class="why-icon">${f.icon}</div>
       <h3>${f.title}</h3>
       <p>${f.desc}</p>
-    </div>`;
-  }).join('');
+    </div>`).join('');
   return `
   <section id="why">
     <div class="section-head">
@@ -456,8 +453,7 @@ function renderFAQ(d) {
     <div class="faq-item">
       <div class="faq-q">${esc(item.q)} <span class="faq-icon">+</span></div>
       <div class="faq-a">${esc(item.a)}</div>
-    </div>`;
-  }).join('');
+    </div>`).join('');
   return `
   <section id="faq">
     <div class="section-head">
