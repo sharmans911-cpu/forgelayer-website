@@ -7,7 +7,7 @@
     "instagram_url": ""
   },
   "hero": {
-    "enabled": false,
+    "enabled": true,
     "badge": "Your Imagination to 3D Prints",
     "headline": "Bring your ideas",
     "headline_highlight": "to life in 3D",
