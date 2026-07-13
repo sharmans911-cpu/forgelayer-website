@@ -507,7 +507,7 @@ function renderSite(data) {
   if (data.how?.enabled)      { sections.push(renderHow(data.how)); enabledIds.push('how'); }
   if (data.gallery?.enabled)  { sections.push(renderGallery(data.gallery)); enabledIds.push('gallery'); }
   if (data.pricing?.enabled)  { sections.push(renderPricing(data.pricing)); enabledIds.push('pricing'); }
-  sections.push(renderWhy()); enabledIds.push('why');
+  if (data.why?.enabled!==false) { sections.push(renderWhy()); enabledIds.push('why'); }
   if (data.faq?.enabled)      { sections.push(renderFAQ(data.faq)); enabledIds.push('faq'); }
 
   document.getElementById('page-content').innerHTML = sections.join('');
