@@ -27,7 +27,8 @@
         "number": "100%",
         "label": "Custom made"
       }
-    ]
+    ],
+    "hl_style": "rainbow"
   },
   "products": {
     "enabled": true,
