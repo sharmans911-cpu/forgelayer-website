@@ -326,7 +326,7 @@ function renderProducts(d) {
       : '';
     return `
     <div class="product-card">
-      <div class="card-icon ${esc(item.icon_style || 'green')}">${/^(\/|https?:|data:)/.test(item.icon||"")||/\.(png|jpe?g|webp|gif|svg)(\?|$)/i.test(item.icon||"")?`<img src="${esc(item.icon)}" alt="" style="width:100%;height:100%;object-fit:cover;border-radius:inherit;display:block">`:esc(item.icon)}</div>
+      <div class="card-icon ${esc(item.icon_style || 'green')}"${item.img_size?` style="width:${({s:44,m:64,l:88,xl:120})[item.img_size]||56}px;height:${({s:44,m:64,l:88,xl:120})[item.img_size]||56}px"`:``}>${/^(\/|https?:|data:)/.test(item.icon||"")||/\.(png|jpe?g|webp|gif|svg)(\?|$)/i.test(item.icon||"")?`<img src="${esc(item.icon)}" alt="" style="width:100%;height:100%;object-fit:${esc(item.img_fit||'cover')};object-position:${esc(item.img_pos||'center')};transform:rotate(${esc(item.img_rot||'0')}deg);border-radius:inherit;display:block">`:esc(item.icon)}</div>
       <h3>${esc(item.title||item.name||'')}</h3>${item.sku?`<div style="font-size:0.72rem;color:var(--muted);letter-spacing:0.5px;margin-top:3px;opacity:0.85">SKU: ${esc(item.sku)}</div>`:``}
       <p>${esc(item.description)}</p>
       <div class="card-examples">${(item.tags||[]).map(t=>`<span class="tag">${esc(t)}</span>`).join('')}</div>
