@@ -308,8 +308,8 @@ function renderHero(d, site) {
   return `
   <section class="hero" id="home">
     <div class="hero-inner">
-      <div class="hero-badge">${esc(d.badge)}</div>
-      <h1>${esc(d.headline)}<br/><em>${esc(d.headline_highlight)}</em></h1>
+      <div class="hero-badge"${d.badge_color?` style="color:${esc(d.badge_color)};border-color:${esc(d.badge_color)}"`:``}>${esc(d.badge)}</div>
+      <h1${d.headline_color?` style="color:${esc(d.headline_color)}"`:``}>${esc(d.headline)}<br/><em${(function(s){var g={rainbow:'linear-gradient(90deg,#ff2d2d,#ff9a00,#ffe600,#38e000,#00b3ff,#7a5cff,#ff3db4)',sunset:'linear-gradient(90deg,#ff512f,#f09819,#ff2d95)',ocean:'linear-gradient(90deg,#00c6ff,#0072ff,#00e0c6)',purple:'linear-gradient(90deg,#a25bff,#ff5bd8)',gold:'linear-gradient(90deg,#f7971e,#ffd200)'};if(s&&g[s])return ' style="background:'+g[s]+';-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent"';if(s==='custom'&&d.hl_color)return ' style="background:none;-webkit-text-fill-color:'+esc(d.hl_color)+';color:'+esc(d.hl_color)+'"';return '';})(d.hl_style)}>${esc(d.headline_highlight)}</em></h1>
       <p class="hero-sub">${esc(d.subtext)}</p>
       <div class="hero-btns">
         <a href="#products" class="btn-secondary">${esc(d.cta_secondary)} ↗</a>
