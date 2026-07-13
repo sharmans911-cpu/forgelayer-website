@@ -1122,5 +1122,22 @@ if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded"
 try{new MutationObserver(conv).observe(document.documentElement,{childList:true,subtree:true});}catch(e){}
 })();
 </script>
+
+<script>
+/* fl-fontscale: apply site font + text size from content.json */
+(function(){
+  var GF={Poppins:1,Inter:1,Montserrat:1,Nunito:1,"Playfair Display":1};
+  fetch('/content.json?ft='+Date.now(),{cache:'no-store'}).then(function(r){return r.json();}).then(function(c){
+    var s=(c&&c.site)||{}; var font=s.font||''; var scale=s.text_scale||'';
+    if(font){
+      var fam;
+      if(font==='system'){ fam='system-ui,-apple-system,"Segoe UI",Roboto,sans-serif'; }
+      else { fam='"'+font+'",sans-serif'; if(GF[font]){ var l=document.createElement('link'); l.rel='stylesheet'; l.href='https://fonts.googleapis.com/css2?family='+font.replace(/ /g,'+')+':wght@400;600;700;800&display=swap'; document.head.appendChild(l); } }
+      var st=document.createElement('style'); st.setAttribute('data-fl','font'); st.textContent='body,button,input,select,textarea,h1,h2,h3,h4,h5,h6,p,a,span,div,em,strong,li,label{font-family:'+fam+' !important}'; document.head.appendChild(st);
+    }
+    if(scale){ var px={s:15,l:18,xl:20}[scale]||16; document.documentElement.style.fontSize=px+'px'; }
+  }).catch(function(e){});
+})();
+</script>
 </body>
 </html>
