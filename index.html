@@ -365,7 +365,7 @@ function renderHow(d) {
 function renderGallery(d) {
   const items = (d.items || []).map(item => {
     const inner = item.image
-      ? `<img src="${esc(item.image)}" alt="${esc(item.label)}" loading="lazy" />`
+      ? `<img src="${esc(item.image)}" alt="${esc(item.label)}" loading="lazy" style="object-fit:${esc(item.img_fit||'cover')};object-position:${esc(item.img_pos||'center')};transform:rotate(${esc(item.img_rot||'0')}deg)" />`
       : `<div class="gallery-placeholder" style="background:${esc(item.bg||'#111')}">${item.emoji||'ð¨ï¸'}<span class="gallery-label">${esc(item.label)}</span></div>`;
     return `<div class="gallery-item">${inner}</div>`;
   }).join('');
