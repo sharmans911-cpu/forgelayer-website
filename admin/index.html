@@ -247,5 +247,51 @@ function pvFaq(){var f=data.faq||{};var items=(f.items||[]).map(function(it){ret
 function collectSec(sec){if(!data)return;switch(sec){case 'site':if(gv('s-name')!==null){data.site.name=gv('s-name');data.site.email=gv('s-email');data.site.footer_text=gv('s-footer');data.site.whatsapp_url=gv('s-whatsapp');data.site.instagram_url=gv('s-instagram');}break;case 'hero':if(gv('h-badge')!==null){data.hero.enabled=gc('h-on')!==null?gc('h-on'):data.hero.enabled;data.hero.badge=gv('h-badge');data.hero.headline=gv('h-head');data.hero.headline_highlight=gv('h-hi');data.hero.subtext=gv('h-sub');data.hero.cta_primary=gv('h-cta1');data.hero.cta_secondary=gv('h-cta2');var sl=gl('stat-list',['number','label']);if(sl)data.hero.stats=sl;}break;case 'products':if(gv('p-lbl')!==null){data.products.enabled=gc('p-on')!==null?gc('p-on'):data.products.enabled;data.products.label=gv('p-lbl');data.products.title=gv('p-title');data.products.subtitle=gv('p-sub');var catList=document.getElementById('cat-list');if(catList){data.products.items=Array.from(catList.querySelectorAll('.item-card')).map(function(card){var get=function(f){var el=card.querySelector('[data-f="'+f+'"]');return el?el.value:'';};var tagsStr=get('tags');var tags=tagsStr?tagsStr.split(',').map(function(s){return s.trim();}).filter(Boolean):[];var szToggle=card.querySelector('.sz-toggle');var szInps=Array.from(card.querySelectorAll('.sz-inp')).map(function(i){return i.value.trim();}).filter(Boolean);return{icon:get('icon'),icon_style:get('icon_style'),title:get('title'),description:get('description'),tags:tags,price_from:get('price_from'),turnaround:get('turnaround'),sizes_enabled:szToggle?szToggle.checked:false,sizes:szInps};});}var pl=gl('prod-list',['name','price','description']);if(pl){data.products[curCat]=pl.map(function(p,i){p.id=curCat.charAt(0)+(i+1);p.images=p.images||[];return p;});}}break;case 'how':if(gv('w-lbl')!==null){data.how.enabled=gc('w-on')!==null?gc('w-on'):data.how.enabled;data.how.label=gv('w-lbl');data.how.title=gv('w-title');data.how.subtitle=gv('w-sub');var wl=gl('step-list',['title','description']);if(wl)data.how.steps=wl;}break;case 'gallery':if(gv('g-lbl')!==null){data.gallery.enabled=gc('g-on')!==null?gc('g-on'):data.gallery.enabled;data.gallery.label=gv('g-lbl');data.gallery.title=gv('g-title');data.gallery.subtitle=gv('g-sub');data.gallery.note=gv('g-note');var gl2=gl('gal-list',['emoji','label','bg']);if(gl2)data.gallery.items=gl2;}break;case 'order':if(gv('o-lbl')!==null){data.order.enabled=gc('o-on')!==null?gc('o-on'):data.order.enabled;data.order.label=gv('o-lbl');data.order.title=gv('o-title');data.order.subtitle=gv('o-sub');data.order.email=gv('o-email');data.order.button_text=gv('o-btn');data.order.sub_text=gv('o-subt');}break;case 'faq':if(document.getElementById('faq-list')){data.faq.enabled=gc('faq-on')!==null?gc('faq-on'):data.faq.enabled;var fl=gl('faq-list',['question','answer']);if(fl)data.faq.items=fl;}break;}}
 boot();
 </script>
+
+<script>
+(function(){
+  var REPO="sharmans911-cpu/forgelayer-website";
+  function tok(){ try{return localStorage.getItem("fl_tok");}catch(e){return null;} }
+  function isImg(v){ v=(v||"").toLowerCase(); if(v.indexOf("/")===0||v.indexOf("http")===0||v.indexOf("data:")===0){return true;} var ex=[".png",".jpg",".jpeg",".webp",".gif",".svg"]; for(var i=0;i<ex.length;i++){ if(v.indexOf(ex[i])>-1){return true;} } return false; }
+  function addUploader(field){
+    if(!field||field.getAttribute("data-flimg")){return;}
+    field.setAttribute("data-flimg","1");
+    var input=field.querySelector("input"); if(!input){return;}
+    if(!input.placeholder){input.placeholder="Emoji or image";}
+    var bar=document.createElement("div"); bar.style.cssText="display:flex;gap:8px;align-items:center;margin-top:6px;flex-wrap:wrap";
+    var btn=document.createElement("button"); btn.type="button"; btn.textContent="Upload image"; btn.style.cssText="font-size:0.72rem;padding:5px 10px;border-radius:8px;border:1px solid #2a7d5a;background:#0f2a1e;color:#7ee0a8;cursor:pointer";
+    var clr=document.createElement("button"); clr.type="button"; clr.textContent="Clear"; clr.style.cssText="font-size:0.72rem;padding:5px 10px;border-radius:8px;border:1px solid #444;background:#1a1a1a;color:#aaa;cursor:pointer";
+    var status=document.createElement("span"); status.style.cssText="font-size:0.7rem;color:#9aa";
+    var prev=document.createElement("img"); prev.style.cssText="width:34px;height:34px;object-fit:cover;border-radius:6px;border:1px solid #333;display:none";
+    function refresh(){ if(isImg(input.value)){ prev.src=input.value; prev.style.display="inline-block"; } else { prev.style.display="none"; } }
+    refresh();
+    var file=document.createElement("input"); file.type="file"; file.accept="image/png,image/jpeg,image/webp,image/gif"; file.style.display="none"; document.body.appendChild(file);
+    btn.onclick=function(){ file.click(); };
+    clr.onclick=function(){ input.value=""; input.dispatchEvent(new Event("input",{bubbles:true})); input.dispatchEvent(new Event("change",{bubbles:true})); refresh(); status.textContent="Cleared"; };
+    file.onchange=function(){
+      var f=file.files&&file.files[0]; if(!f){return;}
+      if(f.size>6291456){ status.textContent="Too big (max 6MB) - resize first"; return; }
+      var t=tok(); if(!t){ status.textContent="No login token found"; return; }
+      status.textContent="Uploading...";
+      var rd=new FileReader();
+      rd.onload=function(){
+        var b64=String(rd.result).split(",")[1];
+        var safe=f.name.replace(/[^A-Za-z0-9._-]/g,"_"); var path="assets/uploads/"+Date.now()+"_"+safe;
+        fetch("https://api.github.com/repos/"+REPO+"/contents/"+path,{method:"PUT",headers:{Authorization:"token "+t,"Content-Type":"application/json",Accept:"application/vnd.github+json"},body:JSON.stringify({message:"Upload image "+safe,content:b64})})
+        .then(function(r){return r.json();}).then(function(res){
+          if(res&&res.content){ input.value="/"+path; input.dispatchEvent(new Event("input",{bubbles:true})); input.dispatchEvent(new Event("change",{bubbles:true})); refresh(); status.textContent="Uploaded - now click Save & Deploy"; }
+          else{ status.textContent="Upload failed: "+((res&&res.message)||"error"); }
+        }).catch(function(e){ status.textContent="Upload error"; });
+      };
+      rd.readAsDataURL(f); file.value="";
+    };
+    input.addEventListener("input",refresh);
+    bar.appendChild(btn); bar.appendChild(clr); bar.appendChild(prev); bar.appendChild(status); field.appendChild(bar);
+  }
+  function run(){ var labs=document.querySelectorAll("label"); for(var i=0;i<labs.length;i++){ var tx=(labs[i].textContent||"").toLowerCase(); if(tx.indexOf("icon / emoji")>-1||tx.indexOf("icon/emoji")>-1){ addUploader(labs[i].parentElement); } } }
+  if(document.readyState==="loading"){ document.addEventListener("DOMContentLoaded",run); } else { run(); }
+  try{ new MutationObserver(run).observe(document.body,{childList:true,subtree:true}); }catch(e){}
+})();
+</script>
 </body>
 </html>
