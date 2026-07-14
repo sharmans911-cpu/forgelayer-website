@@ -19,7 +19,7 @@
     "headline": "Bring your ideas",
     "headline_highlight": "to life in 3D",
     "subtext": "3D Printing personalised Household things, Prototypes and more. Printed with Precision, delivered with care.",
-    "cta_primary": "",
+    "cta_primary": "Place an Order",
     "cta_secondary": "See what we make",
     "stats": [
       {
@@ -52,7 +52,7 @@
     "headline_hidden": false,
     "headline_highlight_hidden": false,
     "subtext_hidden": false,
-    "cta_primary_hidden": true,
+    "cta_primary_hidden": false,
     "cta_secondary_hidden": false
   },
   "products": {
