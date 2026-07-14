@@ -119,6 +119,8 @@
     .product-card:hover { transform: translateY(-6px); border-color: var(--accent); box-shadow: 0 12px 40px rgba(0,217,166,0.1); }
     .product-card:hover::after { opacity: 1; }
     .card-icon { width: 56px; height: 56px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 1.6rem; margin-bottom: 20px; }
+    .card-image { width: calc(100% + 56px); margin: -36px -28px 24px -28px; display: block; background: rgba(255,255,255,0.03); }
+    .card-image img { width: 100%; height: 100%; display: block; }
     .card-icon.green  { background: rgba(0,217,166,0.12); }
     .card-icon.blue   { background: rgba(0,152,255,0.12); }
     .card-icon.purple { background: rgba(139,92,246,0.12); }
@@ -302,17 +304,17 @@ function mailtoLink(email, siteName) {
 
 // ─── Section renderers ───────────────────────────────────────────────────────
 function renderHero(d, site) {
-  const stats = (d.stats || []).map(s => `
-    <div><div class="stat-num">${esc(s.number)}</div><div class="stat-label">${esc(s.label)}</div></div>
+  const stats = (d.stats || []).filter(s => !s.hidden).map(s => `
+    <div>${s.number_hidden?'':`<div class="stat-num">${esc(s.number)}</div>`}${s.label_hidden?'':`<div class="stat-label">${esc(s.label)}</div>`}</div>
   `).join('');
   return `
   <section class="hero" id="home">
     <div class="hero-inner">
-      <div class="hero-badge"${d.badge_color?` style="color:${esc(d.badge_color)};border-color:${esc(d.badge_color)}"`:``}>${esc(d.badge)}</div>
-      <h1${d.headline_color?` style="color:${esc(d.headline_color)}"`:``}>${esc(d.headline)}<br/><em${(function(s){var g={rainbow:'linear-gradient(90deg,#ff2d2d,#ff9a00,#ffe600,#38e000,#00b3ff,#7a5cff,#ff3db4)',sunset:'linear-gradient(90deg,#ff512f,#f09819,#ff2d95)',ocean:'linear-gradient(90deg,#00c6ff,#0072ff,#00e0c6)',purple:'linear-gradient(90deg,#a25bff,#ff5bd8)',gold:'linear-gradient(90deg,#f7971e,#ffd200)'};if(s&&g[s])return ' style="background:'+g[s]+';-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent"';if(s==='custom'&&d.hl_color)return ' style="background:none;-webkit-text-fill-color:'+esc(d.hl_color)+';color:'+esc(d.hl_color)+'"';return '';})(d.hl_style)}>${esc(d.headline_highlight)}</em></h1>
-      <p class="hero-sub">${esc(d.subtext)}</p>
+      ${d.badge_hidden?'':`<div class="hero-badge"${d.badge_color?` style="color:${esc(d.badge_color)};border-color:${esc(d.badge_color)}"`:``}>${esc(d.badge)}</div>`}
+      <h1${d.headline_color?` style="color:${esc(d.headline_color)}"`:``}>${d.headline_hidden?'':esc(d.headline)}${(!d.headline_hidden&&!d.headline_highlight_hidden)?'<br/>':''}${d.headline_highlight_hidden?'':`<em${(function(s){var g={rainbow:'linear-gradient(90deg,#ff2d2d,#ff9a00,#ffe600,#38e000,#00b3ff,#7a5cff,#ff3db4)',sunset:'linear-gradient(90deg,#ff512f,#f09819,#ff2d95)',ocean:'linear-gradient(90deg,#00c6ff,#0072ff,#00e0c6)',purple:'linear-gradient(90deg,#a25bff,#ff5bd8)',gold:'linear-gradient(90deg,#f7971e,#ffd200)'};if(s&&g[s])return ' style="background:'+g[s]+';-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent"';if(s==='custom'&&d.hl_color)return ' style="background:none;-webkit-text-fill-color:'+esc(d.hl_color)+';color:'+esc(d.hl_color)+'"';return '';})(d.hl_style)}>${esc(d.headline_highlight)}</em>`}</h1>
+      ${d.subtext_hidden?'':`<p class="hero-sub">${esc(d.subtext)}</p>`}
       <div class="hero-btns">
-        <a href="#products" class="btn-secondary">${esc(d.cta_secondary)} ↗</a>
+        ${d.cta_secondary_hidden?'':`<a href="#products" class="btn-secondary">${esc(d.cta_secondary)} ↗</a>`}
       </div>
       ${stats ? `<div class="hero-stats">${stats}</div>` : ''}
     </div>
@@ -320,64 +322,68 @@ function renderHero(d, site) {
 }
 
 function renderProducts(d) {
-  const cards = (d.items || []).map(item => {
+  const cards = (d.items || []).filter(item => !item.hidden).map(item => {
     const sizesHtml = (item.sizes_enabled && item.sizes && item.sizes.length > 0)
       ? `<div class="card-sizes"><div class="sizes-label">Available sizes</div><div class="size-options">${item.sizes.map(s=>`<span class="size-tag">${esc(s)}</span>`).join('')}</div></div>`
       : '';
+    const isImg = /^(\/|https?:|data:)/.test(item.icon||"") || /\.(png|jpe?g|webp|gif|svg)(\?|$)/i.test(item.icon||"");
+    const iconHtml = item.icon_hidden ? '' : (isImg
+      ? `<div class="card-image" style="height:${({s:140,m:180,l:220,xl:280})[item.img_size]||180}px"><img src="${esc(item.icon)}" alt="" style="object-fit:${esc(item.img_fit||'cover')};object-position:${esc(item.img_pos||'center')};transform:rotate(${esc(item.img_rot||'0')}deg)"></div>`
+      : `<div class="card-icon ${esc(item.icon_style || 'green')}">${esc(item.icon)}</div>`);
     return `
     <div class="product-card">
-      <div class="card-icon ${esc(item.icon_style || 'green')}"${item.img_size?` style="width:${({s:44,m:64,l:88,xl:120})[item.img_size]||56}px;height:${({s:44,m:64,l:88,xl:120})[item.img_size]||56}px"`:``}>${/^(\/|https?:|data:)/.test(item.icon||"")||/\.(png|jpe?g|webp|gif|svg)(\?|$)/i.test(item.icon||"")?`<img src="${esc(item.icon)}" alt="" style="width:100%;height:100%;object-fit:${esc(item.img_fit||'cover')};object-position:${esc(item.img_pos||'center')};transform:rotate(${esc(item.img_rot||'0')}deg);border-radius:inherit;display:block">`:esc(item.icon)}</div>
-      <h3>${esc(item.title||item.name||'')}</h3>${item.sku?`<div style="font-size:0.72rem;color:var(--muted);letter-spacing:0.5px;margin-top:3px;opacity:0.85">SKU: ${esc(item.sku)}</div>`:``}
-      <p>${esc(item.description)}</p>
-      <div class="card-examples">${(item.tags||[]).map(t=>`<span class="tag">${esc(t)}</span>`).join('')}</div>
+      ${iconHtml}
+      ${item.title_hidden?'':`<h3>${esc(item.title||item.name||'')}</h3>`}${(item.sku&&!item.sku_hidden)?`<div style="font-size:0.72rem;color:var(--muted);letter-spacing:0.5px;margin-top:3px;opacity:0.85">SKU: ${esc(item.sku)}</div>`:``}
+      ${item.description_hidden?'':`<p>${esc(item.description)}</p>`}
+      ${item.tags_hidden?'':`<div class="card-examples">${(item.tags||[]).map(t=>`<span class="tag">${esc(t)}</span>`).join('')}</div>`}
       ${sizesHtml}
-      ${item.price_from?`<div class="card-price">${esc(item.price_from)}${item.turnaround?` \u00B7 Turnaround ${esc(item.turnaround)}`:``}</div>`:``}
+      ${(item.price_from&&!item.price_from_hidden)?`<div class="card-price">${esc(item.price_from)}${(item.turnaround&&!item.turnaround_hidden)?` \u00B7 Turnaround ${esc(item.turnaround)}`:``}</div>`:``}
     </div>`; }).join('');
   return `
   <section id="products">
     <div class="section-head">
-      <div class="section-label">${esc(d.label)}</div>
-      <h2>${esc(d.title)}</h2>
-      <p class="section-sub">${esc(d.subtitle)}</p>
+      ${d.label_hidden?'':`<div class="section-label">${esc(d.label)}</div>`}
+      ${d.title_hidden?'':`<h2>${esc(d.title)}</h2>`}
+      ${d.subtitle_hidden?'':`<p class="section-sub">${esc(d.subtitle)}</p>`}
     </div>
     <div class="products-grid">${cards}</div>
   </section>`;
 }
 
 function renderHow(d) {
-  const steps = (d.steps || []).map((s, i) => `
+  const steps = (d.steps || []).filter(s => !s.hidden).map((s, i) => `
     <div class="step">
       <div class="step-num">${i + 1}</div>
-      <h3>${esc(s.title)}</h3>
-      <p>${esc(s.description)}</p>
+      ${s.title_hidden?'':`<h3>${esc(s.title)}</h3>`}
+      ${s.description_hidden?'':`<p>${esc(s.description)}</p>`}
     </div>`).join('');
   return `
   <section id="how">
     <div class="section-head">
-      <div class="section-label">${esc(d.label)}</div>
-      <h2>${esc(d.title)}</h2>
-      <p class="section-sub">${esc(d.subtitle)}</p>
+      ${d.label_hidden?'':`<div class="section-label">${esc(d.label)}</div>`}
+      ${d.title_hidden?'':`<h2>${esc(d.title)}</h2>`}
+      ${d.subtitle_hidden?'':`<p class="section-sub">${esc(d.subtitle)}</p>`}
     </div>
     <div class="steps">${steps}</div>
   </section>`;
 }
 
 function renderGallery(d) {
-  const items = (d.items || []).map(item => {
+  const items = (d.items || []).filter(item => !item.hidden).map(item => {
     const inner = item.image
       ? `<img src="${esc(item.image)}" alt="${esc(item.label)}" loading="lazy" style="object-fit:${esc(item.img_fit||'cover')};object-position:${esc(item.img_pos||'center')};transform:rotate(${esc(item.img_rot||'0')}deg)" />`
-      : `<div class="gallery-placeholder" style="background:${esc(item.bg||'#111')}">${item.emoji||'🖨️'}<span class="gallery-label">${esc(item.label)}</span></div>`;
+      : `<div class="gallery-placeholder" style="background:${esc(item.bg||'#111')}">${item.emoji_hidden?'':(item.emoji||'🖨️')}${item.label_hidden?'':`<span class="gallery-label">${esc(item.label)}</span>`}</div>`;
     return `<div class="gallery-item">${inner}</div>`;
   }).join('');
   return `
   <section id="gallery">
     <div class="section-head">
-      <div class="section-label">${esc(d.label)}</div>
-      <h2>${esc(d.title)}</h2>
-      <p class="section-sub">${esc(d.subtitle)}</p>
+      ${d.label_hidden?'':`<div class="section-label">${esc(d.label)}</div>`}
+      ${d.title_hidden?'':`<h2>${esc(d.title)}</h2>`}
+      ${d.subtitle_hidden?'':`<p class="section-sub">${esc(d.subtitle)}</p>`}
     </div>
     <div class="gallery-grid">${items}</div>
-    ${d.note ? `<p class="gallery-note">${esc(d.note)}</p>` : ''}
+    ${(d.note&&!d.note_hidden) ? `<p class="gallery-note">${esc(d.note)}</p>` : ''}
   </section>`;
 }
 
@@ -409,12 +415,12 @@ function renderOrder(d, site) {
     <div class="order-step-pill"><span class="pill-num">${i+1}</span>${esc(s.text)}</div>`).join('');
   return `
   <section id="order">
-    <div class="section-label">${esc(d.label)}</div>
-    <h2>${esc(d.title)}</h2>
-    <p class="section-sub">${esc(d.subtitle)}</p>
+    ${d.label_hidden?'':`<div class="section-label">${esc(d.label)}</div>`}
+    ${d.title_hidden?'':`<h2>${esc(d.title)}</h2>`}
+    ${d.subtitle_hidden?'':`<p class="section-sub">${esc(d.subtitle)}</p>`}
     <div class="order-steps">${pills}</div>
-    <a class="btn-order" href="${mailtoLink(site.email, site.name)}">✉ ${esc(d.button_text)}</a>
-    <p class="order-sub">${esc(d.sub_text)}</p>
+    ${(d.button_text_hidden||site.email_hidden)?'':`<a class="btn-order" href="${mailtoLink(site.email, site.name)}">✉ ${esc(d.button_text)}</a>`}
+    ${d.sub_text_hidden?'':`<p class="order-sub">${esc(d.sub_text)}</p>`}
   </section>`;
 }
 
@@ -444,16 +450,16 @@ function renderWhy() {
 }
 
 function renderFAQ(d) {
-  const items = (d.items || []).map(item => `
+  const items = (d.items || []).filter(item => !item.hidden).map(item => `
     <div class="faq-item">
-      <div class="faq-q">${esc(item.q)} <span class="faq-icon">+</span></div>
-      <div class="faq-a">${esc(item.a)}</div>
+      ${item.q_hidden?'':`<div class="faq-q">${esc(item.q)} <span class="faq-icon">+</span></div>`}
+      ${item.a_hidden?'':`<div class="faq-a">${esc(item.a)}</div>`}
     </div>`).join('');
   return `
   <section id="faq">
     <div class="section-head">
-      <div class="section-label">${esc(d.label)}</div>
-      <h2>${esc(d.title)}</h2>
+      ${d.label_hidden?'':`<div class="section-label">${esc(d.label)}</div>`}
+      ${d.title_hidden?'':`<h2>${esc(d.title)}</h2>`}
     </div>
     <div class="faq-list">${items}</div>
   </section>`;
@@ -470,15 +476,17 @@ function renderFooter(site, enabledSections) {
   </svg>`;
   const igSvg = `<svg width="28" height="28" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><defs><radialGradient id="ig-g" cx="30%" cy="108%" r="155%"><stop offset="0%" stop-color="#fdf497"/><stop offset="45%" stop-color="#fd5949"/><stop offset="60%" stop-color="#d6249f"/><stop offset="90%" stop-color="#285AEB"/></radialGradient></defs><rect x="1" y="1" width="22" height="22" rx="6" fill="url(#ig-g)"/><circle cx="12" cy="12" r="4.5" fill="none" stroke="#fff" stroke-width="2"/><circle cx="17.5" cy="6.5" r="1.2" fill="#fff"/></svg>`;
   const waSvg = `<svg width="28" height="28" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="1" width="22" height="22" rx="6" fill="#25D366"/><path d="M12 4.5C7.86 4.5 4.5 7.86 4.5 12c0 1.48.39 2.87 1.07 4.07L4.5 19.5l3.52-1.05c1.17.62 2.5.97 3.98.97C16.14 19.42 19.5 16.06 19.5 12c0-4.06-3.36-7.5-7.5-7.5zm3.62 10.22c-.16.44-.92.84-1.27.89-.32.05-.73.07-1.18-.08-.27-.09-.62-.22-1.06-.41C10.25 14.3 9.03 12.45 8.94 12.33c-.09-.12-.77-1.02-.77-1.95 0-.93.49-1.39.66-1.58.16-.19.35-.23.47-.23h.33c.11 0 .26-.04.41.31l.56 1.4c.04.11.08.24.01.39l-.22.33-.31.35c-.1.1-.2.2-.08.38.11.18.51.85 1.09 1.38.76.68 1.4.91 1.59 1.01.19.09.3.08.41-.05l.3-.35c.1-.13.2-.09.32-.05l1.3.62c.17.08.28.12.32.2.04.07.04.44-.11.88z" fill="#fff"/></svg>`;
+  const waUrl = site.whatsapp_url_hidden ? '' : (site.whatsapp_url || '');
+  const igUrl = site.instagram_url_hidden ? '' : (site.instagram_url || '');
   return `
     <div class="footer-logo">${footerLogo}</div>
-    <p>${esc(site.footer_text)}</p>
+    ${site.footer_text_hidden?'':`<p>${esc(site.footer_text)}</p>`}
     <div class="footer-right">
-      ${(site.whatsapp_url||site.instagram_url)?`<div class="fl-float-btns">${site.whatsapp_url?`<a href="${esc(site.whatsapp_url)}" target="_blank" rel="noopener" class="fl-float-btn fl-float-wa" title="WhatsApp"><svg width="26" height="26" viewBox="0 0 24 24" fill="#fff"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21 5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2zm5.8 14.16c-.24.68-1.4 1.3-1.94 1.38-.5.07-1.13.1-1.82-.11-.42-.13-.96-.31-1.65-.61-2.9-1.25-4.79-4.17-4.94-4.36-.14-.19-1.18-1.57-1.18-2.99 0-1.42.75-2.12 1.01-2.41.27-.29.58-.36.77-.36.19 0 .39.002.56.01.18.01.42-.07.66.5.24.58.82 2 .89 2.14.07.14.12.31.02.5-.09.19-.14.31-.27.48-.14.17-.29.37-.41.5-.14.14-.28.29-.12.56.16.27.71 1.17 1.53 1.9 1.05.94 1.94 1.23 2.21 1.37.27.14.43.12.58-.07.16-.19.67-.78.85-1.05.18-.27.36-.22.6-.13.24.09 1.53.72 1.8.85.27.14.44.2.51.31.06.11.06.65-.18 1.33z"/></svg></a>`:``}${site.instagram_url?`<a href="${esc(site.instagram_url)}" target="_blank" rel="noopener" class="fl-float-btn fl-float-ig" title="Instagram"><svg width="24" height="24" viewBox="0 0 24 24" fill="#fff"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41-.56-.22-.96-.48-1.38-.9-.42-.42-.68-.82-.9-1.38-.16-.42-.36-1.06-.41-2.23C2.17 15.58 2.16 15.2 2.16 12s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41C8.42 2.17 8.8 2.16 12 2.16zm0 2.45a5.95 5.95 0 100 11.9 5.95 5.95 0 000-11.9zm0 9.82a3.87 3.87 0 110-7.74 3.87 3.87 0 010 7.74zm7.58-10.01a1.39 1.39 0 11-2.78 0 1.39 1.39 0 012.78 0z"/></svg></a>`:``}</div>`:``}<div class="footer-social">
-        <a href="${esc(site.instagram_url || '#')}" target="_blank" rel="noopener" class="social-link" title="Instagram">${igSvg}</a>
-        <a href="${esc(site.whatsapp_url || '#')}" target="_blank" rel="noopener" class="social-link" title="WhatsApp">${waSvg}</a>
+      ${(waUrl||igUrl)?`<div class="fl-float-btns">${waUrl?`<a href="${esc(waUrl)}" target="_blank" rel="noopener" class="fl-float-btn fl-float-wa" title="WhatsApp"><svg width="26" height="26" viewBox="0 0 24 24" fill="#fff"><path d="M12.04 2c-5.46 0-9.91 4.45-9.91 9.91 0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38c1.45.79 3.08 1.21 4.79 1.21 5.46 0 9.91-4.45 9.91-9.91S17.5 2 12.04 2zm5.8 14.16c-.24.68-1.4 1.3-1.94 1.38-.5.07-1.13.1-1.82-.11-.42-.13-.96-.31-1.65-.61-2.9-1.25-4.79-4.17-4.94-4.36-.14-.19-1.18-1.57-1.18-2.99 0-1.42.75-2.12 1.01-2.41.27-.29.58-.36.77-.36.19 0 .39.002.56.01.18.01.42-.07.66.5.24.58.82 2 .89 2.14.07.14.12.31.02.5-.09.19-.14.31-.27.48-.14.17-.29.37-.41.5-.14.14-.28.29-.12.56.16.27.71 1.17 1.53 1.9 1.05.94 1.94 1.23 2.21 1.37.27.14.43.12.58-.07.16-.19.67-.78.85-1.05.18-.27.36-.22.6-.13.24.09 1.53.72 1.8.85.27.14.44.2.51.31.06.11.06.65-.18 1.33z"/></svg></a>`:``}${igUrl?`<a href="${esc(igUrl)}" target="_blank" rel="noopener" class="fl-float-btn fl-float-ig" title="Instagram"><svg width="24" height="24" viewBox="0 0 24 24" fill="#fff"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41-.56-.22-.96-.48-1.38-.9-.42-.42-.68-.82-.9-1.38-.16-.42-.36-1.06-.41-2.23C2.17 15.58 2.16 15.2 2.16 12s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41C8.42 2.17 8.8 2.16 12 2.16zm0 2.45a5.95 5.95 0 100 11.9 5.95 5.95 0 000-11.9zm0 9.82a3.87 3.87 0 110-7.74 3.87 3.87 0 010 7.74zm7.58-10.01a1.39 1.39 0 11-2.78 0 1.39 1.39 0 012.78 0z"/></svg></a>`:``}</div>`:``}<div class="footer-social">
+        <a href="${esc(igUrl || '#')}" target="_blank" rel="noopener" class="social-link" title="Instagram">${igSvg}</a>
+        <a href="${esc(waUrl || '#')}" target="_blank" rel="noopener" class="social-link" title="WhatsApp">${waSvg}</a>
       </div>
-      <div class="footer-links">${links}<a href="mailto:${esc(site.email)}">Contact</a></div>
+      <div class="footer-links">${links}${site.email_hidden?'':`<a href="mailto:${esc(site.email)}">Contact</a>`}</div>
     </div>`;
 }
 
@@ -870,8 +878,8 @@ var PRODUCTS={
   ]
 };
 function getProd(catId){
-  if(_C&&_C.products&&_C.products[catId]&&_C.products[catId].length)return _C.products[catId];
-  return PRODUCTS[catId]||[];
+  var list=(_C&&_C.products&&_C.products[catId]&&_C.products[catId].length)?_C.products[catId]:(PRODUCTS[catId]||[]);
+  return list.filter(function(p){return !p.hidden;});
 }
 function getCats(){
   if(_C&&_C.products&&_C.products.items&&_C.products.items.length){
@@ -895,7 +903,9 @@ function prodCardHTML(p,catId){
   var img=(p.images&&p.images.length)
     ?"<div class=\"fl-prod-img\"><img src=\""+p.images[0]+"\" alt=\""+p.name+"\">"+badge+"</div>"
     :"<div class=\"fl-prod-img\">&#128424;"+badge+"</div>";
-  return "<div class=\"fl-prod-card\" onclick=\"window.flOpenProd('"+catId+"','"+p.id+"')\">" +img+"<div class=\"fl-prod-name\">"+p.name+"</div><div class=\"fl-prod-price\">"+p.price+"</div></div>";
+  var nameHtml=p.name_hidden?"":"<div class=\"fl-prod-name\">"+p.name+"</div>";
+  var priceHtml=p.price_hidden?"":"<div class=\"fl-prod-price\">"+p.price+"</div>";
+  return "<div class=\"fl-prod-card\" onclick=\"window.flOpenProd('"+catId+"','"+p.id+"')\">" +img+nameHtml+priceHtml+"</div>";
 }
 function hideHome(){
   document.querySelectorAll("body>*:not(#fl-cat-page):not(#fl-prod-page):not(#fl-about-page):not(#fl-shipping-page):not(#fl-all-page):not(#fl-search-modal):not(.fl-float-btns):not(script):not(style)").forEach(function(el){
@@ -949,9 +959,9 @@ window.flOpenProd=function(catId,pid){
   var main=document.getElementById("fl-gal-main");
   if(prod.images&&prod.images.length){main.innerHTML="<img src=\""+prod.images[0]+"\">";}
   else{main.textContent="\uD83D\uDDA8";}
-  document.getElementById("fl-detail-name").textContent=prod.name;
-  document.getElementById("fl-detail-price").textContent=prod.price;
-  document.getElementById("fl-detail-desc").textContent=prod.description;
+  document.getElementById("fl-detail-name").textContent=prod.name_hidden?"":prod.name;
+  document.getElementById("fl-detail-price").textContent=prod.price_hidden?"":prod.price;
+  document.getElementById("fl-detail-desc").textContent=prod.description_hidden?"":prod.description;
   document.getElementById("fl-sel-color").textContent="No colour selected";
   document.querySelectorAll(".fl-swatch").forEach(function(s){s.classList.remove("selected");});
   document.querySelectorAll(".fl-swatch").forEach(function(s){
