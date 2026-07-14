@@ -619,8 +619,15 @@ loadContent().then(renderSite);
 .fl-gal-main{width:100%;aspect-ratio:4/3;border-radius:var(--radius);background:var(--dark);display:flex;align-items:center;justify-content:center;font-size:5rem;color:var(--muted);overflow:hidden}
 .fl-gal-main img{width:100%;height:100%;object-fit:cover}
 .fl-prod-info h3{color:var(--text);font-size:1.5rem;margin-bottom:8px}
-.fl-prod-info .fl-price{color:var(--accent);font-size:1.3rem;font-weight:700;margin-bottom:16px}
+.fl-detail-sku{color:var(--muted);font-size:0.78rem;letter-spacing:0.5px;margin-bottom:8px;opacity:0.85}
+.fl-prod-info .fl-price{color:var(--accent);font-size:1.3rem;font-weight:700;margin-bottom:6px}
+.fl-detail-turnaround{color:var(--muted);font-size:0.85rem;margin-bottom:16px}
 .fl-prod-info p{color:var(--muted);line-height:1.7;margin-bottom:16px}
+.fl-detail-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px}
+.fl-detail-sizes{margin-bottom:16px}
+.fl-detail-info{display:flex;flex-direction:column;gap:16px;margin-top:8px}
+.fl-info-block h4{font-size:0.95rem;font-weight:700;margin-bottom:6px;color:var(--text)}
+.fl-info-block p{color:var(--muted);font-size:0.9rem;line-height:1.6;margin:0}
 .fl-order-btn{background:var(--accent);color:#000;border:none;padding:14px 32px;border-radius:var(--radius);font-weight:700;font-size:1rem;cursor:pointer;text-decoration:none;display:inline-block;margin-top:8px}
 .fl-order-btn:hover{opacity:0.9}
 .fl-color-section{margin-bottom:20px}
@@ -714,8 +721,12 @@ loadContent().then(renderSite);
     <div><div class="fl-gal-main" id="fl-gal-main">&#128424;</div></div>
     <div class="fl-prod-info">
       <h3 id="fl-detail-name"></h3>
+      <div class="fl-detail-sku" id="fl-detail-sku"></div>
       <div class="fl-price" id="fl-detail-price"></div>
+      <div class="fl-detail-turnaround" id="fl-detail-turnaround"></div>
       <p id="fl-detail-desc"></p>
+      <div class="fl-detail-tags" id="fl-detail-tags"></div>
+      <div class="fl-detail-sizes" id="fl-detail-sizes"></div>
       <div class="fl-color-section">
         <div class="fl-color-label">Choose colour</div>
         <div class="fl-color-swatches">
@@ -729,6 +740,7 @@ loadContent().then(renderSite);
         </div>
         <div class="fl-selected-color" id="fl-sel-color">No colour selected</div>
       </div>
+      <div class="fl-detail-info" id="fl-detail-info"></div>
     </div>
   </div>
 </div>
@@ -900,8 +912,9 @@ function getAllProds(){
 }
 function prodCardHTML(p,catId){
   var badge=p.badge?"<div class=\"fl-prod-badge\">"+p.badge+"</div>":"";
-  var img=(p.images&&p.images.length)
-    ?"<div class=\"fl-prod-img\"><img src=\""+p.images[0]+"\" alt=\""+p.name+"\">"+badge+"</div>"
+  var hasImg=!p.image_hidden&&p.images&&p.images.length;
+  var img=hasImg
+    ?"<div class=\"fl-prod-img\"><img src=\""+p.images[0]+"\" alt=\""+p.name+"\" style=\"object-fit:"+(p.img_fit||'cover')+";object-position:"+(p.img_pos||'center')+";transform:rotate("+(p.img_rot||'0')+"deg)\">"+badge+"</div>"
     :"<div class=\"fl-prod-img\">&#128424;"+badge+"</div>";
   var nameHtml=p.name_hidden?"":"<div class=\"fl-prod-name\">"+p.name+"</div>";
   var priceHtml=p.price_hidden?"":"<div class=\"fl-prod-price\">"+p.price+"</div>";
@@ -957,11 +970,61 @@ window.flOpenProd=function(catId,pid){
   document.getElementById("fl-cat-page").style.display="none";
   document.getElementById("fl-prod-page").style.display="block";
   var main=document.getElementById("fl-gal-main");
-  if(prod.images&&prod.images.length){main.innerHTML="<img src=\""+prod.images[0]+"\">";}
-  else{main.textContent="\uD83D\uDDA8";}
+  if(!prod.image_hidden&&prod.images&&prod.images.length){
+    main.innerHTML="";
+    var mainImg=document.createElement("img");
+    mainImg.src=prod.images[0];
+    mainImg.style.objectFit=prod.img_fit||"cover";
+    mainImg.style.objectPosition=prod.img_pos||"center";
+    mainImg.style.transform="rotate("+(prod.img_rot||"0")+"deg)";
+    main.appendChild(mainImg);
+  } else { main.textContent="\uD83D\uDDA8"; }
   document.getElementById("fl-detail-name").textContent=prod.name_hidden?"":prod.name;
+  document.getElementById("fl-detail-sku").textContent=(prod.sku&&!prod.sku_hidden)?("SKU: "+prod.sku):"";
   document.getElementById("fl-detail-price").textContent=prod.price_hidden?"":prod.price;
+  document.getElementById("fl-detail-turnaround").textContent=(prod.turnaround&&!prod.turnaround_hidden)?("Turnaround: "+prod.turnaround):"";
   document.getElementById("fl-detail-desc").textContent=prod.description_hidden?"":prod.description;
+  var tagsEl=document.getElementById("fl-detail-tags");
+  tagsEl.innerHTML="";
+  if(!prod.tags_hidden){
+    (prod.tags||[]).forEach(function(t){
+      var span=document.createElement("span");
+      span.className="tag";
+      span.textContent=t;
+      tagsEl.appendChild(span);
+    });
+  }
+  var sizesEl=document.getElementById("fl-detail-sizes");
+  sizesEl.innerHTML="";
+  if(prod.sizes_enabled&&prod.sizes&&prod.sizes.length){
+    var szLabel=document.createElement("div");
+    szLabel.className="sizes-label";
+    szLabel.textContent="Available sizes";
+    var szOpts=document.createElement("div");
+    szOpts.className="size-options";
+    prod.sizes.forEach(function(s){
+      var tag=document.createElement("span");
+      tag.className="size-tag";
+      tag.textContent=s;
+      szOpts.appendChild(tag);
+    });
+    sizesEl.appendChild(szLabel);
+    sizesEl.appendChild(szOpts);
+  }
+  var infoEl=document.getElementById("fl-detail-info");
+  infoEl.innerHTML="";
+  (prod.info_sections||[]).forEach(function(sec){
+    if(!sec.title&&!sec.content)return;
+    var block=document.createElement("div");
+    block.className="fl-info-block";
+    var h4=document.createElement("h4");
+    h4.textContent=sec.title||"";
+    var p=document.createElement("p");
+    p.textContent=sec.content||"";
+    block.appendChild(h4);
+    block.appendChild(p);
+    infoEl.appendChild(block);
+  });
   document.getElementById("fl-sel-color").textContent="No colour selected";
   document.querySelectorAll(".fl-swatch").forEach(function(s){s.classList.remove("selected");});
   document.querySelectorAll(".fl-swatch").forEach(function(s){
