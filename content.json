@@ -6,7 +6,12 @@
     "whatsapp_url": "",
     "instagram_url": "",
     "font": "",
-    "text_scale": ""
+    "text_scale": "",
+    "name_hidden": false,
+    "email_hidden": false,
+    "footer_text_hidden": false,
+    "whatsapp_url_hidden": false,
+    "instagram_url_hidden": false
   },
   "hero": {
     "enabled": true,
@@ -19,21 +24,36 @@
     "stats": [
       {
         "number": "6",
-        "label": "Colors available"
+        "number_hidden": false,
+        "label": "Colors available",
+        "label_hidden": false,
+        "hidden": false
       },
       {
         "number": "5-7",
-        "label": "Working days"
+        "number_hidden": false,
+        "label": "Working days",
+        "label_hidden": false,
+        "hidden": false
       },
       {
         "number": "100%",
-        "label": "Custom made"
+        "number_hidden": false,
+        "label": "Custom made",
+        "label_hidden": false,
+        "hidden": false
       }
     ],
     "hl_style": "rainbow",
     "headline_color": "",
     "badge_color": "",
-    "hl_color": ""
+    "hl_color": "",
+    "badge_hidden": false,
+    "headline_hidden": false,
+    "headline_highlight_hidden": false,
+    "subtext_hidden": false,
+    "cta_primary_hidden": true,
+    "cta_secondary_hidden": false
   },
   "products": {
     "enabled": true,
