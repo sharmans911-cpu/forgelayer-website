@@ -84,6 +84,10 @@
         "turnaround_hidden": false,
         "sku": "",
         "sku_hidden": false,
+        "img_size": "",
+        "images": [
+          "/assets/uploads/1785267270110_cropped.jpg"
+        ],
         "sizes_enabled": false,
         "sizes": [],
         "hidden": false
@@ -104,6 +108,8 @@
         "turnaround_hidden": false,
         "sku": "",
         "sku_hidden": false,
+        "img_size": "",
+        "images": [],
         "sizes_enabled": false,
         "sizes": [],
         "hidden": false
@@ -124,6 +130,8 @@
         "turnaround_hidden": false,
         "sku": "",
         "sku_hidden": false,
+        "img_size": "",
+        "images": [],
         "sizes_enabled": false,
         "sizes": [],
         "hidden": false
@@ -144,6 +152,8 @@
         "turnaround_hidden": false,
         "sku": "",
         "sku_hidden": false,
+        "img_size": "",
+        "images": [],
         "sizes_enabled": false,
         "sizes": [],
         "hidden": false
@@ -158,12 +168,7 @@
         "price_hidden": false,
         "description": "Keep your desk tidy with this sleek cable management clip set. Mounts to the edge of any desk and holds up to 4 cables neatly in place. Available in all standard colours.",
         "description_hidden": false,
-        "image": "",
-        "image_hidden": false,
         "images": [],
-        "img_fit": "cover",
-        "img_pos": "center",
-        "img_rot": "0",
         "sku": "",
         "sku_hidden": false,
         "turnaround": "",
@@ -175,6 +180,9 @@
           "50",
           "100"
         ],
+        "discount_enabled": false,
+        "discount_pct": "",
+        "discount_reason": "",
         "info_sections": [
           {
             "title": "Technical",
@@ -195,12 +203,7 @@
         "price_hidden": false,
         "description": "Minimalist wall hooks for coats, bags, keys or towels. Each hook holds up to 2 kg. Comes as a set of 3. Just drill, mount and done.",
         "description_hidden": false,
-        "image": "",
-        "image_hidden": false,
         "images": [],
-        "img_fit": "cover",
-        "img_pos": "center",
-        "img_rot": "0",
         "sku": "",
         "sku_hidden": false,
         "turnaround": "",
@@ -209,6 +212,9 @@
         "tags_hidden": false,
         "sizes_enabled": false,
         "sizes": [],
+        "discount_enabled": false,
+        "discount_pct": "",
+        "discount_reason": "",
         "info_sections": [],
         "hidden": false
       },
@@ -220,12 +226,7 @@
         "price_hidden": false,
         "description": "A slim angled stand that holds your phone at the perfect viewing angle on a nightstand or desk. Stable, lightweight and printed in one piece.",
         "description_hidden": false,
-        "image": "",
-        "image_hidden": false,
         "images": [],
-        "img_fit": "cover",
-        "img_pos": "center",
-        "img_rot": "0",
         "sku": "",
         "sku_hidden": false,
         "turnaround": "",
@@ -234,6 +235,9 @@
         "tags_hidden": false,
         "sizes_enabled": false,
         "sizes": [],
+        "discount_enabled": false,
+        "discount_pct": "",
+        "discount_reason": "",
         "info_sections": [],
         "hidden": false
       },
@@ -245,12 +249,7 @@
         "price_hidden": false,
         "description": "Clip-on label holders for standard spice jars (fits most 40–50mm diameter jars). Print any label you like and slot it in. Set of 6.",
         "description_hidden": false,
-        "image": "",
-        "image_hidden": false,
         "images": [],
-        "img_fit": "cover",
-        "img_pos": "center",
-        "img_rot": "0",
         "sku": "",
         "sku_hidden": false,
         "turnaround": "",
@@ -259,6 +258,9 @@
         "tags_hidden": false,
         "sizes_enabled": false,
         "sizes": [],
+        "discount_enabled": false,
+        "discount_pct": "",
+        "discount_reason": "",
         "info_sections": [],
         "hidden": false
       },
@@ -270,12 +272,7 @@
         "price_hidden": false,
         "description": "Custom-fit drawer dividers for kitchen or desk drawers. Tell us your drawer dimensions and we will print dividers that slot in perfectly. Set of 4.",
         "description_hidden": false,
-        "image": "",
-        "image_hidden": false,
         "images": [],
-        "img_fit": "cover",
-        "img_pos": "center",
-        "img_rot": "0",
         "sku": "",
         "sku_hidden": false,
         "turnaround": "",
@@ -284,6 +281,9 @@
         "tags_hidden": false,
         "sizes_enabled": false,
         "sizes": [],
+        "discount_enabled": false,
+        "discount_pct": "",
+        "discount_reason": "",
         "info_sections": [],
         "hidden": false
       },
@@ -295,12 +295,7 @@
         "price_hidden": false,
         "description": "Bathroom organiser with slots for 2 toothbrushes and a small soap dish. Compact, easy to clean and printed in moisture-resistant PLA.",
         "description_hidden": false,
-        "image": "",
-        "image_hidden": false,
         "images": [],
-        "img_fit": "cover",
-        "img_pos": "center",
-        "img_rot": "0",
         "sku": "",
         "sku_hidden": false,
         "turnaround": "",
@@ -309,6 +304,9 @@
         "tags_hidden": false,
         "sizes_enabled": false,
         "sizes": [],
+        "discount_enabled": false,
+        "discount_pct": "",
+        "discount_reason": "",
         "info_sections": [],
         "hidden": false
       },
@@ -320,12 +318,7 @@
         "price_hidden": false,
         "description": "",
         "description_hidden": false,
-        "image": "",
-        "image_hidden": false,
         "images": [],
-        "img_fit": "cover",
-        "img_pos": "center",
-        "img_rot": "0",
         "sku": "",
         "sku_hidden": false,
         "turnaround": "",
@@ -334,6 +327,9 @@
         "tags_hidden": false,
         "sizes_enabled": false,
         "sizes": [],
+        "discount_enabled": false,
+        "discount_pct": "",
+        "discount_reason": "",
         "info_sections": [],
         "hidden": false
       }
@@ -597,7 +593,13 @@
       {
         "text": "Confirm & we print"
       }
-    ]
+    ],
+    "label_hidden": false,
+    "title_hidden": false,
+    "subtitle_hidden": false,
+    "email_hidden": false,
+    "button_text_hidden": false,
+    "sub_text_hidden": false
   },
   "faq": {
     "enabled": true,
@@ -606,43 +608,73 @@
     "items": [
       {
         "q": "What materials do you print with?",
-        "a": "Primarily PLA — durable and eco-friendly. Available in all our standard colours. We can discuss alternatives for specific functional needs."
+        "q_hidden": false,
+        "a": "Primarily PLA — durable and eco-friendly. Available in all our standard colours. We can discuss alternatives for specific functional needs.",
+        "a_hidden": false,
+        "hidden": false
       },
       {
         "q": "How long does an order take?",
-        "a": "Standard orders take 5–7 working days from confirmation. Complex or large items may take longer — we always confirm the timeline upfront."
+        "q_hidden": false,
+        "a": "Standard orders take 5–7 working days from confirmation. Complex or large items may take longer — we always confirm the timeline upfront.",
+        "a_hidden": false,
+        "hidden": false
       },
       {
         "q": "Can I request a completely custom design?",
-        "a": "Absolutely. Send us your idea, sketch or reference image at orders@forgelayer.online. We'll quote you within 24 hours — no obligation."
+        "q_hidden": false,
+        "a": "Absolutely. Send us your idea, sketch or reference image at orders@forgelayer.online. We'll quote you within 24 hours — no obligation.",
+        "a_hidden": false,
+        "hidden": false
       },
       {
         "q": "Which colours are available?",
-        "a": "Black, White, Red, Pink, Orange, Sky Blue and Grey. Need something else? Just ask."
+        "q_hidden": false,
+        "a": "Black, White, Red, Pink, Orange, Sky Blue and Grey. Need something else? Just ask.",
+        "a_hidden": false,
+        "hidden": false
       },
       {
         "q": "How do I place an order?",
-        "a": "Browse our categories, then email orders@forgelayer.online. We reply within 24 hours."
+        "q_hidden": false,
+        "a": "Browse our categories, then email orders@forgelayer.online. We reply within 24 hours.",
+        "a_hidden": false,
+        "hidden": false
       },
       {
         "q": "Can I see a preview before printing?",
-        "a": "Yes — for custom orders we send a digital render for your approval before anything is printed."
+        "q_hidden": false,
+        "a": "Yes — for custom orders we send a digital render for your approval before anything is printed.",
+        "a_hidden": false,
+        "hidden": false
       },
       {
         "q": "What is the maximum print size?",
-        "a": "Up to 256 × 256 × 256 mm. Larger items can be printed in sections and joined seamlessly."
+        "q_hidden": false,
+        "a": "Up to 256 × 256 × 256 mm. Larger items can be printed in sections and joined seamlessly.",
+        "a_hidden": false,
+        "hidden": false
       },
       {
         "q": "Do you ship across Germany?",
-        "a": "Yes, we ship throughout Germany. Shipping cost is confirmed at the time of order. Local pickup is also available."
+        "q_hidden": false,
+        "a": "Yes, we ship throughout Germany. Shipping cost is confirmed at the time of order. Local pickup is also available.",
+        "a_hidden": false,
+        "hidden": false
       },
       {
         "q": "What is your return policy?",
-        "a": "Since all prints are custom-made, we do not accept returns unless there is a manufacturing defect. We send photos before shipping so you can approve."
+        "q_hidden": false,
+        "a": "Since all prints are custom-made, we do not accept returns unless there is a manufacturing defect. We send photos before shipping so you can approve.",
+        "a_hidden": false,
+        "hidden": false
       },
       {
         "q": "How do I send you my design files?",
-        "a": "Send STL, OBJ or 3MF files to orders@forgelayer.online. We can also design from scratch based on your description or sketch."
+        "q_hidden": false,
+        "a": "Send STL, OBJ or 3MF files to orders@forgelayer.online. We can also design from scratch based on your description or sketch.",
+        "a_hidden": false,
+        "hidden": false
       }
     ]
   },
