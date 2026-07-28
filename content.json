@@ -170,9 +170,21 @@
         "turnaround_hidden": false,
         "tags": [],
         "tags_hidden": false,
-        "sizes_enabled": false,
-        "sizes": [],
-        "info_sections": [],
+        "sizes_enabled": true,
+        "sizes": [
+          "50",
+          "100"
+        ],
+        "info_sections": [
+          {
+            "title": "Technical",
+            "content": "asdfasdfsdfkjasbfklblksanldcnlasldnf"
+          },
+          {
+            "title": "Electrical",
+            "content": "skjdfbklbakslbfb"
+          }
+        ],
         "hidden": false
       },
       {
