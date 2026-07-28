@@ -503,35 +503,63 @@
     "items": [
       {
         "emoji": "📦",
+        "emoji_hidden": false,
         "label": "Desk Organiser",
-        "bg": "#0d2137"
+        "label_hidden": false,
+        "bg": "#0d2137",
+        "bg_hidden": false,
+        "hidden": false
       },
       {
         "emoji": "🪝",
+        "emoji_hidden": false,
         "label": "Wall Hook Set",
-        "bg": "#0d1f0d"
+        "label_hidden": false,
+        "bg": "#0d1f0d",
+        "bg_hidden": false,
+        "hidden": false
       },
       {
         "emoji": "🔑",
+        "emoji_hidden": false,
         "label": "Name Keychain",
-        "bg": "#1f0d25"
+        "label_hidden": false,
+        "bg": "#1f0d25",
+        "bg_hidden": false,
+        "hidden": false
       },
       {
         "emoji": "🌿",
+        "emoji_hidden": false,
         "label": "Mini Planter",
-        "bg": "#1f1a0d"
+        "label_hidden": false,
+        "bg": "#1f1a0d",
+        "bg_hidden": false,
+        "hidden": false
       },
       {
         "emoji": "⚙️",
+        "emoji_hidden": false,
         "label": "Custom Bracket",
-        "bg": "#1a1a2e"
+        "label_hidden": false,
+        "bg": "#1a1a2e",
+        "bg_hidden": false,
+        "hidden": false
       },
       {
         "emoji": "🎁",
+        "emoji_hidden": false,
         "label": "Gift Box",
-        "bg": "#0d1f1a"
+        "label_hidden": false,
+        "bg": "#0d1f1a",
+        "bg_hidden": false,
+        "hidden": false
       }
-    ]
+    ],
+    "label_hidden": false,
+    "title_hidden": false,
+    "subtitle_hidden": false,
+    "note_hidden": false
   },
   "pricing": {
     "enabled": false
