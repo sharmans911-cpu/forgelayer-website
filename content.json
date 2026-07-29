@@ -172,7 +172,9 @@
         "price_hidden": false,
         "description": "Keep your desk tidy with this sleek cable management clip set. Mounts to the edge of any desk and holds up to 4 cables neatly in place. Available in all standard colours.",
         "description_hidden": false,
-        "images": [],
+        "images": [
+          "/assets/uploads/1785311550127_cropped.jpg"
+        ],
         "sku": "",
         "sku_hidden": false,
         "turnaround": "",
