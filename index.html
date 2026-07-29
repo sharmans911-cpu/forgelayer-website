@@ -890,6 +890,7 @@ loadContent().then(renderSite);
 <script>
 (function(){
 var _C=null,_curCatId=null,_selColor="",_galImages=[],_galIdx=0;
+var _flAdminMode=/[?&]admin=1/.test(location.search);
 function renderGalImage(){
   var main=document.getElementById("fl-gal-main");
   main.innerHTML="";
@@ -1031,6 +1032,7 @@ window.flOpenProd=function(catId,pid){
   var prods=getProd(catId);
   var prod=prods.find(function(p){return p.id===pid;})||prods[0];
   if(!prod)return;
+  window.__flCurProd={cat:catId,id:prod.id};
   _selColor="";
   document.getElementById("fl-cat-page").style.display="none";
   document.getElementById("fl-prod-page").style.display="block";
@@ -1250,10 +1252,41 @@ function tryInjectTestimonials(n){
   if(faq||sections.length>1){injectTestimonials();return;}
   if(n<40)setTimeout(function(){tryInjectTestimonials(n+1);},50);
 }
+window.flSetCatalogData=function(d){
+  _C=d;
+  var catPage=document.getElementById("fl-cat-page");
+  var prodPage=document.getElementById("fl-prod-page");
+  var allPage=document.getElementById("fl-all-page");
+  if(prodPage&&prodPage.style.display==="block"&&window.__flCurProd){
+    window.flOpenProd(window.__flCurProd.cat,window.__flCurProd.id);
+  } else if(catPage&&catPage.style.display==="block"&&_curCatId){
+    var cats=getCats();
+    var cat=cats.find(function(c){return c.id===_curCatId;})||cats[0];
+    if(cat)openCat(cat.id,cat.name,cat.description||"");
+  } else if(allPage&&allPage.style.display==="block"){
+    renderAllGrid(_curCatId||"all");
+  }
+};
+window.flGoToCat=function(catId){
+  var cats=getCats();
+  var cat=cats.find(function(c){return c.id===catId;})||cats[0];
+  if(cat)openCat(cat.id,cat.name,cat.description||"");
+};
+window.flGoToHomeSection=function(anchor){
+  window.flShowHome();
+  if(anchor){
+    var el=document.getElementById(anchor);
+    if(el)el.scrollIntoView({block:"start"});
+  } else {
+    window.scrollTo(0,0);
+  }
+};
 function init(){
   var modal=document.getElementById("fl-search-modal");
   if(modal)modal.addEventListener("click",function(e){if(e.target===this)window.flCloseSearch();});
-  fetch("content.json?t="+Date.now()).then(function(r){return r.json();}).then(function(d){_C=d;tryWire(0);}).catch(function(){tryWire(0);});
+  if(!_flAdminMode){
+    fetch("content.json?t="+Date.now()).then(function(r){return r.json();}).then(function(d){_C=d;tryWire(0);}).catch(function(){tryWire(0);});
+  }
   tryWire(0);
   tryWireNav(0);
   tryInjectTestimonials(0);
