@@ -111,7 +111,9 @@
         "sku": "",
         "sku_hidden": false,
         "img_size": "",
-        "images": [],
+        "images": [
+          "/assets/uploads/1785311428387_WhatsApp_Image_2026-07-10_at_11.50.11.jpeg"
+        ],
         "sizes_enabled": false,
         "sizes": [],
         "hidden": false
