@@ -494,7 +494,8 @@ function renderFAQ(d) {
 
 function renderFooter(site, enabledSections) {
   const links = enabledSections.filter(Boolean).map(id =>
-    `<a href="#${id}">${id.charAt(0).toUpperCase()+id.slice(1)}</a>`).join('');
+    `<a href="#${id}" onclick="event.preventDefault();window.flGoToHomeSection('${id}')">${id.charAt(0).toUpperCase()+id.slice(1)}</a>`).join('');
+  const legalLinks = `<a href="#impressum" onclick="event.preventDefault();window.flShowImpressum()">Impressum</a><a href="#datenschutz" onclick="event.preventDefault();window.flShowPrivacy()">Datenschutz</a>`;
   const footerLogo = `<svg height="28" viewBox="0 0 160 36" xmlns="http://www.w3.org/2000/svg" aria-label="ForgeLayer">
     <polygon points="15,20 29,27 15,34 1,27"  fill="#005a42"/>
     <polygon points="15,11 25,17 15,23 5,17"  fill="#00906a"/>
@@ -513,8 +514,95 @@ function renderFooter(site, enabledSections) {
         <a href="${esc(igUrl || '#')}" target="_blank" rel="noopener" class="social-link" title="Instagram">${igSvg}</a>
         <a href="${esc(waUrl || '#')}" target="_blank" rel="noopener" class="social-link" title="WhatsApp">${waSvg}</a>
       </div>
-      <div class="footer-links">${links}${site.email_hidden?'':`<a href="mailto:${esc(site.email)}">Contact</a>`}</div>
+      <div class="footer-links">${links}${site.email_hidden?'':`<a href="mailto:${esc(site.email)}">Contact</a>`}${legalLinks}</div>
     </div>`;
+}
+
+function renderTestimonials(d) {
+  const cards = (d.items || []).filter(t => !t.hidden).map(t => {
+    const n = Math.max(0, Math.min(5, parseInt(t.stars, 10) || 5));
+    return `
+    <div class="fl-t-card">
+      <div class="fl-stars">${'★'.repeat(n)}</div>
+      ${t.text ? `<p class="fl-t-text">${esc(t.text)}</p>` : ''}
+      ${t.name ? `<div class="fl-t-name">${esc(t.name)}</div>` : ''}
+      ${t.location ? `<div class="fl-t-loc">${esc(t.location)}</div>` : ''}
+    </div>`;
+  }).join('');
+  if (!cards) return '';
+  return `
+  <section class="fl-testimonials">
+    ${d.label_hidden?'':`<div class="fl-t-label">${esc(d.label || 'Customer reviews')}</div>`}
+    ${d.title_hidden?'':`<div class="fl-t-title">${esc(d.title || 'What our customers say')}</div>`}
+    <div class="fl-t-grid">${cards}</div>
+  </section>`;
+}
+
+// ─── Legal pages (Impressum / Datenschutz) ───────────────────────────────────
+function renderLegalPages(data) {
+  const L = data.legal || {};
+  const im = L.impressum || {};
+  const pv = L.privacy || {};
+
+  // Fields §5 DDG requires. Flagged inline while blank so nothing is missed before launch.
+  const required = [
+    ['owner_name',   'Full legal name of the business owner'],
+    ['street',       'Street and house number'],
+    ['postcode_city','Postcode and city'],
+    ['email',        'Contact email'],
+  ];
+  const missing = required.filter(([k]) => !(im[k] || '').trim()).map(([, label]) => label);
+
+  const val = (k) => (im[k] || '').trim()
+    ? esc(im[k])
+    : '<span class="fl-legal-missing">— not filled in yet —</span>';
+
+  const row = (label, k) => (im[k] || '').trim() || required.some(([rk]) => rk === k)
+    ? `<dt>${esc(label)}</dt><dd>${val(k)}</dd>` : '';
+
+  const imBody = `
+    <h2>${esc(im.heading || 'Impressum')}</h2>
+    <p class="fl-a-sub">${esc(im.subheading || 'Angaben gemäß § 5 DDG')}</p>
+    ${missing.length ? `<div class="fl-legal-note"><strong>This page is not complete yet.</strong> Still needed: ${missing.map(esc).join(', ')}. German law requires these before the site is publicly available.</div>` : ''}
+    <h3>Diensteanbieter</h3>
+    <dl>
+      ${row('Name', 'owner_name')}
+      ${im.business_name ? `<dt>Business</dt><dd>${esc(im.business_name)}</dd>` : ''}
+      ${row('Address', 'street')}
+      ${row('', 'postcode_city')}
+      <dt>Country</dt><dd>${esc(im.country || 'Germany')}</dd>
+    </dl>
+    <h3>Kontakt</h3>
+    <dl>
+      ${row('Email', 'email')}
+      ${im.phone ? `<dt>Phone</dt><dd>${esc(im.phone)}</dd>` : ''}
+    </dl>
+    ${(im.vat_id || im.small_business_note) ? `<h3>Umsatzsteuer</h3>` : ''}
+    ${im.vat_id ? `<p>USt-IdNr.: ${esc(im.vat_id)}</p>` : ''}
+    ${im.small_business_note ? `<p>${esc(im.small_business_text || 'Als Kleinunternehmer im Sinne von § 19 Abs. 1 UStG wird keine Umsatzsteuer berechnet.')}</p>` : ''}
+    ${im.responsible ? `<h3>Verantwortlich für den Inhalt</h3><p>${esc(im.responsible)}</p>` : ''}
+    ${im.dispute_text ? `<h3>Streitschlichtung</h3><p>${esc(im.dispute_text)}</p>` : ''}
+    ${im.extra ? `<h3>${esc(im.extra_heading || 'Weitere Angaben')}</h3><p>${esc(im.extra)}</p>` : ''}
+  `;
+
+  const sections = (pv.sections || [])
+    .filter(s => !s.hidden && (s.title || s.content))
+    .map(s => `${s.title ? `<h3>${esc(s.title)}</h3>` : ''}${s.content ? `<p>${esc(s.content)}</p>` : ''}`)
+    .join('');
+
+  const pvBody = `
+    <h2>${esc(pv.heading || 'Datenschutzerklärung')}</h2>
+    <p class="fl-a-sub">${esc(pv.subheading || 'How your data is handled on this site')}</p>
+    ${pv.review_note ? `<div class="fl-legal-note">${esc(pv.review_note)}</div>` : ''}
+    ${pv.intro ? `<p>${esc(pv.intro)}</p>` : ''}
+    ${sections}
+    ${pv.updated ? `<h3>Stand</h3><p>${esc(pv.updated)}</p>` : ''}
+  `;
+
+  const imEl = document.getElementById('fl-impressum-body');
+  const pvEl = document.getElementById('fl-privacy-body');
+  if (imEl) imEl.innerHTML = imBody;
+  if (pvEl) pvEl.innerHTML = pvBody;
 }
 
 // ─── Nav builder ─────────────────────────────────────────────────────────────
@@ -543,12 +631,14 @@ function renderSite(data) {
   if (data.gallery?.enabled)  { sections.push(renderGallery(data.gallery)); enabledIds.push('gallery'); }
   if (data.pricing?.enabled)  { sections.push(renderPricing(data.pricing)); enabledIds.push('pricing'); }
   if (data.why?.enabled!==false) { sections.push(renderWhy()); enabledIds.push('why'); }
+  if (data.testimonials?.enabled) { sections.push(renderTestimonials(data.testimonials)); }
   if (data.faq?.enabled)      { sections.push(renderFAQ(data.faq)); enabledIds.push('faq'); }
 
   document.getElementById('page-content').innerHTML = sections.join('');
   document.getElementById('site-footer').innerHTML  = renderFooter(s, enabledIds);
   document.title = `${s.name} — Custom 3D Prints`;
 
+  renderLegalPages(data);
   initSlideshows();
   buildNav(data);
   initInteractions();
@@ -627,7 +717,13 @@ loadContent().then(renderSite);
 
 
 <style>
-#fl-cat-page,#fl-prod-page,#fl-about-page,#fl-shipping-page,#fl-all-page{display:none;min-height:80vh;padding:48px 5%;background:var(--black)}
+#fl-cat-page,#fl-prod-page,#fl-about-page,#fl-shipping-page,#fl-all-page,#fl-impressum-page,#fl-privacy-page{display:none;min-height:80vh;padding:48px 5%;background:var(--black)}
+.fl-legal-note{background:rgba(255,176,32,0.08);border:1px solid rgba(255,176,32,0.3);border-radius:8px;padding:14px 16px;color:#ffb020;font-size:0.85rem;line-height:1.6;margin-bottom:28px}
+.fl-legal-missing{color:#ff6b5b;font-style:italic}
+.fl-about-wrap dl{display:grid;grid-template-columns:auto 1fr;gap:8px 20px;margin-bottom:8px}
+.fl-about-wrap dt{color:var(--muted);font-size:0.85rem}
+.fl-about-wrap dd{color:var(--text);line-height:1.7}
+@media(max-width:520px){.fl-about-wrap dl{grid-template-columns:1fr;gap:2px 0}.fl-about-wrap dd{margin-bottom:10px}}
 .fl-back{background:none;border:1px solid var(--border);color:var(--muted);padding:8px 20px;border-radius:var(--radius);cursor:pointer;margin-bottom:32px;font-size:0.9rem}
 .fl-back:hover{color:var(--text);border-color:var(--muted)}
 .fl-prod-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
@@ -861,6 +957,16 @@ loadContent().then(renderSite);
   </div>
 </div>
 
+<div id="fl-impressum-page">
+  <button class="fl-back" onclick="window.flShowHome()">&#8592; Back</button>
+  <div class="fl-about-wrap" id="fl-impressum-body"></div>
+</div>
+
+<div id="fl-privacy-page">
+  <button class="fl-back" onclick="window.flShowHome()">&#8592; Back</button>
+  <div class="fl-about-wrap" id="fl-privacy-body"></div>
+</div>
+
 <div id="fl-all-page">
   <button class="fl-back" onclick="window.flShowHome()">&#8592; Back</button>
   <h2>All Products</h2>
@@ -987,19 +1093,19 @@ function prodCardHTML(p,catId){
   return "<div class=\"fl-prod-card\" onclick=\"window.flOpenProd('"+catId+"','"+p.id+"')\">" +img+nameHtml+priceHtml+"</div>";
 }
 function hideHome(){
-  document.querySelectorAll("body>*:not(#fl-cat-page):not(#fl-prod-page):not(#fl-about-page):not(#fl-shipping-page):not(#fl-all-page):not(#fl-search-modal):not(.fl-float-btns):not(script):not(style)").forEach(function(el){
+  document.querySelectorAll("body>*:not(#fl-cat-page):not(#fl-prod-page):not(#fl-about-page):not(#fl-shipping-page):not(#fl-all-page):not(#fl-impressum-page):not(#fl-privacy-page):not(#fl-search-modal):not(#site-footer):not(.fl-float-btns):not(script):not(style)").forEach(function(el){
     if(el.style.display!=="none"){el._flHidden=true;el.style.display="none";}
   });
 }
 function showPage(id){
   hideHome();
-  ["fl-cat-page","fl-prod-page","fl-about-page","fl-shipping-page","fl-all-page"].forEach(function(p){
+  ["fl-cat-page","fl-prod-page","fl-about-page","fl-shipping-page","fl-all-page","fl-impressum-page","fl-privacy-page"].forEach(function(p){
     document.getElementById(p).style.display=(p===id)?"block":"none";
   });
   window.scrollTo(0,0);
 }
 window.flShowHome=function(){
-  ["fl-cat-page","fl-prod-page","fl-about-page","fl-shipping-page","fl-all-page"].forEach(function(p){
+  ["fl-cat-page","fl-prod-page","fl-about-page","fl-shipping-page","fl-all-page","fl-impressum-page","fl-privacy-page"].forEach(function(p){
     document.getElementById(p).style.display="none";
   });
   document.querySelectorAll("body>*").forEach(function(el){
@@ -1137,6 +1243,8 @@ window.flOpenProd=function(catId,pid){
 };
 window.flShowAbout=function(){showPage("fl-about-page");};
 window.flShowShipping=function(){showPage("fl-shipping-page");};
+window.flShowImpressum=function(){showPage("fl-impressum-page");};
+window.flShowPrivacy=function(){showPage("fl-privacy-page");};
 window.flCalcChange=function(val){
   var r=document.getElementById("fl-calc-result");
   var d=document.getElementById("fl-calc-days");
@@ -1223,34 +1331,11 @@ function wireNav(){
   addLink("Shipping",window.flShowShipping);
   addSrch();
 }
-function injectTestimonials(){
-  var html="<section class=\"fl-testimonials\">"
-    +"<div class=\"fl-t-label\">Customer reviews</div>"
-    +"<div class=\"fl-t-title\">What our customers say</div>"
-    +"<div class=\"fl-t-grid\">"
-    +"<div class=\"fl-t-card\"><div class=\"fl-stars\">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class=\"fl-t-text\">Ordered a custom cable organiser and a set of wall hooks. Arrived super fast and the quality is great. Will definitely order again!</p><div class=\"fl-t-name\">Markus R.</div><div class=\"fl-t-loc\">Munich, Germany</div></div>"
-    +"<div class=\"fl-t-card\"><div class=\"fl-stars\">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class=\"fl-t-text\">Got a personalised name sign for my daughter's room. It looks amazing and the colour is exactly what I asked for. The photo preview before shipping is a great touch.</p><div class=\"fl-t-name\">Laura S.</div><div class=\"fl-t-loc\">Berlin, Germany</div></div>"
-    +"<div class=\"fl-t-card\"><div class=\"fl-stars\">&#9733;&#9733;&#9733;&#9733;&#9733;</div><p class=\"fl-t-text\">Needed a custom bracket for a shelf mount and ForgeLayer delivered perfectly. Printed to my exact measurements. Great communication throughout.</p><div class=\"fl-t-name\">Thomas W.</div><div class=\"fl-t-loc\">Hamburg, Germany</div></div>"
-    +"</div></section>";
-  var faq=document.querySelector("#faq,section[id*=faq],[class*=faq]");
-  if(faq){faq.insertAdjacentHTML("beforebegin",html);}
-  else{
-    var sections=document.querySelectorAll("body>section,body>div[class]");
-    if(sections.length>1)sections[sections.length-2].insertAdjacentHTML("afterend",html);
-  }
-}
 function tryWireNav(n){
   n=n||0;
   var navLinks=document.querySelectorAll("nav a, nav ul li a, header a");
   if(navLinks.length){wireNav();return;}
   if(n<40)setTimeout(function(){tryWireNav(n+1);},50);
-}
-function tryInjectTestimonials(n){
-  n=n||0;
-  var faq=document.querySelector("#faq,section[id*=faq],[class*=faq]");
-  var sections=document.querySelectorAll("body>section,body>div[class]");
-  if(faq||sections.length>1){injectTestimonials();return;}
-  if(n<40)setTimeout(function(){tryInjectTestimonials(n+1);},50);
 }
 window.flSetCatalogData=function(d){
   _C=d;
@@ -1289,7 +1374,6 @@ function init(){
   }
   tryWire(0);
   tryWireNav(0);
-  tryInjectTestimonials(0);
 }
 if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",init);}else{setTimeout(init,200);}
 })();
@@ -1338,7 +1422,7 @@ try{new MutationObserver(conv).observe(document.documentElement,{childList:true,
     if(font){
       var fam;
       if(font==='system'){ fam='system-ui,-apple-system,"Segoe UI",Roboto,sans-serif'; }
-      else { fam='"'+font+'",sans-serif'; if(GF[font]){ var l=document.createElement('link'); l.rel='stylesheet'; l.href='https://fonts.googleapis.com/css2?family='+font.replace(/ /g,'+')+':wght@400;600;700;800&display=swap'; document.head.appendChild(l); } }
+      else { fam='"'+font+'",sans-serif'; if(GF[font]&&!document.getElementById('fl-fonts-css')){ var l=document.createElement('link'); l.id='fl-fonts-css'; l.rel='stylesheet'; l.href='/assets/fonts/fonts.css'; document.head.appendChild(l); } }
       var st=document.createElement('style'); st.setAttribute('data-fl','font'); st.textContent='body,button,input,select,textarea,h1,h2,h3,h4,h5,h6,p,a,span,div,em,strong,li,label{font-family:'+fam+' !important}'; document.head.appendChild(st);
     }
     if(scale){ var px={s:15,l:18,xl:20}[scale]||16; document.documentElement.style.fontSize=px+'px'; }
