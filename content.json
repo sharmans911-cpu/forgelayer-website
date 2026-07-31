@@ -688,5 +688,97 @@
   },
   "why": {
     "enabled": true
+  },
+  "testimonials": {
+    "enabled": false,
+    "label": "Customer reviews",
+    "title": "What our customers say",
+    "items": [
+      {
+        "stars": 5,
+        "text": "Ordered a custom cable organiser and a set of wall hooks. Arrived super fast and the quality is great. Will definitely order again!",
+        "name": "Markus R.",
+        "location": "Munich, Germany",
+        "hidden": false
+      },
+      {
+        "stars": 5,
+        "text": "Got a personalised name sign for my daughter's room. It looks amazing and the colour is exactly what I asked for. The photo preview before shipping is a great touch.",
+        "name": "Laura S.",
+        "location": "Berlin, Germany",
+        "hidden": false
+      },
+      {
+        "stars": 5,
+        "text": "Needed a custom bracket for a shelf mount and ForgeLayer delivered perfectly. Printed to my exact measurements. Great communication throughout.",
+        "name": "Thomas W.",
+        "location": "Hamburg, Germany",
+        "hidden": false
+      }
+    ]
+  },
+  "legal": {
+    "impressum": {
+      "heading": "Impressum",
+      "subheading": "Angaben gemäß § 5 DDG",
+      "business_name": "ForgeLayer",
+      "owner_name": "",
+      "street": "",
+      "postcode_city": "",
+      "country": "Germany",
+      "email": "orders@forgelayer.online",
+      "phone": "",
+      "vat_id": "",
+      "small_business_note": true,
+      "small_business_text": "Als Kleinunternehmer im Sinne von § 19 Abs. 1 UStG wird keine Umsatzsteuer berechnet.",
+      "responsible": "",
+      "dispute_text": "Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.",
+      "extra_heading": "",
+      "extra": ""
+    },
+    "privacy": {
+      "heading": "Datenschutzerklärung",
+      "subheading": "How your data is handled on this site",
+      "review_note": "Draft — please have this checked before the site goes public, and update it whenever the site starts using cookies, analytics or a contact form.",
+      "intro": "We take the protection of your personal data seriously. This site is a catalogue only: it has no shopping basket, no user accounts and no payment processing. The sections below explain what little data is processed when you visit.",
+      "sections": [
+        {
+          "title": "Who is responsible",
+          "content": "The operator of this website is responsible for data processing here. The full name and contact details are listed in the Impressum.",
+          "hidden": false
+        },
+        {
+          "title": "Hosting and server log files",
+          "content": "This site is hosted on Cloudflare Pages. When you open a page, your browser automatically sends technical information which the host records in log files: IP address, date and time of the request, the page requested, browser type and operating system. This is necessary to deliver the site and to keep it secure and stable. Cloudflare is a provider with servers outside the EU, which can mean your data is transferred to a third country.",
+          "hidden": false
+        },
+        {
+          "title": "No cookies, no tracking",
+          "content": "This website does not set cookies, does not use advertising networks and does not run analytics or tracking scripts. Your visit is not profiled.",
+          "hidden": false
+        },
+        {
+          "title": "Fonts and other assets",
+          "content": "All fonts, styles and scripts used by this site are served from this site itself. No third-party font or script provider receives your IP address.",
+          "hidden": false
+        },
+        {
+          "title": "Contacting us",
+          "content": "If you contact us by email, WhatsApp or Instagram, the information you send — such as your name, contact details and the content of your message — is stored so we can answer you and handle your enquiry. Messages sent through WhatsApp or Instagram are also processed by those platforms under their own privacy policies. We keep enquiries only as long as needed to deal with them, unless we are legally required to keep them longer.",
+          "hidden": false
+        },
+        {
+          "title": "Your rights",
+          "content": "You have the right to information about the data we hold about you, and to have it corrected, deleted or its processing restricted. You may object to processing and request a copy of your data in a portable form. To exercise any of these rights, contact us using the details in the Impressum.",
+          "hidden": false
+        },
+        {
+          "title": "Right to complain",
+          "content": "If you believe your data is being handled unlawfully, you can complain to your local data protection supervisory authority.",
+          "hidden": false
+        }
+      ],
+      "updated": ""
+    }
   }
 }
